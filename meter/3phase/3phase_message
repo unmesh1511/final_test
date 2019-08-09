@@ -1,0 +1,37 @@
+#!/bin/bash
+
+LOGGER_PATH="/home/unmesh/iox_test/meter/3phase/logger"
+
+kill_process()
+{
+	pkill mosquitto_sub
+	if [[ $? -eq 0 ]];
+	then
+		echo "mosquitto_sub process killed"
+	else
+		echo "failed to kill mosquitto_sub process"
+	fi
+	rm ${LOGGER_PATH}
+}
+
+parse_logger()
+{
+	sleep 5
+	if [[ -s ${LOGGER_PATH} ]];
+	then 
+		out=$(awk -F "," '/utc/{print $4}' ${LOGGER_PATH} | grep -oP '[[:digit:]].*(?= [[:space:]]*UTC.*)' | sort -k1,2 -ur | head -n1 | xargs -Iregex grep -m1 "regex" ${LOGGER_PATH})
+		parse=$(echo ${out} | python -c 'import sys, json; print json.load(sys.stdin)["message"]')
+		echo "parse : "${parse}
+	fi
+}
+3phase_message_test1()
+{
+	echo "test1 : " > ${LOGGER_PATH}
+	mosquitto_sub -t "glp/0/./=logger/event" >> ${LOGGER_PATH} &
+	mosquitto_pub -m '{"action":"message"}' -t "glp/0/17q2d9v/rq/dev/iox/meter/do"
+	parse_logger
+}
+
+3phase_message_test1
+
+kill_process

@@ -1,0 +1,132 @@
+#!/bin/bash
+
+kill_process()
+{
+    pkill mosquitto_sub
+    if [[ $? -eq 0 ]];
+    then
+        echo "mosquitto_sub process killed"
+    else
+        echo "failed to kill mosquitto_sub process"
+    fi
+}
+
+din_dvc_test1()
+{
+	mosquitto_sub -t "glp/0/./=control/service" &
+	mosquitto_sub -t "glp/0/./=engine/dvc/dio/di/1/respond" &
+	mosquitto_pub -m '{"value":{"type":"pulse","di-level":{"report-dur":1000,"detect-level":0,"pullup-cfg":true},"di-pulse":{"report-dur":17,"detect-level":0,"pullup-cfg":true},"di-frequency":{"report-dur":100,"detect-level":0,"pullup-cfg":true}}}' -t "glp/0/T6tWyga/rq/dev/iox/dio/if/di/1/di-val"
+
+}
+
+din_dvc_test2()
+{
+	mosquitto_sub -t "glp/0/T6tWyga/rq/dev/iox/dio/if/di/1/di-val" &
+	mosquitto_pub -m '{"prio":16,"value":{"type":"pulse","di-level":{"report-dur":1000,"detect-level":0,"pullup-cfg":true},"di-pulse":{"report-dur":16,"detect-level":0,"pullup-cfg":true},"di-frequency":{"report-dur":100,"detect-level":0,"pullup-cfg":true}}}' -t "glp/0/T6tWyga/rq/dev/iox/dio/if/di/1/di-val"
+
+}
+
+din_dvc_test3()
+{
+	mosquitto_sub -t "glp/0/T6tWyga/rq/dev/iox/dio/if/di/1/di-val" &
+	mosquitto_pub -m '{"prio":15,"active":true,"value":{"type":"pulse","di-level":{"report-dur":1000,"detect-level":0,"pullup-cfg":true},"di-pulse":{"report-dur":15,"detect-level":0,"pullup-cfg":true},"di-frequency":{"report-dur":100,"detect-level":0,"pullup-cfg":true}}}' -t "glp/0/T6tWyga/rq/dev/iox/dio/if/di/1/di-val"
+
+}
+
+din_dvc_test4()
+{
+	mosquitto_sub -t "glp/0/T6tWyga/rq/dev/iox/dio/if/di/1/di-val" &
+	mosquitto_pub -m '{"prio":14,"active":false,"value":{"type":"pulse","di-level":{"report-dur":1000,"detect-level":0,"pullup-cfg":true},"di-pulse":{"report-dur":14,"detect-level":0,"pullup-cfg":true},"di-frequency":{"report-dur":100,"detect-level":0,"pullup-cfg":true}}}' -t "glp/0/T6tWyga/rq/dev/iox/dio/if/di/1/di-val"
+
+}
+
+din_dvc_test5()
+{
+	mosquitto_sub -t "glp/0/T6tWyga/rq/dev/iox/dio/if/di/1/di-val" &
+	mosquitto_pub -m '{"value":{"type":"pulse","di-level":{"report-dur":1000,"detect-level":0,"pullup-cfg":true},"di-pulse":{"report-dur":170,"detect-level":0,"pullup-cfg":true},"di-frequency":{"report-dur":100,"detect-level":0,"pullup-cfg":true}}}' -t "glp/0/T6tWyga/rq/dev/iox/dio/if/di/1/di-val"
+}
+
+din_dvc_test6()
+{
+	mosquitto_sub -t "glp/0/T6tWyga/rq/dev/iox/dio/if/di/1/di-val" &
+	mosquitto_pub -m '{"prio":15,"value":{"type":"pulse","di-level":{"report-dur":1000,"detect-level":0,"pullup-cfg":true},"di-pulse":{"report-dur":150,"detect-level":0,"pullup-cfg":true},"di-frequency":{"report-dur":100,"detect-level":0,"pullup-cfg":true}}}' -t "glp/0/T6tWyga/rq/dev/iox/dio/if/di/1/di-val"
+
+}
+
+din_dvc_test7()
+{
+	mosquitto_sub -t "glp/0/T6tWyga/rq/dev/iox/dio/if/di/1/di-val" &
+	mosquitto_pub -m '{"prio":14,"value":{"type":"pulse","di-level":{"report-dur":1000,"detect-level":0,"pullup-cfg":true},"di-pulse":{"report-dur":140,"detect-level":0,"pullup-cfg":true},"di-frequency":{"report-dur":100,"detect-level":0,"pullup-cfg":true}}}' -t "glp/0/T6tWyga/rq/dev/iox/dio/if/di/1/di-val"
+}
+
+din_dvc_test8()
+{
+	mosquitto_sub -t "glp/0/T6tWyga/rq/dev/iox/dio/if/di/1/di-val" &
+	mosquitto_pub -m '{"prio":16,"monitor":{"rate":60,"threshold":100},"value":{"type":"pulse","di-level":{"report-dur":1000,"detect-level":0,"pullup-cfg":true},"di-pulse":{"report-dur":160,"detect-level":0,"pullup-cfg":true},"di-frequency":{"report-dur":100,"detect-level":0,"pullup-cfg":true}}}' -t "glp/0/T6tWyga/rq/dev/iox/dio/if/di/1/di-val"
+}
+
+din_dvc_test9()
+{
+	mosquitto_sub -t "glp/0/T6tWyga/rq/dev/iox/dio/if/di/1/di-val/monitor/rate" &
+	mosquitto_pub -m '120' -t "glp/0/T6tWyga/rq/dev/iox/dio/if/di/1/di-val/monitor/rate"
+}
+
+din_dvc_test10()
+{
+	mosquitto_sub -t "glp/0/T6tWyga/rq/dev/iox/dio/if/di/1/di-val" &
+	mosquitto_pub -m '{"prio":15,"active":false}' -t "glp/0/T6tWyga/rq/dev/iox/dio/if/di/1/di-val"
+}
+
+din_dvc_test11()
+{
+	mosquitto_sub -t "glp/0/T6tWyga/rq/dev/iox/dio/if/di/1/di-val" &
+	mosquitto_pub -m '{"prio":14,"active":true,"value":{"type":"pulse","di-level":{"report-dur":1000,"detect-level":0,"pullup-cfg":true},"di-pulse":{"report-dur":14,"detect-level":0,"pullup-cfg":true},"di-frequency":{"report-dur":100,"detect-level":0,"pullup-cfg":true}}}' -t "glp/0/T6tWyga/rq/dev/iox/dio/if/di/1/di-val"
+}
+
+
+din_dvc_test12()
+{
+	mosquitto_sub -t "glp/0/T6tWyga/rq/dev/iox/dio/if/di/1/di-val" &
+	mosquitto_pub -m '{"prio":17,"value":null}' -t "glp/0/T6tWyga/rq/dev/iox/dio/if/di/1/di-val"
+}
+
+
+din_dvc_test13()
+{
+	mosquitto_sub -t "glp/0/T6tWyga/rq/dev/iox/dio/if/di/1/di-val" &
+	mosquitto_pub -m '{"prio":16,"value":null}' -t "glp/0/T6tWyga/rq/dev/iox/dio/if/di/1/di-val"
+}
+
+
+
+din_dvc_test14()
+{
+	mosquitto_sub -t "glp/0/T6tWyga/rq/dev/iox/dio/if/di/1/di-val" &
+	mosquitto_pub -m '{"prio":14,"value":null}' -t "glp/0/T6tWyga/rq/dev/iox/dio/if/di/1/di-val"
+}
+
+
+din_dvc_test15()
+{
+	mosquitto_sub -t "glp/0/T6tWyga/rq/dev/iox/dio/if/di/1/di-val" &
+	mosquitto_pub -m '{"prio":15,"value":null}' -t "glp/0/T6tWyga/rq/dev/iox/dio/if/di/1/di-val"
+}
+
+#publish and subscribe to some topics
+
+din_dvc_test1
+din_dvc_test2
+din_dvc_test3
+din_dvc_test4
+din_dvc_test5
+din_dvc_test6
+din_dvc_test7
+din_dvc_test8
+din_dvc_test9
+din_dvc_test10
+din_dvc_test11
+din_dvc_test12
+din_dvc_test13
+din_dvc_test14
+din_dvc_test15
+

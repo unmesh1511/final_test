@@ -1,0 +1,20 @@
+kill_process()
+{
+    pkill mosquitto_sub
+    if [[ $? -eq 0 ]];
+    then
+        echo "mosquitto_sub process killed"
+    else
+        echo "failed to kill mosquitto_sub process"
+    fi
+    rm ${DIO_CREATE_OUT_PATH}
+}
+
+access_dio_create_out()
+{
+    sleep 5
+    out=$(grep 'utc' ${DIO_CREATE_OUT_PATH} | grep -oP '[[:digit:]].*(?= [[:space:]]*UTC.*)' | sort -k1,2 -ur | head -n1 | xargs -Iregex grep -m1 -B4 -A1 "regex" ${DIO_CREATE_OUT_PATH})
+    parse=$(echo ${out} | python -c 'import sys, json; print json.load(sys.stdin)["message"]')
+    echo "parse : "${parse}
+}
+

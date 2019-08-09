@@ -1,0 +1,70 @@
+#!/bin/bash
+
+LOGGER_PATH="/home/unmesh/iox_test/dcm/logger"
+STS_PATH="/home/unmesh/iox_test/dcm/sts"
+
+kill_process()
+{
+	pkill mosquitto_sub
+	if [[ $? -eq 0 ]];
+	then
+		echo "mosquitto_sub process killed"
+	else
+		echo "failed to kill mosquitto_sub process"
+	fi
+	rm ${STS_PATH}
+}
+
+parse_logger()
+{
+	sleep 5
+	if [[ -s ${LOGGER_PATH} ]];
+	then 
+		out=$(grep 'utc' ${LOGGER_PATH} | grep -oP '[[:digit:]].*(?= [[:space:]]*UTC.*)' | sort -k1,2 -ur | head -n1 | xargs -Iregex grep -m1 -B4 -A1 "regex" ${LOGGER_PATH})
+		parse=$(echo ${out} | python -c 'import sys, json; print json.load(sys.stdin)["message"]')
+		echo "parse : "${parse}
+	fi
+}
+
+parse_sts()
+{
+	sleep 5
+	if [[ -s ${STS_PATH} ]];
+	then 
+		out=$(grep 'mru' ${STS_PATH} | grep -oP '[[:digit:]].*(?= [[:space:]]*UTC.*)' | sort -k1,2 -ur | head -n1 | xargs -Iregex grep -m1 -B11 -A1 "regex" ${STS_PATH})
+		sleep 2
+		state=$(echo ${out} | python -c 'import sys, json; print json.load(sys.stdin)["state"]')
+		echo "state : "${state}
+	fi
+}
+
+dcm_provision_test1()
+{
+	mosquitto_sub -t "" &
+	mosquitto_pub -m '{"action":"provision"}' -t "glp/0/17q2d9v/rq/con/test10/do"
+
+}
+
+dcm_provision_test2()
+{
+	mosquitto_sub -t "glp/0/17q2d9v/fb/con/test2/sts" > ${STS_PATH} &
+	mosquitto_sub -t "glp/0/17q2d9v/fb/con/test2/sts" > ${STS_PATH} &	
+	mosquitto_pub -m '' -t "glp/0/17q2d9v/rq/con/test2/do"
+	parse_sts
+}
+
+dcm_provision_test3()
+{
+	mosquitto_sub -t "glp/0/17q2d9v/fb/con/test2/sts" > ${STS_PATH} &
+	mosquitto_sub -t "glp/0/17q2d9v/fb/con/test2/sts" > ${STS_PATH} &
+	mosquitto_sub -t "glp/0/17q2d9v/fb/con/test2/cfg" &
+	mosquitto_pub -m '{"action":"provision"}' -t "glp/0/17q2d9v/rq/con/test2/do"
+	parse_sts
+}
+
+
+dcm_provision_test1
+dcm_provision_test2
+dcm_provision_test3
+
+kill_process

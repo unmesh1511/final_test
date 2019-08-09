@@ -1,0 +1,121 @@
+#!/bin/bash
+
+kill_process()
+{
+    pkill mosquitto_sub
+    if [[ $? -eq 0 ]];
+    then
+        echo "mosquitto_sub process killed"
+    else
+        echo "failed to kill mosquitto_sub process"
+    fi
+}
+
+do_dvc_test1()
+{
+	mosquitto_sub -t "glp/0/./=control/service" &
+	mosquitto_sub -t "glp/0/./=engine/dvc/dio/do/1/respond" &
+	mosquitto_pub -m '{"value":{"type":"frequency","level":false,"frequency":17,"pulse":0,"pwm":{"frequency":0,"duty-cycle":0}}}' -t "glp/0/T6tWyga/rq/dev/iox/dio/if/do/1/do-val"
+
+}
+
+do_dvc_test2()
+{
+	mosquitto_sub -t "glp/0/T6tWyga/rq/dev/iox/dio/if/do/1/do-val" &
+	mosquitto_pub -m '{"prio":16,"value":{"type":"frequency","level":false,"frequency":16,"pulse":0,"pwm":{"frequency":0,"duty-cycle":0}}}' -t "glp/0/T6tWyga/rq/dev/iox/dio/if/do/1/do-val"
+
+}
+
+do_dvc_test3()
+{
+	mosquitto_sub -t "glp/0/T6tWyga/rq/dev/iox/dio/if/do/1/do-val" &
+	mosquitto_pub -m '{"prio":15,"active":true,"value":{"type":"frequency","level":false,"frequency":15,"pulse":0,"pwm":{"frequency":0,"duty-cycle":0}}}' -t "glp/0/T6tWyga/rq/dev/iox/dio/if/do/1/do-val"
+
+}
+
+do_dvc_test4()
+{
+	mosquitto_sub -t "glp/0/T6tWyga/rq/dev/iox/dio/if/do/1/do-val" &
+	mosquitto_pub -m '{"prio":14,"active":false,"value":{"type":"frequency","level":false,"frequency":14,"pulse":0,"pwm":{"frequency":0,"duty-cycle":0}}}' -t "glp/0/T6tWyga/rq/dev/iox/dio/if/do/1/do-val"
+
+}
+
+do_dvc_test5()
+{
+	mosquitto_sub -t "glp/0/T6tWyga/rq/dev/iox/dio/if/do/1/do-val" &
+	mosquitto_pub -m '{"value":{"type":"frequency","level":false,"frequency":170,"pulse":0,"pwm":{"frequency":0,"duty-cycle":0}}}' -t "glp/0/T6tWyga/rq/dev/iox/dio/if/do/1/do-val"
+}
+
+do_dvc_test6()
+{
+	mosquitto_sub -t "glp/0/T6tWyga/rq/dev/iox/dio/if/do/1/do-val" &
+	mosquitto_pub -m '{"prio":15,"value":{"type":"frequency","level":false,"frequency":150,"pulse":0,"pwm":{"frequency":0,"duty-cycle":0}}}' -t "glp/0/T6tWyga/rq/dev/iox/dio/if/do/1/do-val"
+
+}
+
+do_dvc_test7()
+{
+	mosquitto_sub -t "glp/0/T6tWyga/rq/dev/iox/dio/if/do/1/do-val" &
+	mosquitto_pub -m '{"prio":14,"value":{"type":"frequency","level":false,"frequency":140,"pulse":0,"pwm":{"frequency":0,"duty-cycle":0}}}' -t "glp/0/T6tWyga/rq/dev/iox/dio/if/do/1/do-val"
+}
+
+do_dvc_test8()
+{
+	mosquitto_sub -t "glp/0/T6tWyga/rq/dev/iox/dio/if/do/1/do-val" &
+	mosquitto_pub -m '{"prio":15,"active":false,"value":{"type":"frequency","level":false,"frequency":15,"pulse":0,"pwm":{"frequency":0,"duty-cycle":0}}}' -t "glp/0/T6tWyga/rq/dev/iox/dio/if/do/1/do-val"
+}
+
+do_dvc_test9()
+{
+	mosquitto_sub -t "glp/0/T6tWyga/rq/dev/iox/dio/if/do/1/do-val" &
+	mosquitto_pub -m '{"prio":14,"active":true,"value":{"type":"frequency","level":false,"frequency":14,"pulse":0,"pwm":{"frequency":0,"duty-cycle":0}}}' -t "glp/0/T6tWyga/rq/dev/iox/dio/if/do/1/do-val"
+}
+
+do_dvc_test10()
+{
+	mosquitto_sub -t "glp/0/T6tWyga/rq/dev/iox/dio/if/do/1/do-val" &
+	mosquitto_pub -m '{"prio":17,"value":null}' -t "glp/0/T6tWyga/rq/dev/iox/dio/if/do/1/do-val"
+}
+
+do_dvc_test11()
+{
+	mosquitto_sub -t "glp/0/T6tWyga/rq/dev/iox/dio/if/do/1/do-val" &
+	mosquitto_pub -m '{"prio":16,"value":null}' -t "glp/0/T6tWyga/rq/dev/iox/dio/if/do/1/do-val"
+}
+
+
+do_dvc_test12()
+{
+	mosquitto_sub -t "glp/0/T6tWyga/rq/dev/iox/dio/if/do/1/do-val" &
+	mosquitto_pub -m '{"prio":14,"value":null}' -t "glp/0/T6tWyga/rq/dev/iox/dio/if/do/1/do-val"
+}
+
+
+do_dvc_test13()
+{
+	mosquitto_sub -t "glp/0/T6tWyga/rq/dev/iox/dio/if/do/1/do-val" &
+	mosquitto_pub -m '{"prio":15,"value":null}' -t "glp/0/T6tWyga/rq/dev/iox/dio/if/do/1/do-val"
+}
+
+
+
+
+
+#publish and subscribe to some topics
+
+do_dvc_test1
+do_dvc_test2
+do_dvc_test3
+do_dvc_test4
+do_dvc_test5
+do_dvc_test6
+do_dvc_test7
+do_dvc_test8
+do_dvc_test9
+do_dvc_test10
+do_dvc_test11
+do_dvc_test12
+do_dvc_test13
+
+sleep 10
+kill_process

@@ -1,0 +1,177 @@
+#!/bin/bash
+
+LOGGER_PATH="/home/unmesh/iox_test/dio/do/logger"
+
+kill_process()
+{
+    pkill mosquitto_sub
+    if [[ $? -eq 0 ]];
+    then
+        echo "mosquitto_sub process killed"
+    else
+        echo "failed to kill mosquitto_sub process"
+    fi
+    rm ${LOGGER_PATH}
+}
+
+parse_logger()
+{
+	sleep 5
+	if [[ -s ${LOGGER_PATH} ]];
+	then 
+		out=$(grep 'utc' ${LOGGER_PATH} | grep -oP '[[:digit:]].*(?= [[:space:]]*UTC.*)' | sort -k1,2 -ur | head -n1 | xargs -Iregex grep -m1 -B4 -A1 "regex" ${LOGGER_PATH})
+		parse=$(echo ${out} | python -c 'import sys, json; print json.load(sys.stdin)["message"]')
+		echo "parse : "${parse}
+	fi
+}
+
+do_mode_test1()
+{
+
+	echo "test1 : " > ${LOGGER_PATH}
+	mosquitto_sub -t "glp/0/./=logger/event" >> ${LOGGER_PATH} &
+	mosquitto_pub -m '{"do-val":{"value":{"type":"level","level":true,"frequency":0,"pulse":0,"pwm":{"frequency":0,"duty-cycle":0}}}}' -t "glp/0/17q2d9v/rq/dev/iox/dio/if/do/1"
+	parse_logger
+
+}
+
+do_mode_test2()
+{
+
+	echo "test2 : " > ${LOGGER_PATH}
+	mosquitto_sub -t "glp/0/./=logger/event" >> ${LOGGER_PATH} &
+#	mosquitto_sub -t "glp/0/17q2d9v/fb/dev/iox/dio/if/relay/2" &
+	mosquitto_pub -m '{"do-val":{"value":{"type":"level","level":false,"frequency":0,"pulse":0,"pwm":{"frequency":0,"duty-cycle":0}}}}' -t "glp/0/17q2d9v/rq/dev/iox/dio/if/do/1"
+	parse_logger
+
+}
+
+do_mode_test3()
+{
+
+	echo "test3 : " > ${LOGGER_PATH}
+	mosquitto_sub -t "glp/0/./=logger/event" >> ${LOGGER_PATH} &
+	mosquitto_pub -m '{"do-val":{"value":{"type":"level","level":"true","frequency":0,"pulse":0,"pwm":{"frequency":20000,"duty-cycle":90}}}}' -t "glp/0/17q2d9v/rq/dev/iox/dio/if/do/1"
+	parse_logger
+
+}
+
+do_mode_test4()
+{
+
+	echo "test4 : " > ${LOGGER_PATH}
+	mosquitto_sub -t "glp/0/./=logger/event" >> ${LOGGER_PATH} &
+#	mosquitto_sub -t "glp/0/17q2d9v/fb/dev/iox/dio/if/do/1" &
+	mosquitto_pub -m '{"do-val":{"value":{"type":"pulse","level":false,"frequency":0,"pulse":1000,"pwm":{"frequency":0,"duty-cycle":0}}}}' -t "glp/0/17q2d9v/rq/dev/iox/dio/if/do/1"
+	parse_logger
+
+}
+
+do_mode_test5()
+{
+
+	echo "test5 : " > ${LOGGER_PATH}
+	mosquitto_sub -t "glp/0/./=logger/event" >> ${LOGGER_PATH} &
+#	mosquitto_sub -t "glp/0/17q2d9v/fb/dev/iox/dio/if/do/1" &
+	mosquitto_pub -m '{"do-val":{"value":{"type":"pulse","level":false,"frequency":0,"pulse":60000,"pwm":{"frequency":0,"duty-cycle":0}}}}' -t "glp/0/17q2d9v/rq/dev/iox/dio/if/do/1"
+	parse_logger
+
+}
+
+do_mode_test6()
+{
+
+	echo "test6 : " > ${LOGGER_PATH}
+	mosquitto_sub -t "glp/0/./=logger/event" >> ${LOGGER_PATH} &
+	mosquitto_pub -m '{"do-val":{"value":{"type":"pulse","level":true,"frequency":0,"pulse":"test","pwm":{"frequency":20000,"duty-cycle":90}}}}' -t "glp/0/17q2d9v/rq/dev/iox/dio/if/do/1"
+	parse_logger
+
+}
+
+do_mode_test7()
+{
+
+	echo "test7 : " > ${LOGGER_PATH}
+	mosquitto_sub -t "glp/0/./=logger/event" >> ${LOGGER_PATH} &
+#	mosquitto_sub -t "glp/0/17q2d9v/fb/dev/iox/dio/if/do/1" &
+	mosquitto_pub -m '{"do-val":{"value":{"type":"frequency","level":false,"frequency":1,"pulse":0,"pwm":{"frequency":0,"duty-cycle":0}}}}' -t "glp/0/17q2d9v/rq/dev/iox/dio/if/do/1"
+	parse_logger
+
+}
+
+do_mode_test8()
+{
+
+	echo "test8 : " > ${LOGGER_PATH}
+	mosquitto_sub -t "glp/0/./=logger/event" >> ${LOGGER_PATH} &
+#	mosquitto_sub -t "glp/0/17q2d9v/fb/dev/iox/dio/if/do/1" &
+	mosquitto_pub -m '{"do-val":{"value":{"type":"frequency","level":false,"frequency":20000,"pulse":0,"pwm":{"frequency":0,"duty-cycle":0}}}}' -t "glp/0/17q2d9v/rq/dev/iox/dio/if/do/1"
+	parse_logger
+
+}
+
+do_mode_test9()
+{
+
+	echo "test9 : " > ${LOGGER_PATH}
+	mosquitto_sub -t "glp/0/./=logger/event" >> ${LOGGER_PATH} &
+	mosquitto_pub -m '{"do-val":{"value":{"type":"frequency","level":true,"frequency":"test","pulse":0,"pwm":{"frequency":20000,"duty-cycle":90}}}}' -t "glp/0/17q2d9v/rq/dev/iox/dio/if/do/1"
+	parse_logger
+
+}
+
+do_mode_test10()
+{
+
+	echo "test10 : " > ${LOGGER_PATH}
+	mosquitto_sub -t "glp/0/./=logger/event" >> ${LOGGER_PATH} &
+#	mosquitto_sub -t "glp/0/17q2d9v/fb/dev/iox/dio/if/do/1" &
+	mosquitto_pub -m '{"do-val":{"value":{"type":"pwm","level":false,"frequency":0,"pulse":0,"pwm":{"frequency":1,"duty-cycle":10}}}}' -t "glp/0/17q2d9v/rq/dev/iox/dio/if/do/1"
+	parse_logger
+
+}
+
+do_mode_test11()
+{
+
+	echo "test11 : " > ${LOGGER_PATH}
+	mosquitto_sub -t "glp/0/./=logger/event" >> ${LOGGER_PATH} &
+#	mosquitto_sub -t "glp/0/17q2d9v/fb/dev/iox/dio/if/do/1" &
+	mosquitto_pub -m '{"do-val":{"value":{"type":"pwm","level":false,"frequency":0,"pulse":0,"pwm":{"frequency":20000,"duty-cycle":90}}}}' -t "glp/0/17q2d9v/rq/dev/iox/dio/if/do/1"
+	parse_logger
+
+}
+
+do_mode_test12()
+{
+
+	echo "test12 : " > ${LOGGER_PATH}
+	mosquitto_sub -t "glp/0/./=logger/event" >> ${LOGGER_PATH} &
+	mosquitto_pub -m '{"do-val":{"value":{"type":"pwm","level":true,"frequency":0,"pulse":0,"pwm":{"frequency":"test","duty-cycle":90}}}}' -t "glp/0/17q2d9v/rq/dev/iox/dio/if/do/1"
+	parse_logger
+}
+
+do_mode_test13()
+{
+
+	echo "test13 : " > ${LOGGER_PATH}
+	mosquitto_sub -t "glp/0/./=logger/event" >> ${LOGGER_PATH} &
+	mosquitto_pub -m '{"do-val":{"value":{"type":"pwm","level":true,"frequency":0,"pulse":0,"pwm":{"frequency":"test","duty-cycle":90}}}}' -t "glp/0/17q2d9v/rq/dev/iox/dio/if/do/1"
+	parse_logger
+}
+
+do_mode_test1
+do_mode_test2
+do_mode_test3
+do_mode_test4
+do_mode_test5
+do_mode_test6
+do_mode_test7
+do_mode_test8
+do_mode_test9
+do_mode_test10
+do_mode_test11
+do_mode_test12
+do_mode_test13
+
+kill_process

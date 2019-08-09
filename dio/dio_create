@@ -1,0 +1,136 @@
+#!/bin/bash
+
+LOGGER_PATH="/home/unmesh/iox_test/dio/logger"
+STS_PATH="/home/unmesh/iox_test/dio/sts"
+kill_process()
+{
+	pkill mosquitto_sub
+	if [[ $? -eq 0 ]];
+	then
+		echo "mosquitto_sub process killed"
+	else
+		echo "failed to kill mosquitto_sub process"
+	fi
+	rm ${LOGGER_PATH}
+	rm ${STS_PATH}
+}
+
+parse_logger()
+{
+	sleep 5
+	if [[ -s ${LOGGER_PATH} ]];
+	then 
+		out=$(grep 'utc' ${LOGGER_PATH} | grep -oP '[[:digit:]].*(?= [[:space:]]*UTC.*)' | sort -k1,2 -ur | head -n1 | xargs -Iregex grep -m1 -B4 -A1 "regex" ${LOGGER_PATH})
+		parse=$(echo ${out} | python -c 'import sys, json; print json.load(sys.stdin)["message"]')
+		echo "parse : "${parse}
+	fi
+}
+
+parse_sts()
+{
+	mosquitto_sub -t "glp/0/17q2d9v/fb/dev/iox/dio/sts" > ${STS_PATH} &
+	sleep 5
+	if [[ -s ${STS_PATH} ]];
+	then 
+		out=$(grep 'mru' ${STS_PATH} | grep -oP '[[:digit:]].*(?= [[:space:]]*UTC.*)' | sort -k1,2 -ur | head -n1 | xargs -Iregex grep -m1 -B11 -A1 "regex" ${STS_PATH})
+		sleep 2
+		state=$(echo ${out} | python -c 'import sys, json; print json.load(sys.stdin)["state"]')
+		echo "state : "${state}
+	fi
+}
+
+dio_create_test1()
+{
+	echo "test1 : " > ${LOGGER_PATH}
+  	mosquitto_sub -t "glp/0/./=logger/event" >> ${LOGGER_PATH} &
+	mosquitto_pub -m '{"action":"create"}' -t "glp/0/17q2d9v/rq/dev/iox/dio/do"
+	parse_logger
+	parse_sts
+}
+
+dio_create_test2()
+{
+	
+	echo "test2 : " > ${LOGGER_PATH}
+	mosquitto_sub -t "glp/0/./=logger/event" >> ${LOGGER_PATH} &
+	mosquitto_pub -m '{"action":"create","args":{"type":"900001050304DD00"}}' -t "glp/0/17q2d9v/rq/dev/iox/dio/do"
+	parse_logger
+	parse_sts
+}
+
+dio_create_test3()
+{
+	echo "test3 : " > ${LOGGER_PATH}
+	mosquitto_sub -t "glp/0/./=logger/event" >> ${LOGGER_PATH} &
+	mosquitto_pub -m '{"action":"create","args":{"type":"900001050304DD00"}}' -t "glp/0/17q2d9v/rq/dev/iox/dio/do"
+	parse_logger
+	parse_sts
+}
+
+dio_create_test4()
+{
+	echo "test4 : " > ${LOGGER_PATH}
+	mosquitto_sub -t "glp/0/./=logger/event" >> ${LOGGER_PATH} &
+	mosquitto_pub -m '{"action":"create","args":{"type":"900001050304DD00"}}' -t "glp/0/17q2d9v/rq/dev/iox/dio/do"
+	parse_logger
+	parse_sts
+}
+
+dio_create_test5()
+{
+	echo "test5 : " > ${LOGGER_PATH}
+	mosquitto_sub -t "glp/0/./=logger/event" >> ${LOGGER_PATH} &
+	mosquitto_pub -m '{"action":"create","args":{"type":"900001050304DD00"}}' -t "glp/0/17q2d9v/rq/dev/iox/dio/do"
+	parse_logger
+	parse_sts
+}
+
+dio_create_test6()
+{
+	echo "test6 : " > ${LOGGER_PATH}
+	mosquitto_sub -t "glp/0/./=logger/event" >> ${LOGGER_PATH} &
+	mosquitto_pub -m '{"action":"create","args":{"type":"900001050304DD00","provision":true}}' -t "glp/0/17q2d9v/rq/dev/iox/dio/do"
+	parse_logger
+	parse_sts
+}
+
+dio_create_test7()
+{
+	echo "test7 : " > ${LOGGER_PATH}
+	mosquitto_sub -t "glp/0/./=logger/event" >> ${LOGGER_PATH} &
+	mosquitto_pub -m '{"action":"create","args":{"type":"900001050304DD00","provision":false,"unid":"256"}}' -t "glp/0/17q2d9v/rq/dev/iox/dio/do"
+	parse_logger
+	parse_sts
+}
+
+dio_create_test8()
+{
+	echo "test8 : " > ${LOGGER_PATH}
+	mosquitto_sub -t "glp/0/./=logger/event" >> ${LOGGER_PATH} &
+	mosquitto_pub -m '{"action":"create","args":{"type":"900001050304DD00","provision":true,"unid":"abcd"}}' -t "glp/0/17q2d9v/rq/dev/iox/dio/do"
+	parse_logger
+	parse_sts
+}
+
+dio_create_test9()
+{
+	echo "test9 : " > ${LOGGER_PATH}
+	mosquitto_sub -t "glp/0/./=logger/event" >> ${LOGGER_PATH} &
+	mosquitto_pub -m '{"action":"create","args":{"type":"900001050304DD00","provision":"true","unid":"256"}}' -t "glp/0/17q2d9v/rq/dev/iox/dio/do"
+	parse_logger
+	parse_sts
+}
+
+#mosquitto_pub -m "17q2d9v" -t "glp/0/././sid"
+
+dio_create_test1
+dio_create_test2
+dio_create_test3
+dio_create_test4
+dio_create_test5
+dio_create_test6
+dio_create_test7
+dio_create_test8
+dio_create_test9
+
+kill_process

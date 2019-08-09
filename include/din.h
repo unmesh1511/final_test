@@ -1,0 +1,32 @@
+void din_deep_test1();
+void din_deep_test2();
+void din_deep_test3();
+void din_deep_test4();
+void din_deep_test5();
+void din_deep_test6();
+void din_device_test1();
+void din_device_test2();
+void din_get_test1();
+void din_get_test2();
+void din_get_test3();
+void din_get_test4();
+void din_get_test5();
+void din_get_test6();
+void din_mode_test1();
+void din_mode_test2();
+void din_mode_test3();
+void din_mode_test4();
+void din_mode_test5();
+void din_mode_test6();
+void din_mode_test7();
+void din_port_test1();
+void din_port_test2();
+void din_port_test3();
+void din_port_test4();
+void din_port_test5();
+void din_port_test6();
+void din_port_test7();
+void din_port_test8();
+void din_port_test9();
+
+

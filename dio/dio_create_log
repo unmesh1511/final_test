@@ -1,0 +1,12 @@
+ | dio_create_test1
+START_TIME : 11:17:14
+mosquitto_pub -m '{action:create}' -t 'glp/0/17q2d9v/rq/dev/iox/dio/do'
+END_TIME : 11:17:19
+
+==============================================================================
+ | dio_create_test2
+START_TIME : 11:17:19
+mosquitto_pub -m '{action:create,args:{type:900001050304DD00}}' -t 'glp/0/17q2d9v/rq/dev/iox/dio/do'
+END_TIME : 11:17:24
+
+==============================================================================

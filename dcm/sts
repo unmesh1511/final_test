@@ -1,0 +1,3 @@
+{"state":"provisioned","unid":"256","health":"normal","cat":"i/o","type":"900001050304DD00","interfaceType":"static","usage":"mixed","version":"1.0.0","product":"IOX_DIO","manufacturer":"IOX Digital IO Device","mru":"2018-07-12 15:58:57.840 UTC"}
+{"state":"provisioned","unid":"256","health":"normal","cat":"i/o","type":"900001050304DD00","interfaceType":"static","usage":"mixed","version":"1.0.0","product":"IOX_DIO","manufacturer":"IOX Digital IO Device","mru":"2018-07-12 18:30:04.220 UTC"}
+{"state":"provisioned","unid":"256","health":"normal","cat":"i/o","type":"900001050304DD00","interfaceType":"static","usage":"mixed","version":"1.0.0","product":"IOX_DIO","manufacturer":"IOX Digital IO Device","mru":"2018-07-12 18:30:16.300 UTC"}

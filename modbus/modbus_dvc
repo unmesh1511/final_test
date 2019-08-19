@@ -2,11 +2,9 @@
 
 kill_process()
 {
-	pkill mosquitto_sub
-	if [[ $? -eq 0 ]];
+	pkill mosquitto_sub 
+	if [[ $? -eq 1 ]];
 	then
-		echo "mosquitto_sub process killed"
-	else
 		echo "failed to kill mosquitto_sub process"
 	fi
 }
@@ -16,98 +14,98 @@ modbus_dvc_test1()
 {
 	mosquitto_sub -t "glp/0/./=engine/iox/modbus/dvc/respond" &
 	mosquitto_sub -t "glp/0/./=control/service" &
-	mosquitto_pub -m '{"value":17}' -t "glp/0/T6tWyga/rq/dev/iox/amik/if/block/3/'Demand Reset'"
+	mosquitto_pub -m '{"value":17}' -t "glp/0/17q2d9v/rq/dev/iox/amik/if/block/3/'Demand Reset'"
 
 }
 
 modbus_dvc_test2()
 {
-	mosquitto_sub -t "glp/0/T6tWyga/rq/dev/iox/amik/if/block/3/Demand Reset" &
-	mosquitto_pub -m '{"prio":16,"value":16}' -t "glp/0/T6tWyga/rq/dev/iox/amik/if/block/3/'Demand Reset'"
+	mosquitto_sub -t "glp/0/17q2d9v/rq/dev/iox/amik/if/block/3/Demand Reset" &
+	mosquitto_pub -m '{"prio":16,"value":16}' -t "glp/0/17q2d9v/rq/dev/iox/amik/if/block/3/'Demand Reset'"
 
 }
 
 modbus_dvc_test3()
 {
-	mosquitto_sub -t "glp/0/T6tWyga/rq/dev/iox/amik/if/block/3/Demand Reset" &
-	mosquitto_pub -m '{"prio":15,"active":true,"value":15}' -t "glp/0/T6tWyga/rq/dev/iox/amik/if/block/3/'Demand Reset'"
+	mosquitto_sub -t "glp/0/17q2d9v/rq/dev/iox/amik/if/block/3/Demand Reset" &
+	mosquitto_pub -m '{"prio":15,"active":true,"value":15}' -t "glp/0/17q2d9v/rq/dev/iox/amik/if/block/3/'Demand Reset'"
 
 }
 
 modbus_dvc_test4()
 {
-	mosquitto_sub -t "glp/0/T6tWyga/rq/dev/iox/amik/if/block/3/Demand Reset" &
-	mosquitto_pub -m '{"prio":14,"active":false,"value":14}' -t "glp/0/T6tWyga/rq/dev/iox/amik/if/block/3/'Demand Reset'"
+	mosquitto_sub -t "glp/0/17q2d9v/rq/dev/iox/amik/if/block/3/Demand Reset" &
+	mosquitto_pub -m '{"prio":14,"active":false,"value":14}' -t "glp/0/17q2d9v/rq/dev/iox/amik/if/block/3/'Demand Reset'"
 
 }
 
 modbus_dvc_test5()
 {
-	mosquitto_sub -t "glp/0/T6tWyga/rq/dev/iox/amik/if/block/3/Demand Reset" &
-	mosquitto_pub -m '{"value":170}' -t "glp/0/T6tWyga/rq/dev/iox/amik/if/block/3/'Demand Reset'"
+	mosquitto_sub -t "glp/0/17q2d9v/rq/dev/iox/amik/if/block/3/Demand Reset" &
+	mosquitto_pub -m '{"value":170}' -t "glp/0/17q2d9v/rq/dev/iox/amik/if/block/3/'Demand Reset'"
 }
 
 modbus_dvc_test6()
 {
-	mosquitto_sub -t "glp/0/T6tWyga/rq/dev/iox/amik/if/block/3/Demand Reset" &
-	mosquitto_pub -m '{"prio":15,"value":150}' -t "glp/0/T6tWyga/rq/dev/iox/amik/if/block/3/'Demand Reset'"
+	mosquitto_sub -t "glp/0/17q2d9v/rq/dev/iox/amik/if/block/3/Demand Reset" &
+	mosquitto_pub -m '{"prio":15,"value":150}' -t "glp/0/17q2d9v/rq/dev/iox/amik/if/block/3/'Demand Reset'"
 
 }
 
 modbus_dvc_test7()
 {
-	mosquitto_sub -t "glp/0/T6tWyga/rq/dev/iox/amik/if/block/3/Demand Reset" &
-	mosquitto_pub -m '{"prio":14,"value":140}' -t "glp/0/T6tWyga/rq/dev/iox/amik/if/block/3/'Demand Reset'"
+	mosquitto_sub -t "glp/0/17q2d9v/rq/dev/iox/amik/if/block/3/Demand Reset" &
+	mosquitto_pub -m '{"prio":14,"value":140}' -t "glp/0/17q2d9v/rq/dev/iox/amik/if/block/3/'Demand Reset'"
 }
 
 modbus_dvc_test8()
 {
-	mosquitto_sub -t "glp/0/T6tWyga/rq/dev/iox/amik/if/block/3/Demand Reset" &
-	mosquitto_pub -m '{"prio":16,"value":160,"monitor":{"rate":160}}' -t "glp/0/T6tWyga/rq/dev/iox/amik/if/block/3/'Demand Reset'"
+	mosquitto_sub -t "glp/0/17q2d9v/rq/dev/iox/amik/if/block/3/Demand Reset" &
+	mosquitto_pub -m '{"prio":16,"value":160,"monitor":{"rate":160}}' -t "glp/0/17q2d9v/rq/dev/iox/amik/if/block/3/'Demand Reset'"
 }
 
 modbus_dvc_test9()
 {
 	mosquitto_sub -t "" &
-	mosquitto_pub -m '320' -t "glp/0/T6tWyga/rq/dev/iox/amik/if/block/3/'Demand Reset'/monitor/rate"
+	mosquitto_pub -m '320' -t "glp/0/17q2d9v/rq/dev/iox/amik/if/block/3/'Demand Reset'/monitor/rate"
 }
 
 modbus_dvc_test10()
 {
-	mosquitto_sub -t "glp/0/T6tWyga/rq/dev/iox/amik/if/block/3/Demand Reset" &
-	mosquitto_pub -m '{"prio":15,"active":false}' -t "glp/0/T6tWyga/rq/dev/iox/amik/if/block/3/'Demand Reset'"
+	mosquitto_sub -t "glp/0/17q2d9v/rq/dev/iox/amik/if/block/3/Demand Reset" &
+	mosquitto_pub -m '{"prio":15,"active":false}' -t "glp/0/17q2d9v/rq/dev/iox/amik/if/block/3/'Demand Reset'"
 }
 
 modbus_dvc_test11()
 {
-	mosquitto_sub -t "glp/0/T6tWyga/rq/dev/iox/amik/if/block/3/Demand Reset" &
-	mosquitto_pub -m '{"prio":14,"active":true}' -t "glp/0/T6tWyga/rq/dev/iox/amik/if/block/3/'Demand Reset'"
+	mosquitto_sub -t "glp/0/17q2d9v/rq/dev/iox/amik/if/block/3/Demand Reset" &
+	mosquitto_pub -m '{"prio":14,"active":true}' -t "glp/0/17q2d9v/rq/dev/iox/amik/if/block/3/'Demand Reset'"
 }
 
 
 modbus_dvc_test12()
 {
-	mosquitto_sub -t "glp/0/T6tWyga/rq/dev/iox/amik/if/block/3/Demand Reset" &
-	mosquitto_pub -m '{"prio":17,"value":null}' -t "glp/0/T6tWyga/rq/dev/iox/amik/if/block/3/'Demand Reset'"
+	mosquitto_sub -t "glp/0/17q2d9v/rq/dev/iox/amik/if/block/3/Demand Reset" &
+	mosquitto_pub -m '{"prio":17,"value":null}' -t "glp/0/17q2d9v/rq/dev/iox/amik/if/block/3/'Demand Reset'"
 }
 
 
 modbus_dvc_test13()
 {
-	mosquitto_sub -t "glp/0/T6tWyga/rq/dev/iox/amik/if/block/3/Demand Reset" &
-	mosquitto_pub -m '{"prio":16,"value":null}' -t "glp/0/T6tWyga/rq/dev/iox/amik/if/block/3/'Demand Reset'"
+	mosquitto_sub -t "glp/0/17q2d9v/rq/dev/iox/amik/if/block/3/Demand Reset" &
+	mosquitto_pub -m '{"prio":16,"value":null}' -t "glp/0/17q2d9v/rq/dev/iox/amik/if/block/3/'Demand Reset'"
 }
 
 modbus_dvc_test14()
 {
-	mosquitto_sub -t "glp/0/T6tWyga/rq/dev/iox/amik/if/block/3/Demand Reset" &
-	mosquitto_pub -m '{"prio":14,"value":null}' -t "glp/0/T6tWyga/rq/dev/iox/amik/if/block/3/'Demand Reset'"
+	mosquitto_sub -t "glp/0/17q2d9v/rq/dev/iox/amik/if/block/3/Demand Reset" &
+	mosquitto_pub -m '{"prio":14,"value":null}' -t "glp/0/17q2d9v/rq/dev/iox/amik/if/block/3/'Demand Reset'"
 }
 
 modbus_dvc_test15()
 {
-	mosquitto_sub -t "glp/0/T6tWyga/rq/dev/iox/amik/if/block/3/Demand Reset" &
-	mosquitto_pub -m '{"prio":15,"value":null}' -t "glp/0/T6tWyga/rq/dev/iox/amik/if/block/3/'Demand Reset'"
+	mosquitto_sub -t "glp/0/17q2d9v/rq/dev/iox/amik/if/block/3/Demand Reset" &
+	mosquitto_pub -m '{"prio":15,"value":null}' -t "glp/0/17q2d9v/rq/dev/iox/amik/if/block/3/'Demand Reset'"
 }
 
 modbus_dvc_test1
@@ -126,4 +124,7 @@ modbus_dvc_test13
 modbus_dvc_test14
 modbus_dvc_test15
 
+sleep 10
+
 kill_process
+

@@ -1,6 +1,6 @@
-/home/unmesh/iox_test/dio/relay/relay_deep
-/home/unmesh/iox_test/dio/relay/relay_device
-/home/unmesh/iox_test/dio/relay/relay_get
-/home/unmesh/iox_test/dio/relay/relay_port
-/home/unmesh/iox_test/dio/relay/relay_value
-/home/unmesh/iox_test/dio/relay/relay_valueObj
+relay_deep
+relay_device
+relay_get
+relay_port
+relay_value
+relay_valueObj

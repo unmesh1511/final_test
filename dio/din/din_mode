@@ -1,35 +1,17 @@
 #!/bin/bash
 
-LOGGER_PATH="/home/unmesh/iox_test/dio/din/logger"
-kill_process()
-{
-    pkill mosquitto_sub
-    if [[ $? -eq 0 ]];
-    then
-        echo "mosquitto_sub process killed"
-    else
-        echo "failed to kill mosquitto_sub process"
-    fi
-    rm ${LOGGER_PATH}
-}
+IOX_PATH="/home/unmesh/iox_test/"
+source ${IOX_PATH}"common"
+LOGGER_PATH=${IOX_PATH}"dio/din/logger"
 
-parse_logger()
-{
-	sleep 5
-	if [[ -s ${LOGGER_PATH} ]];
-	then 
-		out=$(grep 'utc' ${LOGGER_PATH} | grep -oP '[[:digit:]].*(?= [[:space:]]*UTC.*)' | sort -k1,2 -ur | head -n1 | xargs -Iregex grep -m1 -B4 -A1 "regex" ${LOGGER_PATH})
-		parse=$(echo ${out} | python -c 'import sys, json; print json.load(sys.stdin)["message"]')
-		echo "parse : "${parse}
-	fi
-}
+wrong_config_level="Wrong configuration for level"
+wrong_config_pulse="Wrong configuration for Pulse output"
+wrong_config_freq="Wrong configuration for Frequency output"
 
 din_mode_test1()
 {  
-  
-	echo "test1 : " > ${LOGGER_PATH}
+  	subscribe_logger_event &
 #	mosquitto_sub -t "glp/0/17q2d9v/fb/dev/iox/dio/if/di/1" &
-	mosquitto_sub -t "glp/0/./=logger/event" >> ${LOGGER_PATH} &
 	mosquitto_pub -m '{"di-val":{"value":{"type":"level","di-level":{"report-dur":1000,"detect-level":0,"pullup-cfg":true},"di-pulse":{"report-dur":10,"detect-level":0,"pullup-cfg":true},"di-frequency":{"report-dur":100,"detect-level":0,"pullup-cfg":true}},"monitor":{"rate":1500,"cat":"data","inFeedback":true,"report":"change","throttle":0,"threshold":10}}}' -t "glp/0/17q2d9v/rq/dev/iox/dio/if/di/1"
 	parse_logger
 
@@ -38,8 +20,7 @@ din_mode_test1()
 din_mode_test2()
 {
 
-	echo "test2 : " > ${LOGGER_PATH}
-	mosquitto_sub -t "glp/0/./=logger/event" >> ${LOGGER_PATH} &
+  	subscribe_logger_event &
 #	mosquitto_sub -t "glp/0/17q2d9v/fb/dev/iox/dio/if/relay/2" &
 	mosquitto_pub -m '{"do-val":{"value":{"type":"level","level":false,"frequency":0,"pulse":0,"pwm":{"frequency":0,"duty-cycle":0}}}}' -t "glp/0/17q2d9v/rq/dev/iox/dio/if/do/1"
 	parse_logger
@@ -49,18 +30,16 @@ din_mode_test2()
 din_mode_test3()
 {
 
-	echo "test3 : " > ${LOGGER_PATH}
-	mosquitto_sub -t "glp/0/./=logger/event" >> ${LOGGER_PATH} &
+  	subscribe_logger_event &
 	mosquitto_pub -m '{"do-val":{"value":{"type":"level","level":"true","frequency":0,"pulse":0,"pwm":{"frequency":20000,"duty-cycle":90}}}}' -t "glp/0/17q2d9v/rq/dev/iox/dio/if/do/1"
-	parse_logger
+	parse_logger "${wrong_config_level}"
 
 }
 
 din_mode_test4()
 {
 
-	echo "test4 : " > ${LOGGER_PATH}
-	mosquitto_sub -t "glp/0/./=logger/event" >> ${LOGGER_PATH} &
+  	subscribe_logger_event &
 #	mosquitto_sub -t "glp/0/17q2d9v/fb/dev/iox/dio/if/di/1" &
 	mosquitto_pub -m '{"di-val":{"value":{"type":"pulse","di-level":{"report-dur":1000,"detect-level":0,"pullup-cfg":true},"di-pulse":{"report-dur":10,"detect-level":0,"pullup-cfg":true},"di-frequency":{"report-dur":100,"detect-level":0,"pullup-cfg":true}},"monitor":{"rate":15,"cat":"data","inFeedback":true,"report":"change","throttle":0,"threshold":10}}}' -t "glp/0/17q2d9v/rq/dev/iox/dio/if/do/1"
 	parse_logger
@@ -70,18 +49,15 @@ din_mode_test4()
 din_mode_test5()
 {
 
-	echo "test5 : " > ${LOGGER_PATH}
-	mosquitto_sub -t "glp/0/./=logger/event" >> ${LOGGER_PATH} &
+  	subscribe_logger_event &
 	mosquitto_pub -m '{"do-val":{"value":{"type":"pulse","level":true,"frequency":0,"pulse":"test","pwm":{"frequency":20000,"duty-cycle":90}}}}' -t "glp/0/17q2d9v/rq/dev/iox/dio/if/do/1"
-	parse_logger
-
+	parse_logger "${wrong_config_pulse}"
 }
 
 din_mode_test6()
 {
 
-	echo "test6 : " > ${LOGGER_PATH}
-	mosquitto_sub -t "glp/0/./=logger/event" >> ${LOGGER_PATH} &
+  	subscribe_logger_event &
 #	mosquitto_sub -t "glp/0/17q2d9v/fb/dev/iox/dio/if/di/1" &
 	mosquitto_pub -m '{"di-val":{"value":{"type":"frequency","di-level":{"report-dur":1000,"detect-level":0,"pullup-cfg":true},"di-pulse":{"report-dur":10,"detect-level":0,"pullup-cfg":true},"di-frequency":{"report-dur":100,"detect-level":0,"pullup-cfg":true}},"monitor":{"rate":15,"cat":"data","inFeedback":true,"report":"change","throttle":0,"threshold":10}}}' -t "glp/0/17q2d9v/rq/dev/iox/dio/if/di/1"
 	parse_logger
@@ -90,12 +66,9 @@ din_mode_test6()
 
 din_mode_test7()
 {
-
-	echo "test7 : " > ${LOGGER_PATH}
-	mosquitto_sub -t "glp/0/./=logger/event" >> ${LOGGER_PATH} &
+  	subscribe_logger_event &
 	mosquitto_pub -m '{"do-val":{"value":{"type":"frequency","level":true,"frequency":"test","pulse":0,"pwm":{"frequency":20000,"duty-cycle":90}}}}' -t "glp/0/17q2d9v/rq/dev/iox/dio/if/do/1"
-
-	parse_logger
+	parse_logger "${wrong_config_freq}"
 }
 
 din_mode_test1
@@ -107,3 +80,4 @@ din_mode_test6
 din_mode_test7
 
 kill_process
+

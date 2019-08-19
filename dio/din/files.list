@@ -1,5 +1,5 @@
-/home/unmesh/iox_test/dio/din/din_deep
-/home/unmesh/iox_test/dio/din/din_device
-/home/unmesh/iox_test/dio/din/din_get
-/home/unmesh/iox_test/dio/din/din_mode
-/home/unmesh/iox_test/dio/din/din_port
+din_deep
+din_device
+din_get
+din_mode
+din_port

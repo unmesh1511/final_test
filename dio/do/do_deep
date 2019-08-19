@@ -4,14 +4,11 @@ LOGGER_PATH="/home/unmesh/iox_test/dio/do/logger"
 
 kill_process()
 {
-    pkill mosquitto_sub
-    if [[ $? -eq 0 ]];
-    then
-        echo "mosquitto_sub process killed"
-    else
-        echo "failed to kill mosquitto_sub process"
-    fi
-    rm ${LOGGER_PATH}
+	pkill mosquitto_sub 
+	if [[ $? -eq 1 ]];
+	then
+		echo "failed to kill mosquitto_sub process"
+	fi
 }
 
 parse_logger()
@@ -19,28 +16,42 @@ parse_logger()
 	sleep 5
 	if [[ -s ${LOGGER_PATH} ]];
 	then 
-		out=$(grep 'utc' ${LOGGER_PATH} | grep -oP '[[:digit:]].*(?= [[:space:]]*UTC.*)' | sort -k1,2 -ur | head -n1 | xargs -Iregex grep -m1 -B4 -A1 "regex" ${LOGGER_PATH})
-		parse=$(echo ${out} | python -c 'import sys, json; print json.load(sys.stdin)["message"]')
-		echo "parse : "${parse}
+		out=$(awk -F "," '/utc/{print $4}' ${LOGGER_PATH} | grep -oP '[[:digit:]].*(?= [[:space:]]*UTC.*)' | sort -k1,2 -ur | head -n1 | xargs -Iregex grep -m1 "regex" ${LOGGER_PATH})
+		out_time=$(awk -F "," '/utc/{print $4}' ${LOGGER_PATH} | grep -oP '[[:digit:]].*(?= [[:space:]]*UTC.*)' | sort -k1,2 -ur | head -n1 | awk '{print $2}')
+		if [[ ${last_out_time} == ${out_time} ]];
+		then
+			echo "NO NEW MESSAGE FROM LOGGER"
+		else
+			parse=$(echo ${out} | python -c 'import sys, json; print json.load(sys.stdin)["message"]')
+			if [[ ${parse} == ${1} ]];
+			then
+				LOGGER_RESULT="PASS"
+			else
+				LOGGER_RESULT="FAIL"
+			fi
+			last_out_time=${out_time}
+		fi
 	fi
+	rm ${LOGGER_PATH}
+}
+
+subscribe_logger_event()
+{
+    mosquitto_sub -t "glp/0/./=logger/event" > ${LOGGER_PATH}
 }
 
 do_deep_test1()
 {
-
-	echo "test1 : " > ${LOGGER_PATH}
-	mosquitto_sub -t "glp/0/./=logger/event" >> ${LOGGER_PATH} &
-	mosquitto_pub -m '{"frequency":10}' -t "glp/0/17q3kc1/rq/dev/iox/dio/if/dqo/1/do-val/value"
+	subscribe_logger_event &
+	mosquitto_pub -m '{"frequency":10}' -t "glp/0/17q2d9v/rq/dev/iox/dio/if/dqo/1/do-val/value"
 	parse_logger
 
 }
 
 do_deep_test2()
 {
-
-	echo "test2 : " > ${LOGGER_PATH}
-	mosquitto_sub -t "glp/0/./=logger/event" >> ${LOGGER_PATH} &
-	mosquitto_pub -m '{"frequency":10}' -t "glp/0/17q3kc1/rq/dev/iox/dio/if/do/1/do-val123/value"
+	subscribe_logger_event &
+	mosquitto_pub -m '{"frequency":10}' -t "glp/0/17q2d9v/rq/dev/iox/dio/if/do/1/do-val123/value"
 	parse_logger
 
 }
@@ -48,33 +59,27 @@ do_deep_test2()
 
 do_deep_test3()
 {
-
-	echo "test3 : " > ${LOGGER_PATH}
-	mosquitto_sub -t "glp/0/./=logger/event" >> ${LOGGER_PATH} &
-#	mosquitto_sub -t "glp/0/17q3kc1/fb/dev/iox/dio/if/do/1" &
-	mosquitto_pub -m '{"do-val":{"value":{"type":"frequency","level":false,"frequency":10,"pulse":300,"pwm":{"frequency":20000,"duty-cycle":90}}}}' -t "glp/0/17q3kc1/rq/dev/iox/dio/if/do/1"
+	subscribe_logger_event &
+#	mosquitto_sub -t "glp/0/17q2d9v/fb/dev/iox/dio/if/do/1" &
+	mosquitto_pub -m '{"do-val":{"value":{"type":"frequency","level":false,"frequency":10,"pulse":300,"pwm":{"frequency":20000,"duty-cycle":90}}}}' -t "glp/0/17q2d9v/rq/dev/iox/dio/if/do/1"
 	parse_logger
 
 }
 
 do_deep_test4()
 {
-
-	echo "test4 : " > ${LOGGER_PATH}
-	mosquitto_sub -t "glp/0/./=logger/event" >> ${LOGGER_PATH} &
-#	mosquitto_sub -t "glp/0/17q3kc1/fb/dev/iox/dio/if/do/1" &
-	mosquitto_pub -m '{"value":{"type":"frequency","level":false,"frequency":1,"pulse":300,"pwm":{"frequency":20000,"duty-cycle":90}}}' -t "glp/0/17q3kc1/rq/dev/iox/dio/if/do/1/do-val"
+	subscribe_logger_event &
+#	mosquitto_sub -t "glp/0/17q2d9v/fb/dev/iox/dio/if/do/1" &
+	mosquitto_pub -m '{"value":{"type":"frequency","level":false,"frequency":1,"pulse":300,"pwm":{"frequency":20000,"duty-cycle":90}}}' -t "glp/0/17q2d9v/rq/dev/iox/dio/if/do/1/do-val"
 	parse_logger
 
 }
 
 do_deep_test5()
 {	
-
-	echo "test5 : " > ${LOGGER_PATH}
-	mosquitto_sub -t "glp/0/./=logger/event" >> ${LOGGER_PATH} &
-#	mosquitto_sub -t "glp/0/17q3kc1/fb/dev/iox/dio/if/do/1" &
-	mosquitto_pub -m '{"frequency":10}' -t "glp/0/17q3kc1/rq/dev/iox/dio/if/do/1/do-val/value"
+	subscribe_logger_event &
+#	mosquitto_sub -t "glp/0/17q2d9v/fb/dev/iox/dio/if/do/1" &
+	mosquitto_pub -m '{"frequency":10}' -t "glp/0/17q2d9v/rq/dev/iox/dio/if/do/1/do-val/value"
 	parse_logger
 }
 
@@ -87,3 +92,4 @@ do_deep_test4
 do_deep_test5
 
 kill_process
+

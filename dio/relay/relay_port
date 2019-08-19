@@ -4,14 +4,11 @@ LOGGER_PATH="/home/unmesh/iox_test/dio/relay/logger"
 
 kill_process()
 {
-    pkill mosquitto_sub
-    if [[ $? -eq 0 ]];
-    then
-        echo "mosquitto_sub process killed"
-    else
-        echo "failed to kill mosquitto_sub process"
-    fi
-    rm ${LOGGER_PATH}
+	pkill mosquitto_sub 
+	if [[ $? -eq 1 ]];
+	then
+		echo "failed to kill mosquitto_sub process"
+	fi
 }
 
 parse_logger()
@@ -19,11 +16,30 @@ parse_logger()
 	sleep 5
 	if [[ -s ${LOGGER_PATH} ]];
 	then 
-		out=$(grep 'utc' ${LOGGER_PATH} | grep -oP '[[:digit:]].*(?= [[:space:]]*UTC.*)' | sort -k1,2 -ur | head -n1 | xargs -Iregex grep -m1 -B4 -A1 "regex" ${LOGGER_PATH})
-		parse=$(echo ${out} | python -c 'import sys, json; print json.load(sys.stdin)["message"]')
-		echo "parse : "${parse}
+		out=$(awk -F "," '/utc/{print $4}' ${LOGGER_PATH} | grep -oP '[[:digit:]].*(?= [[:space:]]*UTC.*)' | sort -k1,2 -ur | head -n1 | xargs -Iregex grep -m1 "regex" ${LOGGER_PATH})
+		out_time=$(awk -F "," '/utc/{print $4}' ${LOGGER_PATH} | grep -oP '[[:digit:]].*(?= [[:space:]]*UTC.*)' | sort -k1,2 -ur | head -n1 | awk '{print $2}')
+		if [[ ${last_out_time} == ${out_time} ]];
+		then
+			echo "NO NEW MESSAGE FROM LOGGER"
+		else
+			parse=$(echo ${out} | python -c 'import sys, json; print json.load(sys.stdin)["message"]')
+			if [[ ${parse} == ${1} ]];
+			then
+				LOGGER_RESULT="PASS"
+			else
+				LOGGER_RESULT="FAIL"
+			fi
+			last_out_time=${out_time}
+		fi
 	fi
+	rm ${LOGGER_PATH}
 }
+
+subscribe_logger_event()
+{
+    mosquitto_sub -t "glp/0/./=logger/event" > ${LOGGER_PATH}
+}
+
 
 relay_port_test1()
 {
@@ -39,8 +55,7 @@ relay_port_test2()
 
 relay_port_test3()
 {
-	echo "test3 : " > ${LOGGER_PATH}
-	mosquitto_sub -t "glp/0/./=logger/event" >> ${LOGGER_PATH} &
+	subscribe_logger_event &
 	mosquitto_pub -m '{"relay-val":{"value":{"level":true}}}' -t "glp/0/17q2d9v/rq/dev/iox/dio/if/relay/3"
 	parse_logger
 }
@@ -51,3 +66,4 @@ relay_port_test2
 relay_port_test3
 
 kill_process
+

@@ -2,11 +2,9 @@
 
 kill_process()
 {
-	pkill mosquitto_sub
-	if [[ $? -eq 0 ]];
+	pkill mosquitto_sub 
+	if [[ $? -eq 1 ]];
 	then
-		echo "mosquitto_sub process killed"
-	else
 		echo "failed to kill mosquitto_sub process"
 	fi
 }

@@ -1,23 +1,13 @@
 #!/bin/bash
 
-kill_process()
-{
-    pkill mosquitto_sub
-    if [[ $? -eq 0 ]];
-    then
-        echo "mosquitto_sub process killed"
-    else
-        echo "failed to kill mosquitto_sub process"
-    fi
-}
-
-
+IOX_PATH="/home/unmesh/iox_test/"
+source ${IOX_PATH}"common"
 
 din_get_test1()
 {
 
 	mosquitto_sub -t "my/responses" &
-	mosquitto_pub -m '{"corr":"abcd","response":"my/responses","item":["dev/iox.411b19/dio/if/di/1/di-val"],"maxAge":1,"timeout":10}' -t "glp/0/./=get/dp/request"
+	mosquitto_pub -m '{"corr":"abcd","response":"my/responses","item":["dev/iox/dio/if/di/1/di-val"],"maxAge":1,"timeout":10}' -t "glp/0/./=get/dp/request"
 
 }
 
@@ -25,7 +15,7 @@ din_get_test2()
 {
 
 	mosquitto_sub -t "my/responses" &
-	mosquitto_pub -m '{"corr":"abcd","response":"my/responses","item":["dev/iox.411b191212/dio/if/di/1/di-val"],"maxAge":1,"timeout":10}' -t "glp/0/./=get/dp/request"
+	mosquitto_pub -m '{"corr":"abcd","response":"my/responses","item":["dev/iox/dio/if/di/1/di-val"],"maxAge":1,"timeout":10}' -t "glp/0/./=get/dp/request"
 
 }
 
@@ -33,7 +23,7 @@ din_get_test3()
 {
 
 	mosquitto_sub -t "my/responses" &
-	mosquitto_pub -m '{"corr":"abcd","response":"my/responses","item":["dev/iox.411b19/dioaww/if/di/1/di-val"],"maxAge":1,"timeout":10}' -t "glp/0/./=get/dp/request"
+	mosquitto_pub -m '{"corr":"abcd","response":"my/responses","item":["dev/iox/dioaww/if/di/1/di-val"],"maxAge":1,"timeout":10}' -t "glp/0/./=get/dp/request"
 
 }
 
@@ -41,7 +31,7 @@ din_get_test4()
 {
 
 	mosquitto_sub -t "my/responses" &
-	mosquitto_pub -m '{"corr":"abcd","response":"my/responses","item":["dev/iox.411b19/dio/if/di/10/di-val"],"maxAge":1,"timeout":10}' -t "glp/0/./=get/dp/request"
+	mosquitto_pub -m '{"corr":"abcd","response":"my/responses","item":["dev/iox/dio/if/di/10/di-val"],"maxAge":1,"timeout":10}' -t "glp/0/./=get/dp/request"
 
 }
 
@@ -49,7 +39,7 @@ din_get_test5()
 {
 
 	mosquitto_sub -t "my/responses" &
-	mosquitto_pub -m '{"corr":"abcd","response":"my/responses","item":["dev/iox.411b19/dio/if/di/1/di-valasd"],"maxAge":1,"timeout":10}' -t "glp/0/./=get/dp/request"
+	mosquitto_pub -m '{"corr":"abcd","response":"my/responses","item":["dev/iox/dio/if/di/1/di-valasd"],"maxAge":1,"timeout":10}' -t "glp/0/./=get/dp/request"
 
 }
 
@@ -57,7 +47,7 @@ din_get_test6()
 {
 
 	mosquitto_sub -t "my/responses" &
-	mosquitto_pub -m '{"corr":"abcd","response":"my/responses","item":["dev/iox.411b19/dio/if/di/1/di-val","dev/iox.411b19/dio/if/di/2/di-val"],"maxAge":1,"timeout":10}' -t "glp/0/./=get/dp/request"
+	mosquitto_pub -m '{"corr":"abcd","response":"my/responses","item":["dev/iox/dio/if/di/1/di-val","dev/iox/dio/if/di/2/di-val"],"maxAge":1,"timeout":10}' -t "glp/0/./=get/dp/request"
 
 }
 
@@ -71,3 +61,4 @@ din_get_test6
 sleep 10
 
 kill_process
+

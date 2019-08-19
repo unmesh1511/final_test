@@ -1,92 +1,82 @@
 #!/bin/bash
 
-LOGGER_PATH="/home/unmesh/iox_test/dio/logger"
-STS_PATH="/home/unmesh/iox_test/dio/sts"
-kill_process()
-{
-	pkill mosquitto_sub
-	if [[ $? -eq 0 ]];
-	then
-		echo "mosquitto_sub process killed"
-	else
-		echo "failed to kill mosquitto_sub process"
-	fi
-	rm ${LOGGER_PATH}
-	rm ${STS_PATH}
-}
+IOX_PATH="/home/unmesh/iox_test/"
+source ${IOX_PATH}"common"
+LOGGER_PATH=${IOX_PATH}"dio/logger"
+STS_PATH=${IOX_PATH}"dio/sts"
+DIO_DELETE_LOG=${IOX_PATH}"dio/dio_delete_log"
 
-parse_logger()
-{
-	sleep 5
-	if [[ -s ${LOGGER_PATH} ]];
-	then 
-		out=$(grep 'utc' ${LOGGER_PATH} | grep -oP '[[:digit:]].*(?= [[:space:]]*UTC.*)' | sort -k1,2 -ur | head -n1 | xargs -Iregex grep -m1 -B4 -A1 "regex" ${LOGGER_PATH})
-		parse=$(echo ${out} | python -c 'import sys, json; print json.load(sys.stdin)["message"]')
-		echo "parse : "${parse}
-	fi
-}
+test_num=1
 
-parse_sts()
+del_without_mru="Deleted item without MRU timestamp"
+sts_expected_state="deleted"
+
+subscribe_sts_event()
 {
-	sleep 5
-	if [[ -s ${STS_PATH} ]];
-	then 
-		out=$(grep 'mru' ${STS_PATH} | grep -oP '[[:digit:]].*(?= [[:space:]]*UTC.*)' | sort -k1,2 -ur | head -n1 | xargs -Iregex grep -m1 -B11 -A1 "regex" ${STS_PATH})
-		sleep 2
-		state=$(echo ${out} | python -c 'import sys, json; print json.load(sys.stdin)["state"]')
-		echo "state : "${state}
-	fi
+	mosquitto_sub -t "glp/0/17q2d9v/fb/dev/iox/dio/sts" > ${STS_PATH}
+	pids+=($!)
 }
 
 dio_delete_test1()
 {
-	echo "test1 : " > ${LOGGER_PATH}
-	mosquitto_sub -t "glp/0/17q2d9v/fb/dev/iox/dio/sts" > ${STS_PATH} &
-	mosquitto_sub -t "glp/0/./=logger/event" >> ${LOGGER_PATH} &
+	start_time=$(date | awk '{print $4}')
+	subscribe_sts_event &
+	subscribe_logger_event &
 	mosquitto_pub -m '{"action":"delete"}' -t "glp/0/17q2d9v/rq/dev/iox/dio/do"
-	parse_logger
-	parse_sts
+	parse_sts "${sts_expected_state}" 
+	parse_logger "${del_without_mru}" 
+	result "sts"
+	pub="mosquitto_pub -m '{"action":"delete"}' -t '"glp/0/17q2d9v/rq/dev/iox/dio/do"'"
+	result_logs "dio_delete_test" ${test_num} ${DIO_DELETE_LOG} ${start_time} "${pub}"
 }
 
 dio_delete_test2()
 {
-	echo "test2 : " > ${LOGGER_PATH}
-	mosquitto_sub -t "glp/0/17q2d9v/fb/dev/iox/dio/sts" > ${STS_PATH} &
-	mosquitto_sub -t "glp/0/./=logger/event" >> ${LOGGER_PATH} &
+	start_time=$(date | awk '{print $4}')
+	subscribe_sts_event &
+	subscribe_logger_event &
 	mosquitto_pub -m '{"action":"delete"}' -t "glp/0/17q2d9v/rq/dev/iox/dio/do"
-	parse_logger
-	parse_sts
+	parse_sts "${sts_expected_state}" 
+	parse_logger "${del_without_mru}"
+	result "sts"
+	pub="mosquitto_pub -m '{"action":"delete"}' -t '"glp/0/17q2d9v/rq/dev/iox/dio/do"'"
+	result_logs "dio_delete_test" ${test_num} ${DIO_DELETE_LOG} ${start_time} "${pub}"
 }
 
 dio_delete_test3()
 {
-	echo "test3 : " > ${LOGGER_PATH}
-	mosquitto_sub -t "glp/0/17q2d9v/fb/dev/iox/dio/sts" > ${STS_PATH} &
-	mosquitto_sub -t "glp/0/./=logger/event" >> ${LOGGER_PATH} &
+	start_time=$(date | awk '{print $4}')
+	subscribe_sts_event &
+	subscribe_logger_event &
 	mosquitto_pub -m '{"action":"delete"}' -t "glp/0/17q2d9v/rq/dev/iox/dio/do" 
-	parse_logger
-	parse_sts
+	parse_sts "${sts_expected_state}" ${DIO_DELETE_LOG}
+	parse_logger "${del_without_mru}" ${DIO_DELETE_LOG}
+	result "sts"
 }
 
 dio_delete_test4()
 {
-	echo "test4 : " > ${LOGGER_PATH}
-	mosquitto_sub -t "glp/0/17q2d9v/fb/dev/iox/dio/sts" > ${STS_PATH} &
-	mosquitto_sub -t "glp/0/./=logger/event" >> ${LOGGER_PATH} &
+	start_time=$(date | awk '{print $4}')
+	subscribe_sts_event &
+	subscribe_logger_event &
 	mosquitto_pub -m '{"action":"delete"}' -t "glp/0/17q2d9v/rq/dev/iox/dio/do"
-	parse_logger
-	parse_sts
+	parse_sts "${sts_expected_state}" ${DIO_DELETE_LOG}
+	parse_logger "${del_without_mru}" ${DIO_DELETE_LOG}
+	result "sts"
 }
 
 dio_delete_test5()
 {
-	echo "test5 : " > ${LOGGER_PATH}
-	mosquitto_sub -t "glp/0/17q2d9v/fb/dev/iox/dio/sts" > ${STS_PATH} &
-	mosquitto_sub -t "glp/0/./=logger/event" >> ${LOGGER_PATH} &
+	start_time=$(date | awk '{print $4}')
+	subscribe_sts_event &
+	subscribe_logger_event &
 	mosquitto_pub -m '{"action":"delete"}' -t "glp/0/17q2d9v/rq/dev/iox/dio/do"
-	parse_logger
-	parse_sts
+	parse_sts "${sts_expected_state}" ${DIO_DELETE_LOG}
+	parse_logger "${del_without_mru}" ${DIO_DELETE_LOG}
+	result "sts"
 }
+
+setup_time
 
 dio_delete_test1
 dio_delete_test2
@@ -95,3 +85,5 @@ dio_delete_test4
 dio_delete_test5
 
 kill_process
+
+

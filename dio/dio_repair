@@ -1,39 +1,36 @@
 #!/bin/bash
 
-LOGGER_PATH="/home/unmesh/iox_test/dio/logger"
+IOX_PATH="/home/unmesh/iox_test/"
+source ${IOX_PATH}"common"
+LOGGER_PATH=${IOX_PATH}"dio/logger"
+STS_PATH=${IOX_PATH}"dio/sts"
+DIO_REPAIR_LOG=${IOX_PATH}"dio/repair_log"
 
-kill_process()
-{
-    pkill mosquitto_sub
-    if [[ $? -eq 0 ]];
-    then
-        echo "mosquitto_sub process killed"
-    else
-        echo "failed to kill mosquitto_sub process"
-    fi
-	rm ${LOGGER_PATH}
-}
+err_repair_hndl="ERROR in iox_repair handle"
 
-parse_logger()
-{
-	sleep 5
-	if [[ -s ${LOGGER_PATH} ]];
-	then 
-		out=$(grep 'utc' ${LOGGER_PATH} | grep -oP '[[:digit:]].*(?= [[:space:]]*UTC.*)' | sort -k1,2 -ur | head -n1 | xargs -Iregex grep -m1 -B4 -A1 "regex" ${LOGGER_PATH})
-		parse=$(echo ${out} | python -c 'import sys, json; print json.load(sys.stdin)["message"]')
-		echo "parse : "${parse}
-	fi
-}
+test_num=1
 
 dio_repair_test1()
 {
-	echo "test1 : " > ${LOGGER_PATH}
-	mosquitto_sub -t "glp/0/./=logger/event" >> ${LOGGER_PATH} &
+	echo -n "dio_repair_test"${test_num} | tee -a ${RESULT_LOG} ${DIO_REPAIR_LOG}
+	((test_num++)) 
+	start_time=$(date | awk '{print $4}')
+	echo "" >> ${DIO_REPAIR_LOG}
+	echo "START_TIME : "${start_time} >> ${DIO_REPAIR_LOG}
+	subscribe_logger_event &
 	mosquitto_pub -m '{"action":"repair"}' -t "glp/0/17q2d9v/rq/dev/iox/dio/do"
-	parse_logger
+	echo "mosquitto_pub -m '{"action":"repair"}' -t '"glp/0/17q2d9v/rq/dev/iox/dio/do"'" >> ${DIO_LOAD_LOG}
+	parse_logger "${err_repair_hndl}" ${DIO_LOAD_LOG}
+	result "logger"
+	end_time=$(date | awk '{print $4}')
+	echo "END_TIME : "${end_time} >> ${DIO_REPAIR_LOG}
+	execution_time ${start_time} ${end_time}
+	echo "" | tee -a ${RESULT_LOG} ${DIO_REPAIR_LOG}
+	echo "==============================================================================" | tee -a ${DIO_REPAIR_LOG}
 }
+
+setup_time
 
 dio_repair_test1
 
 kill_process
-

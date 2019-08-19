@@ -1,5 +1,5 @@
-/home/unmesh/iox_test/dio/do/do_deep
-/home/unmesh/iox_test/dio/do/do_device
-/home/unmesh/iox_test/dio/do/do_get
-/home/unmesh/iox_test/dio/do/do_mode
-/home/unmesh/iox_test/dio/do/do_port
+do_deep
+do_device
+do_get
+do_mode
+do_port

@@ -1,5 +1,4 @@
-# iox_test_shell
-## IOX Test Project
+# IOX Test Project
 IOX Test Project is used for testing different IOX Devices such as DIO, MODBUS, METER, DCM.
 This testsuite contains a collection of options such as executing individual testcases, executing testcases using a file, executing all testcases of a device, excluding a specific test, exclude using     a file containing testcases to be excluded or all the testcases.
 
@@ -17,7 +16,7 @@ The latest image is available at : [iox_test_suite](https://github.com/unmesh151
   
 ## How to run
 ```bash
-  ./ioxtest
+./ioxtest
   ```
   
  IOX testsuite also provides you with the following options :
@@ -53,8 +52,42 @@ The latest image is available at : [iox_test_suite](https://github.com/unmesh151
       Used to exclude testcases mentioned in a file.
       for example : -X <FILE_NAME>
       
+## Testsuite Design 
+The IOX testsuite has a main directory as **iox_test**.
+The iox_test directory has different directories corresponding to different devices such as **dio, modbus, meter** as well as **src, result** directories having source code and logs respectively.
+Inside each device directories there are testcases for different actions such as **create, provision, delete** etc.
     
-    
+```bash
+├── dcm
+│   ├── dcm_*
+│   ├── files.list
+│   
+├── dio
+│   ├── dio_*
+│   ├── files.list
+│   
+├── generic
+│
+├── meter
+│   ├── 3phase
+│       ├── 3phase_*
+│       ├── files.list 
+│   
+├── modbus
+│   ├── modbus_*
+│   ├── files.list
+│   
+├── result
+│
+├── README.md
+│
+├── rs232
+│
+├── env_var
+│
+├── src
+│   ├── ioxtest
+```
     
     
     

@@ -1,6 +1,0 @@
-#!/bin/bash
-
-export cur_dir=$(pwd)
-export IOX_PATH="${cur_dir}/"
-export RUN_LIST_PATH=${IOX_PATH}"run_list"
-export RESULT_PATH=${IOX_PATH}"result/result_logs"

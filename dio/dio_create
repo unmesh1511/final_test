@@ -1,22 +1,19 @@
 #!/bin/bash 
 
-IOX_PATH="/home/unmesh/iox_test/"
-source ${IOX_PATH}"common"
-LOGGER_PATH=${IOX_PATH}"dio/logger"
-STS_PATH=${IOX_PATH}"dio/sts"
-DIO_CREATE_LOG=${IOX_PATH}"dio/dio_create_log"
+source env_var.sh
+source ${IOX_PATH}"/common"
+source ${IOX_PATH}"/info_files.sh"
+source ${IOX_PATH}"/errors.sh"
 
-err_parse_args="Error in parsing args data"
-no_unid="No unid Provided"
-sts_expected_state="unprovisioned"
-device_created="Device already created"
-invalid_provision="Invalid provision value"
+LOGGER_PATH=${IOX_PATH}"/dio/logger"
+STS_PATH=${IOX_PATH}"/dio/sts"
+DIO_CREATE_LOG=${IOX_PATH}"/dio/dio_create_log"
 
 test_num=1
 
 subscribe_sts_event()
 {
-	mosquitto_sub -t "glp/0/17q2d9v/fb/dev/iox/dio/sts" > ${STS_PATH} 
+	mosquitto_sub -t "glp/0/${SID}/fb/dev/iox/${LOGICAL_ID}.dio/sts" > ${STS_PATH} 
 	pids+=($!)
 }
 
@@ -24,10 +21,10 @@ dio_create_test1()
 {
 	start_time=$(date | awk '{print $4}')
   	subscribe_logger_event &
-	mosquitto_pub -m '{"action":"create"}' -t "glp/0/17q2d9v/rq/dev/iox/dio/do"
+	mosquitto_pub -m '{"action":"create"}' -t "glp/0/${SID}/rq/dev/iox/${LOGICAL_ID}.dio/do"
 	parse_logger "${err_parse_args}" 
 	result "logger"
-	pub=("mosquitto_pub -m '{"action":"create"}' -t '"glp/0/17q2d9v/rq/dev/iox/dio/do"'")
+	pub=("mosquitto_pub -m '{"action":"create"}' -t '"glp/0/${SID}/rq/dev/iox/${LOGICAL_ID}.dio/do"'")
 	result_logs "dio_create_test" ${test_num} ${DIO_CREATE_LOG}  ${start_time} "${pub}"
 }
 
@@ -35,10 +32,10 @@ dio_create_test2()
 {
 	start_time=$(date | awk '{print $4}')
 	subscribe_logger_event &
-	mosquitto_pub -m '{"action":"create","args":{"type":"900001050304DD00"}}' -t "glp/0/17q2d9v/rq/dev/iox/dio/do"
+	mosquitto_pub -m '{"action":"create","args":{"type":"900001050304DD00"}}' -t "glp/0/${SID}/rq/dev/iox/${LOGICAL_ID}.dio/do"
 	parse_logger "${no_unid}"
 	result "logger"
-	pub=("mosquitto_pub -m '{"action":"create","args":{"type":"900001050304DD00"}}' -t '"glp/0/17q2d9v/rq/dev/iox/dio/do"'")
+	pub=("mosquitto_pub -m '{"action":"create","args":{"type":"900001050304DD00"}}' -t '"glp/0/${SID}/rq/dev/iox/${LOGICAL_ID}.dio/do"'")
 	result_logs "dio_create_test" ${test_num} ${DIO_CREATE_LOG}  ${start_time} "${pub}"
 }
 
@@ -46,10 +43,10 @@ dio_create_test3()
 {
 	start_time=$(date | awk '{print $4}')
  	subscribe_logger_event &
-	mosquitto_pub -m '{"action":"create","args":{"type":"900001050304DD00"}}' -t "glp/0/17q2d9v/rq/dev/iox/dio/do"
+	mosquitto_pub -m '{"action":"create","args":{"type":"900001050304DD00"}}' -t "glp/0/${SID}/rq/dev/iox/${LOGICAL_ID}.dio/do"
 	parse_logger "${no_unid}"
 	result "logger"
-	pub=("mosquitto_pub -m '{"action":"create","args":{"type":"900001050304DD00"}}' -t '"glp/0/17q2d9v/rq/dev/iox/dio/do"'")
+	pub=("mosquitto_pub -m '{"action":"create","args":{"type":"900001050304DD00"}}' -t '"glp/0/${SID}/rq/dev/iox/${LOGICAL_ID}.dio/do"'")
 	result_logs "dio_create_test" ${test_num} ${DIO_CREATE_LOG}  ${start_time} "${pub}"
 }
 
@@ -57,10 +54,10 @@ dio_create_test4()
 {
 	start_time=$(date | awk '{print $4}')
  	subscribe_logger_event &
-	mosquitto_pub -m '{"action":"create","args":{"type":"900001050304DD00"}}' -t "glp/0/17q2d9v/rq/dev/iox/dio/do"
+	mosquitto_pub -m '{"action":"create","args":{"type":"900001050304DD00"}}' -t "glp/0/${SID}/rq/dev/iox/${LOGICAL_ID}.dio/do"
 	parse_logger "${no_unid}"
 	result "logger"
-	pub=("mosquitto_pub -m '{"action":"create","args":{"type":"900001050304DD00"}}' -t '"glp/0/17q2d9v/rq/dev/iox/dio/do"'")
+	pub=("mosquitto_pub -m '{"action":"create","args":{"type":"900001050304DD00"}}' -t '"glp/0/${SID}/rq/dev/iox/${LOGICAL_ID}.dio/do"'")
 	result_logs "dio_create_test" ${test_num} ${DIO_CREATE_LOG}  ${start_time} "${pub}"
 }
 
@@ -68,10 +65,10 @@ dio_create_test5()
 {
 	start_time=$(date | awk '{print $4}')
  	subscribe_logger_event &
-	mosquitto_pub -m '{"action":"create","args":{"type":"900001050304DD00"}}' -t "glp/0/17q2d9v/rq/dev/iox/dio/do"
+	mosquitto_pub -m '{"action":"create","args":{"type":"900001050304DD00"}}' -t "glp/0/${SID}/rq/dev/iox/${LOGICAL_ID}.dio/do"
 	parse_logger "${no_unid}"
 	result "logger"
-	pub=("mosquitto_pub -m '{"action":"create","args":{"type":"900001050304DD00"}}' -t '"glp/0/17q2d9v/rq/dev/iox/dio/do"'")
+	pub=("mosquitto_pub -m '{"action":"create","args":{"type":"900001050304DD00"}}' -t '"glp/0/${SID}/rq/dev/iox/${LOGICAL_ID}.dio/do"'")
 	result_logs "dio_create_test" ${test_num} ${DIO_CREATE_LOG}  ${start_time} "${pub}"
 }
 
@@ -79,10 +76,10 @@ dio_create_test6()
 {
 	start_time=$(date | awk '{print $4}')
  	subscribe_logger_event &
-	mosquitto_pub -m '{"action":"create","args":{"type":"900001050304DD00","provision":true}}' -t "glp/0/17q2d9v/rq/dev/iox/dio/do"
+	mosquitto_pub -m '{"action":"create","args":{"type":"900001050304DD00","provision":true}}' -t "glp/0/${SID}/rq/dev/iox/${LOGICAL_ID}.dio/do"
 	parse_logger "${no_unid}"
 	result "logger"
-	pub=("mosquitto_pub -m '{"action":"create","args":{"type":"900001050304DD00","provision":true}}' -t '"glp/0/17q2d9v/rq/dev/iox/dio/do"'")
+	pub=("mosquitto_pub -m '{"action":"create","args":{"type":"900001050304DD00","provision":true}}' -t '"glp/0/${SID}/rq/dev/iox/${LOGICAL_ID}.dio/do"'")
 	result_logs "dio_create_test" ${test_num} ${DIO_CREATE_LOG}  ${start_time} "${pub}"
 }
 
@@ -91,11 +88,11 @@ dio_create_test7()
 	start_time=$(date | awk '{print $4}')
 	subscribe_sts_event &
   	subscribe_logger_event &
-	mosquitto_pub -m '{"action":"create","args":{"type":"900001050304DD00","provision":false,"unid":"256"}}' -t "glp/0/17q2d9v/rq/dev/iox/dio/do"
+	mosquitto_pub -m '{"action":"create","args":{"type":"900001050304DD00","provision":false,"unid":"256"}}' -t "glp/0/${SID}/rq/dev/iox/${LOGICAL_ID}.dio/do"
 	parse_sts "${sts_expected_state}"
 	parse_logger "${no_unid}"
 	result "sts"
-	pub=("mosquitto_pub -m '{"action":"create","args":{"type":"900001050304DD00","provision":false,"unid":"256"}}' -t '"glp/0/17q2d9v/rq/dev/iox/dio/do"'")
+	pub=("mosquitto_pub -m '{"action":"create","args":{"type":"900001050304DD00","provision":false,"unid":"256"}}' -t '"glp/0/${SID}/rq/dev/iox/${LOGICAL_ID}.dio/do"'")
 	result_logs "dio_create_test" ${test_num} ${DIO_CREATE_LOG}  ${start_time} "${pub}"
 }
 
@@ -103,10 +100,10 @@ dio_create_test8()
 {
 	start_time=$(date | awk '{print $4}')
  	subscribe_logger_event &
-	mosquitto_pub -m '{"action":"create","args":{"type":"900001050304DD00","provision":true,"unid":"abcd"}}' -t "glp/0/17q2d9v/rq/dev/iox/dio/do"
+	mosquitto_pub -m '{"action":"create","args":{"type":"900001050304DD00","provision":true,"unid":"abcd"}}' -t "glp/0/${SID}/rq/dev/iox/${LOGICAL_ID}.dio/do"
 	parse_logger "${device_created}"
 	result "logger"
-	pub=("mosquitto_pub -m '{"action":"create","args":{"type":"900001050304DD00","provision":true,"unid":"abcd"}}' -t '"glp/0/17q2d9v/rq/dev/iox/dio/do"'")
+	pub=("mosquitto_pub -m '{"action":"create","args":{"type":"900001050304DD00","provision":true,"unid":"abcd"}}' -t '"glp/0/${SID}/rq/dev/iox/${LOGICAL_ID}.dio/do"'")
 	result_logs "dio_create_test" ${test_num} ${DIO_CREATE_LOG}  ${start_time} "${pub}"
 }
 
@@ -114,10 +111,10 @@ dio_create_test9()
 {
 	start_time=$(date | awk '{print $4}')
  	subscribe_logger_event &
-	mosquitto_pub -m '{"action":"create","args":{"type":"900001050304DD00","provision":"true","unid":"256"}}' -t "glp/0/17q2d9v/rq/dev/iox/dio/do"
+	mosquitto_pub -m '{"action":"create","args":{"type":"900001050304DD00","provision":"true","unid":"256"}}' -t "glp/0/${SID}/rq/dev/iox/${LOGICAL_ID}.dio/do"
 	parse_logger "${invalid_provision}"
 	result "logger"
-	pub=("mosquitto_pub -m '{"action":"create","args":{"type":"900001050304DD00","provision":"true","unid":"256"}}' -t '"glp/0/17q2d9v/rq/dev/iox/dio/do"'")
+	pub=("mosquitto_pub -m '{"action":"create","args":{"type":"900001050304DD00","provision":"true","unid":"256"}}' -t '"glp/0/${SID}/rq/dev/iox/${LOGICAL_ID}.dio/do"'")
 	result_logs "dio_create_test" ${test_num} ${DIO_CREATE_LOG} ${start_time} "${pub}"
 }
 

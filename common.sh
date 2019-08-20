@@ -1,15 +1,16 @@
 #!/bin/bash
 
-IOX_PATH="/home/unmesh/iox_test/"
-LOGGER_PATH=${IOX_PATH}"dio/logger"
-STS_PATH=${IOX_PATH}"dio/sts"
-RESULT_LOG=${IOX_PATH}"result/result_logs"
+source env_var.sh
+LOGGER_PATH=${IOX_PATH}"/dio/logger"
+STS_PATH=${IOX_PATH}"/dio/sts"
+RESULT_LOG=${IOX_PATH}"/result/result_logs"
 
 
 kill_process()
 {
 	for pid in ${pids[@]};
 	do
+		echo ${pid}
 		kill ${pid}
 	done	
 	unset pids

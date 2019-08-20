@@ -1,7 +1,10 @@
 #!/bin/bash
 
-IOX_PATH="/home/unmesh/iox_test/"
-source ${IOX_PATH}"common"
+source env_var.sh
+source ${IOX_PATH}"/common.sh"
+source ${IOX_PATH}"/info_file.sh"
+source ${IOX_PATH}"/errors.sh"
+
 
 din_get_test1()
 {

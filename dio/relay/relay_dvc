@@ -1,103 +1,103 @@
 #!/bin/bash
 
-kill_process()
-{
-	pkill mosquitto_sub 
-	if [[ $? -eq 1 ]];
-	then
-		echo "failed to kill mosquitto_sub process"
-	fi
-}
+source env_var.sh
+source ${IOX_PATH}"/common.sh"
+source ${IOX_PATH}"/iox.config"
+source ${IOX_PATH}"/errors.sh"
+
+LOG_EVENT_LOGGER=${IOX_PATH}"/dio/relay/logger"
+LOG_STS=${IOX_PATH}"/dio/relay/sts"
+LOG_RELAY_DVC=${IOX_PATH}"/dio/relay/relay_dvc_log"
 
 relay_dvc_test1()
 {
 	mosquitto_sub -t "glp/0/./=control/service" &
 	mosquitto_sub -t "glp/0/./=engine/dvc/dio/relay/1/respond" &
-	mosquitto_pub -m '{"value":{"level":true}}' -t "glp/0/17q2d9v/rq/dev/iox/dio/if/relay/1/relay-val"
+	mosquitto_pub -m '{"value":{"level":true}}' -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/relay/1/relay-val"
 
 }
 
 relay_dvc_test2()
 {
-	mosquitto_sub -t "glp/0/17q2d9v/rq/dev/iox/dio/if/relay/1/relay-val" &
-	mosquitto_pub -m '{"prio":16,"value":{"level":false}}' -t "glp/0/17q2d9v/rq/dev/iox/dio/if/relay/1/relay-val"
+	mosquitto_sub -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/relay/1/relay-val" &
+	mosquitto_pub -m '{"prio":16,"value":{"level":false}}' -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/relay/1/relay-val"
 
 }
 
 relay_dvc_test3()
 {
-	mosquitto_sub -t "glp/0/17q2d9v/rq/dev/iox/dio/if/relay/1/relay-val" &
-	mosquitto_pub -m '{"prio":15,"active":true,"value":{"level":true}}' -t "glp/0/17q2d9v/rq/dev/iox/dio/if/relay/1/relay-val"
+	mosquitto_sub -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/relay/1/relay-val" &
+	mosquitto_pub -m '{"prio":15,"active":true,"value":{"level":true}}' -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/relay/1/relay-val"
 
 }
 
 relay_dvc_test4()
 {
-	mosquitto_sub -t "glp/0/17q2d9v/rq/dev/iox/dio/if/relay/1/relay-val" &
-	mosquitto_pub -m '{"prio":14,"active":false,"value":{"level":false}}' -t "glp/0/17q2d9v/rq/dev/iox/dio/if/relay/1/relay-val"
+	mosquitto_sub -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/relay/1/relay-val" &
+	mosquitto_pub -m '{"prio":14,"active":false,"value":{"level":false}}' -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/relay/1/relay-val"
 
 }
 
 relay_dvc_test5()
 {
-	mosquitto_sub -t "glp/0/17q2d9v/rq/dev/iox/dio/if/relay/1/relay-val" &
-	mosquitto_pub -m '{"value":{"level":false}}' -t "glp/0/17q2d9v/rq/dev/iox/dio/if/relay/1/relay-val"
+	mosquitto_sub -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/relay/1/relay-val" &
+	mosquitto_pub -m '{"value":{"level":false}}' -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/relay/1/relay-val"
 }
 
 relay_dvc_test6()
 {
-	mosquitto_sub -t "glp/0/17q2d9v/rq/dev/iox/dio/if/relay/1/relay-val" &
-	mosquitto_pub -m '{"prio":15,"value":{"level":false}}' -t "glp/0/17q2d9v/rq/dev/iox/dio/if/relay/1/relay-val"
+	mosquitto_sub -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/relay/1/relay-val" &
+	mosquitto_pub -m '{"prio":15,"value":{"level":false}}' -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/relay/1/relay-val"
 
 }
 
 relay_dvc_test7()
 {
-	mosquitto_sub -t "glp/0/17q2d9v/rq/dev/iox/dio/if/relay/1/relay-val" &
-	mosquitto_pub -m '{"prio":14,"value":{"level":true}}' -t "glp/0/17q2d9v/rq/dev/iox/dio/if/relay/1/relay-val"
+	mosquitto_sub -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/relay/1/relay-val" &
+	mosquitto_pub -m '{"prio":14,"value":{"level":true}}' -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/relay/1/relay-val"
 }
 
 relay_dvc_test8()
 {
-	mosquitto_sub -t "glp/0/17q2d9v/rq/dev/iox/dio/if/relay/1/relay-val" &
-	mosquitto_pub -m '{"prio":15,"active":false}' -t "glp/0/17q2d9v/rq/dev/iox/dio/if/relay/1/relay-val"
+	mosquitto_sub -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/relay/1/relay-val" &
+	mosquitto_pub -m '{"prio":15,"active":false}' -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/relay/1/relay-val"
 }
 
 relay_dvc_test9()
 {
-	mosquitto_sub -t "glp/0/17q2d9v/rq/dev/iox/dio/if/relay/1/relay-val" &
-	mosquitto_pub -m '{"prio":14,"active":true,"value":{"level":true}}' -t "glp/0/17q2d9v/rq/dev/iox/dio/if/relay/1/relay-val"
+	mosquitto_sub -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/relay/1/relay-val" &
+	mosquitto_pub -m '{"prio":14,"active":true,"value":{"level":true}}' -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/relay/1/relay-val"
 }
 
 relay_dvc_test10()
 {
-	mosquitto_sub -t "glp/0/17q2d9v/rq/dev/iox/dio/if/relay/1/relay-val" &
-	mosquitto_pub -m '{"prio":17,"value":null}' -t "glp/0/17q2d9v/rq/dev/iox/dio/if/relay/1/relay-val"
+	mosquitto_sub -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/relay/1/relay-val" &
+	mosquitto_pub -m '{"prio":17,"value":null}' -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/relay/1/relay-val"
 }
 
 relay_dvc_test11()
 {
-	mosquitto_sub -t "glp/0/17q2d9v/rq/dev/iox/dio/if/relay/1/relay-val" &
-	mosquitto_pub -m '{"prio":16,"value":null}' -t "glp/0/17q2d9v/rq/dev/iox/dio/if/relay/1/relay-val"
+	mosquitto_sub -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/relay/1/relay-val" &
+	mosquitto_pub -m '{"prio":16,"value":null}' -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/relay/1/relay-val"
 }
 
 
 relay_dvc_test12()
 {
-	mosquitto_sub -t "glp/0/17q2d9v/rq/dev/iox/dio/if/relay/1/relay-val" &
-	mosquitto_pub -m '{"prio":14,"value":null}' -t "glp/0/17q2d9v/rq/dev/iox/dio/if/relay/1/relay-val"
+	mosquitto_sub -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/relay/1/relay-val" &
+	mosquitto_pub -m '{"prio":14,"value":null}' -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/relay/1/relay-val"
 }
 
 
 relay_dvc_test13()
 {
-	mosquitto_sub -t "glp/0/17q2d9v/rq/dev/iox/dio/if/relay/1/relay-val" &
-	mosquitto_pub -m '{"prio":15,"value":null}' -t "glp/0/17q2d9v/rq/dev/iox/dio/if/relay/1/relay-val"
+	mosquitto_sub -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/relay/1/relay-val" &
+	mosquitto_pub -m '{"prio":15,"value":null}' -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/relay/1/relay-val"
 }
 
 
 
-
+setup_time
 
 #publish and subscribe to some topics
 

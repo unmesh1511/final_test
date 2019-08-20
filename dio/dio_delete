@@ -1,79 +1,94 @@
 #!/bin/bash
 
-IOX_PATH="/home/unmesh/iox_test/"
-source ${IOX_PATH}"common"
-LOGGER_PATH=${IOX_PATH}"dio/logger"
-STS_PATH=${IOX_PATH}"dio/sts"
-DIO_DELETE_LOG=${IOX_PATH}"dio/dio_delete_log"
+source env_var.sh
+source ${IOX_PATH}"/common.sh"
+source ${IOX_PATH}"/iox.config"
+source ${IOX_PATH}"/errors.sh"
+
+LOG_EVENT_LOGGER=${IOX_PATH}"/dio/logger"
+LOG_STS=${IOX_PATH}"/dio/sts"
+LOG_DIO_DELETE=${IOX_PATH}"/dio/dio_delete_log"
 
 test_num=1
 
-del_without_mru="Deleted item without MRU timestamp"
-sts_expected_state="deleted"
-
 subscribe_sts_event()
 {
-	mosquitto_sub -t "glp/0/17q2d9v/fb/dev/iox/dio/sts" > ${STS_PATH}
-	pids+=($!)
+	mosquitto_sub -t "glp/0/${SID}/fb/dev/iox/${DIO_DEV_NAME}/sts" > ${LOG_STS}
 }
 
 dio_delete_test1()
 {
 	start_time=$(date | awk '{print $4}')
 	subscribe_sts_event &
+	pids+=($!)
 	subscribe_logger_event &
-	mosquitto_pub -m '{"action":"delete"}' -t "glp/0/17q2d9v/rq/dev/iox/dio/do"
-	parse_sts "${sts_expected_state}" 
+	pids+=($!)
+	mosquitto_pub -m '{"action":"delete"}' -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/do"
+	parse_sts "${del_expected_state}" 
 	parse_logger "${del_without_mru}" 
 	result "sts"
-	pub="mosquitto_pub -m '{"action":"delete"}' -t '"glp/0/17q2d9v/rq/dev/iox/dio/do"'"
-	result_logs "dio_delete_test" ${test_num} ${DIO_DELETE_LOG} ${start_time} "${pub}"
+	pub=("mosquitto_pub -m '{"action":"delete"}' -t '"glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/do"'")
+	result_logs "dio_delete_test" ${test_num} ${LOG_DIO_DELETE} ${start_time} "${pub}"
 }
 
 dio_delete_test2()
 {
 	start_time=$(date | awk '{print $4}')
 	subscribe_sts_event &
+	pids+=($!)
 	subscribe_logger_event &
-	mosquitto_pub -m '{"action":"delete"}' -t "glp/0/17q2d9v/rq/dev/iox/dio/do"
-	parse_sts "${sts_expected_state}" 
+	pids+=($!)
+	mosquitto_pub -m '{"action":"delete"}' -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/do"
+	parse_sts "${del_expected_state}" 
 	parse_logger "${del_without_mru}"
 	result "sts"
-	pub="mosquitto_pub -m '{"action":"delete"}' -t '"glp/0/17q2d9v/rq/dev/iox/dio/do"'"
-	result_logs "dio_delete_test" ${test_num} ${DIO_DELETE_LOG} ${start_time} "${pub}"
+	pub=("mosquitto_pub -m '{"action":"delete"}' -t '"glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/do"'")
+	result_logs "dio_delete_test" ${test_num} ${LOG_DIO_DELETE} ${start_time} "${pub}"
 }
 
 dio_delete_test3()
 {
 	start_time=$(date | awk '{print $4}')
 	subscribe_sts_event &
+	pids+=($!)
 	subscribe_logger_event &
-	mosquitto_pub -m '{"action":"delete"}' -t "glp/0/17q2d9v/rq/dev/iox/dio/do" 
-	parse_sts "${sts_expected_state}" ${DIO_DELETE_LOG}
-	parse_logger "${del_without_mru}" ${DIO_DELETE_LOG}
+	pids+=($!)
+	mosquitto_pub -m '{"action":"delete"}' -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/do" 
+	parse_sts "${del_expected_state}"
+	parse_logger "${del_without_mru}"
 	result "sts"
+	pub=("mosquitto_pub -m '{"action":"delete"}' -t '"glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/do"'")
+	result_logs "dio_delete_test" ${test_num} ${LOG_DIO_DELETE} ${start_time} "${pub}"
 }
 
 dio_delete_test4()
 {
 	start_time=$(date | awk '{print $4}')
 	subscribe_sts_event &
+	pids+=($!)
 	subscribe_logger_event &
-	mosquitto_pub -m '{"action":"delete"}' -t "glp/0/17q2d9v/rq/dev/iox/dio/do"
-	parse_sts "${sts_expected_state}" ${DIO_DELETE_LOG}
-	parse_logger "${del_without_mru}" ${DIO_DELETE_LOG}
+	pids+=($!)
+	mosquitto_pub -m '{"action":"delete"}' -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/do"
+	parse_sts "${del_expected_state}"
+	parse_logger "${del_without_mru}"
 	result "sts"
+	pub=("mosquitto_pub -m '{"action":"delete"}' -t '"glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/do"'")
+	result_logs "dio_delete_test" ${test_num} ${LOG_DIO_DELETE} ${start_time} "${pub}"
 }
 
 dio_delete_test5()
 {
 	start_time=$(date | awk '{print $4}')
 	subscribe_sts_event &
+	pids+=($!)
 	subscribe_logger_event &
-	mosquitto_pub -m '{"action":"delete"}' -t "glp/0/17q2d9v/rq/dev/iox/dio/do"
-	parse_sts "${sts_expected_state}" ${DIO_DELETE_LOG}
-	parse_logger "${del_without_mru}" ${DIO_DELETE_LOG}
+	pids+=($!)
+	mosquitto_pub -m '{"action":"delete"}' -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/do"
+	parse_sts "${del_expected_state}"
+	parse_logger "${del_without_mru}"
 	result "sts"
+	pub=("mosquitto_pub -m '{"action":"delete"}' -t '"glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/do"'")
+	result_logs "dio_delete_test" ${test_num} ${LOG_DIO_DELETE} ${start_time} "${pub}"
 }
 
 setup_time

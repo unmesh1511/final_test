@@ -1,21 +1,21 @@
 #!/bin/bash
 
-kill_process()
-{
-	pkill mosquitto_sub 
-	if [[ $? -eq 1 ]];
-	then
-		echo "failed to kill mosquitto_sub process"
-	fi
-}
+source env_var.sh
+source ${IOX_PATH}"/common.sh"
+source ${IOX_PATH}"/iox.config"
+source ${IOX_PATH}"/errors.sh"
 
-
+LOG_EVENT_LOGGER=${IOX_PATH}"/dio/relay/logger"
+LOG_STS=${IOX_PATH}"/dio/relay/sts"
+LOG_RELAY_VALUEOBJ=${IOX_PATH}"/dio/relay/relay_valueobj_log"
 
 relay_valueObj_test1()
 {
-	mosquitto_sub -t "glp/0/17q2d9v/fb/dev/iox/dio/if/relay/2" &
-	mosquitto_pub -m '{"relay-val":{"value":{"level":false}}}' -t "glp/0/17q2d9v/rq/dev/iox/dio/if/relay/1"
+	mosquitto_sub -t "glp/0/${SID}/fb/dev/iox/${DIO_DEV_NAME}/if/relay/2" &
+	mosquitto_pub -m '{"relay-val":{"value":{"level":false}}}' -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/relay/1"
 }
+
+setup_time
 
 relay_valueObj_test1
 

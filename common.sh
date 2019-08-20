@@ -1,8 +1,6 @@
 #!/bin/bash
 
 source env_var.sh
-LOGGER_PATH=${IOX_PATH}"/dio/logger"
-STS_PATH=${IOX_PATH}"/dio/sts"
 RESULT_LOG=${IOX_PATH}"/result/result_logs"
 
 
@@ -10,8 +8,7 @@ kill_process()
 {
 	for pid in ${pids[@]};
 	do
-		echo ${pid}
-		kill ${pid}
+		pkill -9 -P ${pid}
 	done	
 	unset pids
 }
@@ -28,7 +25,7 @@ result_logs()
 {
 	((++increment))
 	test_num=${2}
-	echo -n ${increment} >> ${RESULT_LOG}
+	echo -n ${increment} | tee -a ${RESULT_LOG} ${3}
 	echo -n " | ${1}${test_num}" | tee -a ${RESULT_LOG} ${3}
 	((test_num++)) 
 	echo -n " | ${RESULT}" | tee -a ${RESULT_LOG}
@@ -56,16 +53,15 @@ result_logs()
 parse_logger()
 {
 	sleep 5
-	if [[ -s ${LOGGER_PATH} ]];
+	if [[ -s ${LOG_EVENT_LOGGER} ]];
 	then 
-		out_logger=$(awk -F "," '/utc/{print $4}' ${LOGGER_PATH} | grep -oP '[[:digit:]].*(?= [[:space:]]*UTC.*)' | sort -k1,2 -ur | head -n1 | xargs -Iregex grep -m1 "regex" ${LOGGER_PATH})
-		logger_latest_time=$(awk -F "," '/utc/{print $4}' ${LOGGER_PATH} | grep -oP '[[:digit:]].*(?= [[:space:]]*UTC.*)' | sort -k1,2 -ur | head -n1 | awk '{print $2}')
+		out_logger=$(awk -F "," '/utc/{print $4}' ${LOG_EVENT_LOGGER} | grep -oP '[[:digit:]].*(?= [[:space:]]*UTC.*)' | sort -k1,2 -ur | head -n1 | xargs -Iregex grep -m1 "regex" ${LOG_EVENT_LOGGER})
+		logger_latest_time=$(awk -F "," '/utc/{print $4}' ${LOG_EVENT_LOGGER} | grep -oP '[[:digit:]].*(?= [[:space:]]*UTC.*)' | sort -k1,2 -ur | head -n1 | awk '{print $2}')
 		if [[ ${logger_last_time} == ${logger_latest_time} ]];
 		then
 			TIMESTAMP_LOGGER="FAIL"
 		else
 			parse=$(echo ${out_logger} | python -c 'import sys, json; print json.load(sys.stdin)["message"]')
-			echo -n " | parse : "${parse}
 			if [[ ${parse} == ${1} ]];
 			then
 				LOGGER_RESULT="PASS"
@@ -74,24 +70,25 @@ parse_logger()
 			fi
 			logger_last_time=${logger_latest_time}
 		fi
+	else
+		TIMESTAMP_LOGGER="FAIL"
 	fi
-	rm ${LOGGER_PATH}
+	rm ${LOG_EVENT_LOGGER}
 }
 
 parse_sts()
 {
 	sleep 5
-	if [[ -s ${STS_PATH} ]];
+	if [[ -s ${LOG_STS} ]];
 	then 
-		out_sts=$(awk -F "," '/mru/{print $NF}' ${STS_PATH} | grep -oP '[[:digit:]].*(?= [[:space:]]*UTC.*)' | sort -k1,2 -ur | head -n1 | xargs -Iregex grep -m1 "regex" ${STS_PATH})
-		sts_latest_time=$(awk -F "," '/mru/{print $NF}' ${STS_PATH} | grep -oP '[[:digit:]].*(?= [[:space:]]*UTC.*)' | sort -k1,2 -ur | head -n1 | awk '{print $2}')
+		out_sts=$(awk -F "," '/mru/{print $NF}' ${LOG_STS} | grep -oP '[[:digit:]].*(?= [[:space:]]*UTC.*)' | sort -k1,2 -ur | head -n1 | xargs -Iregex grep -m1 "regex" ${LOG_STS})
+		sts_latest_time=$(awk -F "," '/mru/{print $NF}' ${LOG_STS} | grep -oP '[[:digit:]].*(?= [[:space:]]*UTC.*)' | sort -k1,2 -ur | head -n1 | awk '{print $2}')
 		sleep 2
 		if [[ ${sts_last_time} == ${sts_latest_time} ]];
 		then
 			TIMESTAMP_STS="FAIL"
 		else
 			state=$(echo ${out_sts} | python -c 'import sys, json; print json.load(sys.stdin)["state"]')
-			echo -n " | state : "${state}
 			if [[ ${state} == ${1} ]];
 			then
 				STS_RESULT="PASS"
@@ -100,8 +97,10 @@ parse_sts()
 			fi
 			sts_last_time=${sts_latest_time}
 		fi
+	else
+		TIMESTAMP_STS="FAIL"
 	fi
-	rm ${STS_PATH}
+	rm ${LOG_STS}
 }
 
 result()
@@ -128,7 +127,7 @@ result()
 		if [[ ${TIMESTAMP_STS} == "FAIL" ]];
 		then
 			RESULT="FAIL"
-			DESCRIPTION="LOGGER [ TIMESTAMP ]"
+			DESCRIPTION="STS [ TIMESTAMP ]"
 		else
 			if [[ ${STS_RESULT} == "PASS" ]];
 			then
@@ -137,7 +136,7 @@ result()
 			elif [[ ${STS_RESULT} == "FAIL" ]];
 			then
 				RESULT="FAIL"
-				DESCRIPTION="LOGGER [ ${parse} ]"
+				DESCRIPTION="STS [ ${parse} ]"
 			fi
 		fi
 	fi
@@ -154,25 +153,26 @@ unset_var()
 
 subscribe_logger_event()
 {
-	mosquitto_sub -t "glp/0/./=logger/event" > ${LOGGER_PATH}
-	pids+=($!)
+	mosquitto_sub -t "glp/0/./=logger/event" > ${LOG_EVENT_LOGGER}
 }
 
 setup_time()
 {
 	subscribe_logger_event &
+	pids+=($!)
 	subscribe_sts_event &
-
+	pids+=($!)
+	
 	sleep 5
 
-	if [[ -s ${LOGGER_PATH} ]];
+	if [[ -s ${LOG_EVENT_LOGGER} ]];
 	then
-		logger_last_time=$(awk -F "," '/utc/{print $4}' ${LOGGER_PATH} | grep -oP '[[:digit:]].*(?= [[:space:]]*UTC.*)' | sort -k1,2 -ur | head -n1 | awk '{print $2}')
+		logger_last_time=$(awk -F "," '/utc/{print $4}' ${LOG_EVENT_LOGGER} | grep -oP '[[:digit:]].*(?= [[:space:]]*UTC.*)' | sort -k1,2 -ur | head -n1 | awk '{print $2}')
 	fi
 
-	if [[ -s ${STS_PATH} ]];
+	if [[ -s ${LOG_STS} ]];
 	then
-		sts_last_time=$(awk -F "," '/mru/{print $NF}' ${STS_PATH} | grep -oP '[[:digit:]].*(?= [[:space:]]*UTC.*)' | sort -k1,2 -ur | head -n1 | awk '{print $2}')
+		sts_last_time=$(awk -F "," '/mru/{print $NF}' ${LOG_STS} | grep -oP '[[:digit:]].*(?= [[:space:]]*UTC.*)' | sort -k1,2 -ur | head -n1 | awk '{print $2}')
 	fi
 
 }

@@ -1,32 +1,26 @@
 #!/bin/bash
 
-IOX_PATH="/home/unmesh/iox_test/"
-source ${IOX_PATH}"common"
-LOGGER_PATH=${IOX_PATH}"dio/logger"
-STS_PATH=${IOX_PATH}"dio/sts"
-DIO_REPLACE_LOG=${IOX_PATH}"dio/dio_replace_log"
+source env_var.sh
+source ${IOX_PATH}"/common.sh"
+source ${IOX_PATH}"/iox.config"
+source ${IOX_PATH}"/errors.sh"
+
+LOG_EVENT_LOGGER=${IOX_PATH}"/dio/logger"
+LOG_DIO_REPLACE=${IOX_PATH}"/dio/dio_replace_log"
 
 test_num=1
 
-err_replace_hndl="ERROR in iox_replace handle"
 
 dio_replace_test1()
 {
-	echo -n "dio_replace_test"${test_num} | tee -a ${RESULT_LOG} ${DIO_REPLACE_LOG}
-	((test_num++)) 
 	start_time=$(date | awk '{print $4}')
-	echo "" >> ${DIO_REPLACE_LOG}
-	echo "START_TIME : "${start_time} >> ${DIO_REPLACE_LOG}
 	subscribe_logger_event &
-	mosquitto_pub -m '{"action":"replace"}' -t "glp/0/17q2d9v/rq/dev/iox/dio/do"
-	echo "mosquitto_pub -m '{"action":"replace"}' -t '"glp/0/17q2d9v/rq/dev/iox/dio/do"'" >> ${DIO_REPLACE_LOG}
-	parse_logger "${err_replace_hndl}" ${DIO_REPLACE_LOG}
+	pids+=($!)
+	mosquitto_pub -m '{"action":"replace"}' -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/do"
+	parse_logger "${err_replace_hndl}" ${LOG_DIO_REPLACE}
 	result "logger"
-	end_time=$(date | awk '{print $4}')
-	echo "END_TIME : "${end_time} >> ${DIO_REPLACE_LOG}
-	execution_time ${start_time} ${end_time}
-	echo "" | tee -a ${RESULT_LOG} ${DIO_REPLACE_LOG}
-	echo "==============================================================================" | tee -a ${DIO_REPLACE_LOG}
+	pub=("mosquitto_pub -m '{"action":"replace"}' -t '"glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/do"'")
+	result_logs "dio_replace_test" ${test_num} ${LOG_DIO_REPLACE}  ${start_time} "${pub}"
 }
 
 setup_time

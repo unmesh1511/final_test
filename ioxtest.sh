@@ -1,22 +1,28 @@
 #!/bin/bash
 
-
-
-source ../env_var
-
-echo ${IOX_PATH}
+source env_var.sh
+source iox.config
 
 get_info()
 {
 	SID=$(mosquitto_sub -C 1 -t glp/0/././sid)
-	info_msg=$(mosquitto_sub -C 1 -t iox/info)
-	IOX_IP=$(echo ${info_msg} | python -c 'import sys, json; print json.load(sys.stdin)    ["iox_ip"]')
-	LOGICAL_ID=$(echo ${info_msg} | python -c 'import sys, json; print json.load(sys.stdin)    ["logical_id"]')
-	INSTALL_ID=$(echo ${info_msg} | python -c 'import sys, json; print json.load(sys.stdin)    ["install_id"]')
-	echo "SID="${SID} >> info_files.sh
-	echo "IOX_IP="${IOX_IP} >> info_files.sh
-	echo "LOGICAL_ID="${LOGICAL_ID} >> info_files.sh
-	echo "INSTALL_ID="${INSTALL_ID} >> info_files.sh
+#	info_msg=$(mosquitto_sub -C 1 -t iox/info)
+#	IOX_IP=$(echo ${info_msg} | python -c 'import sys, json; print json.load(sys.stdin)["iox_ip"]')
+#	LOGICAL_ID=$(echo ${info_msg} | python -c 'import sys, json; print json.load(sys.stdin)["logical_id"]')
+#	INSTALL_ID=$(echo ${info_msg} | python -c 'import sys, json; print json.load(sys.stdin)["install_id"]')
+ 
+	echo "SID="${SID} >> ${IOX_CONFIG_PATH}
+	if [[ ! -z ${IOX_LOGICAL_ID} ]];
+	then
+		echo "DIO_DEV_NAME="${IOX_LOGICAL_ID}.dio >> ${IOX_CONFIG_PATH}
+		echo "SYS_DEV_NAME="${IOX_LOGICAL_ID}.sys >> ${IOX_CONFIG_PATH}
+		echo "METER_DEV_NAME="${IOX_LOGICAL_ID}.meter >> ${IOX_CONFIG_PATH}
+	else
+		echo "DIO_DEV_NAME=dio" >> ${IOX_CONFIG_PATH}
+		echo "SYS_DEV_NAME=sys" >> ${IOX_CONFIG_PATH}
+		echo "METER_DEV_NAME=meter" >> ${IOX_CONFIG_PATH}
+	fi
+		
 }
 
 
@@ -148,6 +154,8 @@ run_test()
 	esac
 }
 
+
+get_info
 
 command_line_option=0
 x_EXCLUDE_FLAG=0

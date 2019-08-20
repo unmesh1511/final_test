@@ -1,89 +1,59 @@
 #!/bin/bash
 
-IOX_PATH="/home/unmesh/iox_test/"
-source ${IOX_PATH}"common"
-LOGGER_PATH=${IOX_PATH}"dio/logger"
-STS_PATH=${IOX_PATH}"dio/sts"
-DIO_TEST_LOG=${IOX_PATH}"dio/dio_test_log"
+source env_var.sh
+source ${IOX_PATH}"/common.sh"
+source ${IOX_PATH}"/iox.config"
+source ${IOX_PATH}"/errors.sh"
 
-err_test_hndl="ERROR in iox_test handle"
+LOG_EVENT_LOGGER=${IOX_PATH}"/dio/logger"
+LOG_DIO_TEST=${IOX_PATH}"/dio/dio_test_log"
+
 
 test_num=1
 
 dio_test_test1()
 {
-	echo -n "dio_test_log"${test_num} | tee -a ${RESULT_LOG} ${DIO_TEST_LOG}
-	((test_num++)) 
 	start_time=$(date | awk '{print $4}')
-	echo "" >> ${DIO_TEST_LOG}
-	echo "START_TIME : "${start_time} >> ${DIO_TEST_LOG}
 	subscribe_logger_event &
-	mosquitto_pub -m '{"action":"test"}' -t "glp/0/17q2d9v/rq/dev/iox/dio/do"
-	echo "mosquitto_pub -m '{"action":"test"}' -t '"glp/0/17q2d9v/rq/dev/iox/dio/do"'" >> ${DIO_TEST_LOG}
-	parse_logger "${err_test_hndl}" ${DIO_TEST_LOG}
+	pids+=($!)
+	mosquitto_pub -m '{"action":"test"}' -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/do"
+	parse_logger "${err_test_hndl}"
 	result "logger"
-	end_time=$(date | awk '{print $4}')
-	echo "END_TIME : "${end_time} >> ${DIO_TEST_LOG}
-	execution_time ${start_time} ${end_time}
-	echo "" | tee -a ${RESULT_LOG} ${DIO_TEST_LOG}
-	echo "==============================================================================" | tee -a ${DIO_TEST_LOG}
+	pub=("mosquitto_pub -m '{"action":"test"}' -t '"glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/do"'")
+	result_logs "dio_test_test" ${test_num} ${LOG_DIO_TEST}  ${start_time} "${pub}"
 }
 
 dio_test_test2()
 {
-	echo -n "dio_test_log"${test_num} | tee -a ${RESULT_LOG} ${DIO_TEST_LOG}
-	((test_num++)) 
 	start_time=$(date | awk '{print $4}')
-	echo "" >> ${DIO_TEST_LOG}
-	echo "START_TIME : "${start_time} >> ${DIO_TEST_LOG}
 	subscribe_logger_event &
-	mosquitto_pub -m '{"action":"test"}' -t "glp/0/17q2d9v/rq/dev/iox/dio/do"
-	echo "mosquitto_pub -m '{"action":"test"}' -t '"glp/0/17q2d9v/rq/dev/iox/dio/do"'" >> ${DIO_TEST_LOG}
-	parse_logger "${err_test_hndl}" ${DIO_TEST_LOG}
+	pids+=($!)
+	mosquitto_pub -m '{"action":"test"}' -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/do"
+	parse_logger "${err_test_hndl}"
 	result "logger"
-	end_time=$(date | awk '{print $4}')
-	echo "END_TIME : "${end_time} >> ${DIO_TEST_LOG}
-	execution_time ${start_time} ${end_time}
-	echo "" | tee -a ${RESULT_LOG} ${DIO_TEST_LOG}
-	echo "==============================================================================" | tee -a ${DIO_TEST_LOG}
+	pub=("mosquitto_pub -m '{"action":"test"}' -t '"glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/do"'")
 }
 
 dio_test_test3()
 {
-	echo -n "dio_test_log"${test_num} | tee -a ${RESULT_LOG} ${DIO_TEST_LOG}
-	((test_num++)) 
 	start_time=$(date | awk '{print $4}')
-	echo "" >> ${DIO_TEST_LOG}
-	echo "START_TIME : "${start_time} >> ${DIO_TEST_LOG}
 	subscribe_logger_event &
-	mosquitto_pub -m '{"action":"test"}' -t "glp/0/17q2d9v/rq/dev/iox/dio/do"
-	echo "mosquitto_pub -m '{"action":"test"}' -t '"glp/0/17q2d9v/rq/dev/iox/dio/do"'" >> ${DIO_TEST_LOG}
-	parse_logger "${err_test_hndl}" ${DIO_TEST_LOG}
+	pids+=($!)
+	mosquitto_pub -m '{"action":"test"}' -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/do"
+	parse_logger "${err_test_hndl}"
 	result "logger"
-	end_time=$(date | awk '{print $4}')
-	echo "END_TIME : "${end_time} >> ${DIO_TEST_LOG}
-	execution_time ${start_time} ${end_time}
-	echo "" | tee -a ${RESULT_LOG} ${DIO_TEST_LOG}
-	echo "==============================================================================" | tee -a ${DIO_TEST_LOG}
+	pub=("mosquitto_pub -m '{"action":"test"}' -t '"glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/do"'")
 }
 
 dio_test_test4()
 {
-	echo -n "dio_test_log"${test_num} | tee -a ${RESULT_LOG} ${DIO_TEST_LOG}
-	((test_num++)) 
 	start_time=$(date | awk '{print $4}')
-	echo "" >> ${DIO_TEST_LOG}
-	echo "START_TIME : "${start_time} >> ${DIO_TEST_LOG}
 	subscribe_logger_event &
-	mosquitto_pub -m '{"action":"test"}' -t "glp/0/17q2d9v/rq/dev/iox/dio/do"
-	echo "mosquitto_pub -m '{"action":"test"}' -t '"glp/0/17q2d9v/rq/dev/iox/dio/do"'" >> ${DIO_TEST_LOG}
-	parse_logger "${err_test_hndl}" ${DIO_TEST_LOG}
+	pids+=($!)
+	mosquitto_pub -m '{"action":"test"}' -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/do"
+	parse_logger "${err_test_hndl}"
 	result "logger"
-	end_time=$(date | awk '{print $4}')
-	echo "END_TIME : "${end_time} >> ${DIO_TEST_LOG}
-	execution_time ${start_time} ${end_time}
-	echo "" | tee -a ${RESULT_LOG} ${DIO_TEST_LOG}
-	echo "==============================================================================" | tee -a ${DIO_TEST_LOG}
+	pub=("mosquitto_pub -m '{"action":"test"}' -t '"glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/do"'")
 }
 
 setup_time

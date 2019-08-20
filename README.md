@@ -65,7 +65,13 @@ Inside each device directories there are testcases for different actions such as
 ├── dio
 │   ├── dio_*
 │   ├── files.list
-│   
+│
+├── common.sh
+|
+├── env_var.sh
+|
+├── errors.sh
+|
 ├── generic
 │
 ├── meter
@@ -83,10 +89,7 @@ Inside each device directories there are testcases for different actions such as
 │
 ├── rs232
 │
-├── env_var
-│
-├── src
-│   ├── ioxtest
+├── ioxtest.sh
 ```
     
     

@@ -72,17 +72,19 @@ exec_RUN_LIST_PATH()
 	sort -u ${RUN_LIST_PATH} -o ${RUN_LIST_PATH}
 	chmod +x ${RUN_LIST_PATH}
 	cd ${IOX_PATH}
-	echo -n "Sr.No" > ${RESULT_PATH}
+	./run_list 2> /dev/null
+	awk '{print  NR," | ", $0}' ${RESULT_PATH} > temp
+	mv temp ${RESULT_PATH}
+	echo "" >> ${RESULT_PATH}
+
+	echo -n "Sr.No" >> ${RESULT_PATH}
 	echo -n " | TEST_NAME" >> ${RESULT_PATH}
 	echo -n " | RESULT" >> ${RESULT_PATH}
 	echo -n " | DESCRIPTION" >> ${RESULT_PATH}
 	echo -n " | EXECUTION_TIME" >> ${RESULT_PATH}
-	echo "" >> ${RESULT_PATH}	
-	echo "" >> ${RESULT_PATH}
-	./run_list 2> /dev/null
-	column ${RESULT_PATH} -t -s '|' > ${IOX_PATH}"/result/temp_logs"
-	cat ${IOX_PATH}"/result/temp_logs" > ${RESULT_PATH}
-	rm ${IOX_PATH}"/result/temp_logs"
+	tac ${RESULT_PATH} | awk 'NR==1 {line =$0; next} 1; END{print line}' | tac > temp | mv temp ${RESULT_PATH}
+	column ${RESULT_PATH} -t -s '|' > temp
+	mv temp ${RESULT_PATH}
 }
 
 
@@ -236,7 +238,7 @@ fi
 
 exec_RUN_LIST_PATH
 
-#if [[ -f "${RUN_LIST_PATH}" ]];
-#then 
-#	rm ${RUN_LIST_PATH}
-#fi
+if [[ -f "${RUN_LIST_PATH}" ]];
+then 
+	rm ${RUN_LIST_PATH}
+fi

@@ -6,7 +6,7 @@ source ${IOX_PATH}"/iox.config"
 source ${IOX_PATH}"/errors.sh"
 
 LOG_EVENT_LOGGER=${IOX_PATH}"/dio/logger"
-LOG_DIO_REPAIR=${IOX_PATH}"/dio/repair_log"
+LOG_DIO_REPAIR=${IOX_PATH}"/dio/dio_repair_log"
 
 
 dio_repair_test1()

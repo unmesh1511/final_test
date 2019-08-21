@@ -1,0 +1,28 @@
+dio_test_test1
+START_TIME : 17:57:32
+mosquitto_pub -m '{action:test}' -t 'glp/0/17q2d9v/rq/dev/iox/dio/do'
+LOGGER_OUTPUT : {"cat":"error","topic":"glp/0/17q2d9v/rq/dev/iox/dio/do","message":"ERROR in iox_test handle","utc":"2018-07-12 15:21:34.180 UTC"}
+END_TIME : 17:57:37
+
+==============================================================================
+dio_test_test2
+START_TIME : 17:57:37
+mosquitto_pub -m '{action:test}' -t 'glp/0/17q2d9v/rq/dev/iox/dio/do'
+LOGGER_OUTPUT : {"cat":"error","topic":"glp/0/17q2d9v/rq/dev/iox/dio/do","message":"ERROR in iox_test handle","utc":"2018-07-12 15:21:39.260 UTC"}
+END_TIME : 17:57:42
+
+==============================================================================
+dio_test_test3
+START_TIME : 17:57:42
+mosquitto_pub -m '{action:test}' -t 'glp/0/17q2d9v/rq/dev/iox/dio/do'
+LOGGER_OUTPUT : {"cat":"error","topic":"glp/0/17q2d9v/rq/dev/iox/dio/do","message":"ERROR in iox_test handle","utc":"2018-07-12 15:21:44.320 UTC"}
+END_TIME : 17:57:47
+
+==============================================================================
+dio_test_test4
+START_TIME : 17:57:47
+mosquitto_pub -m '{action:test}' -t 'glp/0/17q2d9v/rq/dev/iox/dio/do'
+LOGGER_OUTPUT : {"cat":"error","topic":"glp/0/17q2d9v/rq/dev/iox/dio/do","message":"ERROR in iox_test handle","utc":"2018-07-12 15:21:49.410 UTC"}
+END_TIME : 17:57:52
+
+==============================================================================

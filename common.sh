@@ -23,10 +23,8 @@ execution_time()
 
 result_logs()
 {
-	((++increment))
 	((++test_num)) 
-	echo -n ${increment} | tee -a ${RESULT_LOG} ${2}
-	echo -n " | ${1}${test_num}" | tee -a ${RESULT_LOG} ${2}
+	echo -n "${1}${test_num}" | tee -a ${RESULT_LOG} ${2}
 	echo -n " | ${RESULT}" | tee -a ${RESULT_LOG}
 	echo -n " | ${DESCRIPTION}" | tee -a ${RESULT_LOG}
 	echo "" >> ${2}

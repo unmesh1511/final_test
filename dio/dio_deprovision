@@ -25,7 +25,7 @@ dio_deprovision_test1()
 	parse_logger "${device_not_provisioned}"
 	result "logger"
 	pub=("mosquitto_pub -m '{"action":"deprovision"}' -t '"glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/do"'")
-	result_logs "dio_delete_test" ${LOG_DIO_DEPROVISION}  ${start_time} "${pub}"
+	result_logs "dio_deprovision_test" ${LOG_DIO_DEPROVISION}  ${start_time} "${pub}"
 }
 
 dio_deprovision_test2()
@@ -37,7 +37,7 @@ dio_deprovision_test2()
 	parse_logger "${device_not_provisioned}"
 	result "logger"
 	pub=("mosquitto_pub -m '{"action":"deprovision"}' -t '"glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/do"'")
-	result_logs "dio_delete_test" ${LOG_DIO_DEPROVISION}  ${start_time} "${pub}"
+	result_logs "dio_deprovision_test" ${LOG_DIO_DEPROVISION}  ${start_time} "${pub}"
 }
 
 dio_deprovision_test3()
@@ -49,7 +49,7 @@ dio_deprovision_test3()
 	parse_sts "${deprov_expected_state}"
 	result "sts"
 	pub=("mosquitto_pub -m '{"action":"deprovision"}' -t '"glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/do"'")
-	result_logs "dio_delete_test" ${LOG_DIO_DEPROVISION}  ${start_time} "${pub}"
+	result_logs "dio_deprovision_test" ${LOG_DIO_DEPROVISION}  ${start_time} "${pub}"
 }
 
 dio_deprovision_test4()
@@ -61,7 +61,7 @@ dio_deprovision_test4()
 	parse_logger "${device_not_provisioned}"
 	result "logger"
 	pub=("mosquitto_pub -m '{"action":"deprovision"}' -t '"glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/do"'")
-	result_logs "dio_delete_test" ${LOG_DIO_DEPROVISION}  ${start_time} "${pub}"
+	result_logs "dio_deprovision_test" ${LOG_DIO_DEPROVISION}  ${start_time} "${pub}"
 }
 
 setup_time

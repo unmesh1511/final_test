@@ -1,70 +1,64 @@
-1 | dio_create_test1
-START_TIME : 12:38:19
-LOGGER_OUTPUT : {"cat":"error","source":"modbus","topic":"glp/0/17q2d9v/rq/dev/iox/1dio/do","utc":"2018-07-12 13:30:22.000 UTC","message":"create : error in object"}
-END_TIME : 12:38:25
+dio_create_test1
+START_TIME : 17:52:52
+mosquitto_pub -m '{action:create}' -t 'glp/0/17q2d9v/rq/dev/iox/dio/do'
+LOGGER_OUTPUT : {"cat":"error","topic":"glp/0/17q2d9v/rq/dev/iox/dio/do","message":"Error in parsing args data","utc":"2018-07-12 15:16:54.640 UTC"}
+END_TIME : 17:52:57
 
 ==============================================================================
-2 | dio_create_test2
-START_TIME : 12:38:25
-LOGGER_OUTPUT : {"cat":"error","source":"modbus","topic":"glp/0/17q2d9v/rq/dev/iox/1dio/do","utc":"2018-07-12 13:30:22.000 UTC","message":"create : error in object"}
-END_TIME : 12:38:30
+dio_create_test2
+START_TIME : 17:52:57
+mosquitto_pub -m '{action:create,args:{type:900001050304DD00}}' -t 'glp/0/17q2d9v/rq/dev/iox/dio/do'
+LOGGER_OUTPUT : {"cat":"error","topic":"glp/0/17q2d9v/rq/dev/iox/dio/do","message":"No unid Provided","utc":"2018-07-12 15:16:59.690 UTC"}
+END_TIME : 17:53:02
 
 ==============================================================================
-3 | dio_create_test3
-START_TIME : 12:38:30
-LOGGER_OUTPUT : {"cat":"error","source":"modbus","topic":"glp/0/17q2d9v/rq/dev/iox/1dio/do","utc":"2018-07-12 13:30:22.000 UTC","message":"create : error in object"}
-END_TIME : 12:38:35
+dio_create_test3
+START_TIME : 17:53:02
+mosquitto_pub -m '{action:create,args:{type:900001050304DD00}}' -t 'glp/0/17q2d9v/rq/dev/iox/dio/do'
+LOGGER_OUTPUT : {"cat":"error","topic":"glp/0/17q2d9v/rq/dev/iox/dio/do","message":"No unid Provided","utc":"2018-07-12 15:17:04.730 UTC"}
+END_TIME : 17:53:07
 
 ==============================================================================
-4 | dio_create_test4
-START_TIME : 12:38:35
-LOGGER_OUTPUT : {"cat":"error","source":"modbus","topic":"glp/0/17q2d9v/rq/dev/iox/1dio/do","utc":"2018-07-12 13:30:22.000 UTC","message":"create : error in object"}
-END_TIME : 12:38:40
+dio_create_test4
+START_TIME : 17:53:07
+mosquitto_pub -m '{action:create,args:{type:900001050304DD00}}' -t 'glp/0/17q2d9v/rq/dev/iox/dio/do'
+LOGGER_OUTPUT : {"cat":"error","topic":"glp/0/17q2d9v/rq/dev/iox/dio/do","message":"No unid Provided","utc":"2018-07-12 15:17:09.790 UTC"}
+END_TIME : 17:53:13
 
 ==============================================================================
-5 | dio_create_test5
-START_TIME : 12:38:40
-LOGGER_OUTPUT : {"cat":"error","source":"modbus","topic":"glp/0/17q2d9v/rq/dev/iox/1dio/do","utc":"2018-07-12 13:30:22.000 UTC","message":"create : error in object"}
-END_TIME : 12:38:45
+dio_create_test5
+START_TIME : 17:53:13
+mosquitto_pub -m '{action:create,args:{type:900001050304DD00}}' -t 'glp/0/17q2d9v/rq/dev/iox/dio/do'
+LOGGER_OUTPUT : {"cat":"error","topic":"glp/0/17q2d9v/rq/dev/iox/dio/do","message":"No unid Provided","utc":"2018-07-12 15:17:14.860 UTC"}
+END_TIME : 17:53:18
 
 ==============================================================================
-6 | dio_create_test6
-START_TIME : 12:38:45
-LOGGER_OUTPUT : {"cat":"error","source":"modbus","topic":"glp/0/17q2d9v/rq/dev/iox/1dio/do","utc":"2018-07-12 13:30:22.000 UTC","message":"create : error in object"}
-END_TIME : 12:38:50
+dio_create_test6
+START_TIME : 17:53:18
+mosquitto_pub -m '{action:create,args:{type:900001050304DD00,provision:true}}' -t 'glp/0/17q2d9v/rq/dev/iox/dio/do'
+LOGGER_OUTPUT : {"cat":"error","topic":"glp/0/17q2d9v/rq/dev/iox/dio/do","message":"No unid Provided","utc":"2018-07-12 15:17:19.940 UTC"}
+END_TIME : 17:53:23
 
 ==============================================================================
-7 | dio_create_test7
-START_TIME : 12:38:50
-LOGGER_OUTPUT : {"cat":"error","source":"modbus","topic":"glp/0/17q2d9v/rq/dev/iox/1dio/do","utc":"2018-07-12 13:30:22.000 UTC","message":"create : error in object"}
-END_TIME : 12:39:00
+dio_create_test7
+START_TIME : 17:53:23
+mosquitto_pub -m '{action:create,args:{type:900001050304DD00,provision:false,unid:256}}' -t 'glp/0/17q2d9v/rq/dev/iox/dio/do'
+STATUS_OUTPUT : {"state":"unprovisioned","unid":"256","health":"normal","cat":"i/o","type":"900001050304DD00","interfaceType":"static","usage":"mixed","version":"1.0.0","product":"IOX_DIO","manufacturer":"IOX Digital IO Device","mru":"2018-07-12 15:17:25.180 UTC"}
+LOGGER_OUTPUT : {"cat":"error","topic":"glp/0/17q2d9v/rq/dev/iox/dio/do","message":"No unid Provided","utc":"2018-07-12 15:17:19.940 UTC"}
+END_TIME : 17:53:35
 
 ==============================================================================
-1 | dio_create_test1
-START_TIME : 12:40:01
-mosquitto_pub -m '{action:create}' -t 'glp/0//rq/dev/iox/dio/do'
-LOGGER_OUTPUT : {"cat":"error","source":"modbus","topic":"glp/0/17q2d9v/rq/dev/iox/1dio/do","utc":"2018-07-12 13:30:22.000 UTC","message":"create : error in object"}
-END_TIME : 12:40:06
+dio_create_test8
+START_TIME : 17:54:05
+mosquitto_pub -m '{action:create,args:{type:900001050304DD00,provision:true,unid:abcd}}' -t 'glp/0/17q2d9v/rq/dev/iox/dio/do'
+LOGGER_OUTPUT : {"cat":"error","topic":"glp/0/17q2d9v/rq/dev/iox/dio/do","message":" Invalid unid string","utc":"2018-07-12 15:18:07.110 UTC"}
+END_TIME : 17:54:10
 
 ==============================================================================
-2 | dio_create_test2
-START_TIME : 12:40:06
-mosquitto_pub -m '{action:create,args:{type:900001050304DD00}}' -t 'glp/0//rq/dev/iox/dio/do'
-LOGGER_OUTPUT : {"cat":"error","source":"modbus","topic":"glp/0/17q2d9v/rq/dev/iox/1dio/do","utc":"2018-07-12 13:30:22.000 UTC","message":"create : error in object"}
-END_TIME : 12:40:11
-
-==============================================================================
-3 | dio_create_test3
-START_TIME : 12:40:11
-mosquitto_pub -m '{action:create,args:{type:900001050304DD00}}' -t 'glp/0//rq/dev/iox/dio/do'
-LOGGER_OUTPUT : {"cat":"error","source":"modbus","topic":"glp/0/17q2d9v/rq/dev/iox/1dio/do","utc":"2018-07-12 13:30:22.000 UTC","message":"create : error in object"}
-END_TIME : 12:40:16
-
-==============================================================================
-4 | dio_create_test4
-START_TIME : 12:40:16
-mosquitto_pub -m '{action:create,args:{type:900001050304DD00}}' -t 'glp/0//rq/dev/iox/dio/do'
-LOGGER_OUTPUT : {"cat":"error","source":"modbus","topic":"glp/0/17q2d9v/rq/dev/iox/1dio/do","utc":"2018-07-12 13:30:22.000 UTC","message":"create : error in object"}
-END_TIME : 12:40:21
+dio_create_test9
+START_TIME : 17:54:10
+mosquitto_pub -m '{action:create,args:{type:900001050304DD00,provision:true,unid:256}}' -t 'glp/0/17q2d9v/rq/dev/iox/dio/do'
+LOGGER_OUTPUT : {"cat":"error","topic":"glp/0/17q2d9v/rq/dev/iox/dio/do","message":"Invalid provision value","utc":"2018-07-12 15:18:12.170 UTC"}
+END_TIME : 17:54:15
 
 ==============================================================================

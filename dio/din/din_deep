@@ -9,9 +9,7 @@ LOG_EVENT_LOGGER=${IOX_PATH}"/dio/din/logger"
 LOG_STS=${IOX_PATH}"/dio/din/sts"
 LOG_DIN_DEEP=${IOX_PATH}"/dio/din/din_deep_log"
 
-test_num=1
-
-err_parse_json="Error in parsing json object"
+din_err_parse_json="Error in parsing json object"
 
 din_deep_test1()
 {
@@ -22,7 +20,7 @@ din_deep_test1()
 	parse_logger "${err_parse_json}"
 	result "logger"
 	pub=("mosquitto_pub -m '30' -t '"glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/dia/1/di-val/monitor/rate"'")
-	result_logs "din_deep_test" ${test_num} ${LOG_DIN_DEEP}  ${start_time} "${pub}"
+	result_logs "din_deep_test" ${LOG_DIN_DEEP}  ${start_time} "${pub}"
 }
 
 din_deep_test2()
@@ -34,7 +32,7 @@ din_deep_test2()
 	parse_logger
 	result "logger"
 	pub=("mosquitto_pub -m '30' -t '"glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/di/1/di-vala/monitor/rate"'")
-	result_logs "din_deep_test" ${test_num} ${LOG_DIN_DEEP}  ${start_time} "${pub}"
+	result_logs "din_deep_test" ${LOG_DIN_DEEP}  ${start_time} "${pub}"
 }
 
 din_deep_test3()
@@ -47,7 +45,7 @@ din_deep_test3()
 	parse_logger
 	result "logger"
 	pub=("mosquitto_pub -m '{"di-val":{"value":{"type":"frequency","di-level":{"report-dur":1000,"detect-level":0,"pullup-cfg":true},"di-pulse":{"report-dur":10,"detect-level":0,"pullup-cfg":true},"di-frequency":{"report-dur":100,"detect-level":0,"pullup-cfg":true}},"monitor":{"rate":15,"cat":"data","inFeedback":true,"report":"change","throttle":0,"threshold":10}}}' -t '"glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/di/1"'")
-	result_logs "din_deep_test" ${test_num} ${LOG_DIN_DEEP}  ${start_time} "${pub}"
+	result_logs "din_deep_test" ${LOG_DIN_DEEP}  ${start_time} "${pub}"
 }
 
 din_deep_test4()
@@ -60,7 +58,7 @@ din_deep_test4()
 	parse_logger
 	result "logger"
 	pub=("mosquitto_pub -m '{"value":{"type":"level","di-level":{"report-dur":1000,"detect-level":0,"pullup-cfg":true},"di-pulse":{"report-dur":10,"detect-level":0,"pullup-cfg":true},"di-frequency":{"report-dur":100,"detect-level":0,"pullup-cfg":true}},"monitor":{"rate":100,"cat":"data","inFeedback":true,"report":"change","throttle":0,"threshold":10}}' -t '"glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/di/1/di-val"'")
-	result_logs "din_deep_test" ${test_num} ${LOG_DIN_DEEP}  ${start_time} "${pub}"
+	result_logs "din_deep_test" ${LOG_DIN_DEEP}  ${start_time} "${pub}"
 }
 
 din_deep_test5()
@@ -71,7 +69,7 @@ din_deep_test5()
 	parse_logger
 	result "logger"
 	pub=("mosquitto_pub -m '{"rate":50}' -t '"glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/di/1/di-val/monitor"'")
-	result_logs "din_deep_test" ${test_num} ${LOG_DIN_DEEP}  ${start_time} "${pub}"
+	result_logs "din_deep_test" ${LOG_DIN_DEEP}  ${start_time} "${pub}"
 }
 
 din_deep_test6()
@@ -82,7 +80,7 @@ din_deep_test6()
 	parse_logger
 	result "logger"
 	pub=("mosquitto_pub -m '30' -t '"glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/di/1/di-val/monitor/rate"'")
-	result_logs "din_deep_test" ${test_num} ${LOG_DIN_DEEP}  ${start_time} "${pub}"
+	result_logs "din_deep_test" ${LOG_DIN_DEEP}  ${start_time} "${pub}"
 }
 
 setup_time

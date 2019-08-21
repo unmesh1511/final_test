@@ -8,8 +8,6 @@ source ${IOX_PATH}"/errors.sh"
 LOG_EVENT_LOGGER=${IOX_PATH}"/dio/logger"
 LOG_DIO_REPLACE=${IOX_PATH}"/dio/dio_replace_log"
 
-test_num=1
-
 
 dio_replace_test1()
 {
@@ -20,7 +18,7 @@ dio_replace_test1()
 	parse_logger "${err_replace_hndl}" ${LOG_DIO_REPLACE}
 	result "logger"
 	pub=("mosquitto_pub -m '{"action":"replace"}' -t '"glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/do"'")
-	result_logs "dio_replace_test" ${test_num} ${LOG_DIO_REPLACE}  ${start_time} "${pub}"
+	result_logs "dio_replace_test" ${LOG_DIO_REPLACE}  ${start_time} "${pub}"
 }
 
 setup_time

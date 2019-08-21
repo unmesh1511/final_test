@@ -20,7 +20,7 @@ do_device_test1()
 	parse_logger
 	result "logger"
 	pub=("mosquitto_pub -m '{"do-val":{"value":{"type":"level","level":true,"frequency":10,"pulse":300,"pwm":{"frequency":20000,"duty-cycle":90}}}}' -t '"glp/0/${SID}/rq/dev/iox/${METER_DEV_NAME}/if/do/1"'")
-	result_logs "do_device_test" ${test_num} ${LOG_DO_DEVICE}  ${start_time} "${pub}"
+	result_logs "do_device_test" ${LOG_DO_DEVICE}  ${start_time} "${pub}"
 }
 
 do_device_test2()
@@ -31,7 +31,7 @@ do_device_test2()
 	parse_logger
 	result "logger"
 	pub=("mosquitto_pub -m '{"do-val":{"value":{"type":"level","level":true,"frequency":10,"pulse":300,"pwm":{"frequency":20000,"duty-cycle":90}}}}' -t '"glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/do/1"'")
-	result_logs "do_device_test" ${test_num} ${LOG_DO_DEVICE}  ${start_time} "${pub}"
+	result_logs "do_device_test" ${LOG_DO_DEVICE}  ${start_time} "${pub}"
 }
 
 setup_time

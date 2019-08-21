@@ -19,7 +19,7 @@ din_port_test1()
 	parse_logger
 	result "logger"
 	pub=("mosquitto_pub -m '{"di-val":{"value":{"type":"level","di-level":{"report-dur":1000,"detect-level":0,"pullup-cfg":true},"di-pulse":{"report-dur":10,"detect-level":0,"pullup-cfg":true},"di-frequency":{"report-dur":100,"detect-level":0,"pullup-cfg":true}},"monitor":{"rate":1500,"cat":"data","inFeedback":false,"report":"change","throttle":0,"threshold":10}}}' -t '"glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/di/1"'")
-	result_logs "din_port_test" ${test_num} ${LOG_DIN_PORT}  ${start_time} "${pub}"
+	result_logs "din_port_test" ${LOG_DIN_PORT}  ${start_time} "${pub}"
 }
 
 din_port_test2()
@@ -32,7 +32,7 @@ din_port_test2()
 	parse_logger
 	result "logger"
 	pub=("mosquitto_pub -m '{"di-val":{"value":{"type":"level","di-level":{"report-dur":1000,"detect-level":0,"pullup-cfg":true},"di-pulse":{"report-dur":10,"detect-level":0,"pullup-cfg":true},"di-frequency":{"report-dur":100,"detect-level":0,"pullup-cfg":true}},"monitor":{"rate":1500,"cat":"data","inFeedback":false,"report":"change","throttle":0,"threshold":10}}}' -t '"glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/di/2"'")
-	result_logs "din_port_test" ${test_num} ${LOG_DIN_PORT}  ${start_time} "${pub}"
+	result_logs "din_port_test" ${LOG_DIN_PORT}  ${start_time} "${pub}"
 
 }
 
@@ -46,7 +46,7 @@ din_port_test3()
 	parse_logger
 	result "logger"
 	pub=("mosquitto_pub -m '{"di-val":{"value":{"type":"level","di-level":{"report-dur":1000,"detect-level":0,"pullup-cfg":true},"di-pulse":{"report-dur":10,"detect-level":0,"pullup-cfg":true},"di-frequency":{"report-dur":100,"detect-level":0,"pullup-cfg":true}},"monitor":{"rate":1500,"cat":"data","inFeedback":false,"report":"change","throttle":0,"threshold":10}}}' -t '"glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/di/3"'")
-	result_logs "din_port_test" ${test_num} ${LOG_DIN_PORT}  ${start_time} "${pub}"
+	result_logs "din_port_test" ${LOG_DIN_PORT}  ${start_time} "${pub}"
 
 }
 
@@ -60,7 +60,7 @@ din_port_test4()
 	parse_logger
 	result "logger"
 	pub=("mosquitto_pub -m '{"di-val":{"value":{"type":"level","di-level":{"report-dur":1000,"detect-level":0,"pullup-cfg":true},"di-pulse":{"report-dur":10,"detect-level":0,"pullup-cfg":true},"di-frequency":{"report-dur":100,"detect-level":0,"pullup-cfg":true}},"monitor":{"rate":1500,"cat":"data","inFeedback":false,"report":"change","throttle":0,"threshold":10}}}' -t '"glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/di/4"'")
-	result_logs "din_port_test" ${test_num} ${LOG_DIN_PORT}  ${start_time} "${pub}"
+	result_logs "din_port_test" ${LOG_DIN_PORT}  ${start_time} "${pub}"
 
 }
 
@@ -73,7 +73,7 @@ din_port_test5()
 	mosquitto_pub -m '{"di-val":{"value":{"type":"level","di-level":{"report-dur":1000,"detect-level":0,"pullup-cfg":true},"di-pulse":{"report-dur":10,"detect-level":0,"pullup-cfg":true},"di-frequency":{"report-dur":100,"detect-level":0,"pullup-cfg":true}},"monitor":{"rate":1500,"cat":"data","inFeedback":false,"report":"change","throttle":0,"threshold":10}}}' -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/di/5"
 	parse_logger
 	pub=("mosquitto_pub -m '{"di-val":{"value":{"type":"level","di-level":{"report-dur":1000,"detect-level":0,"pullup-cfg":true},"di-pulse":{"report-dur":10,"detect-level":0,"pullup-cfg":true},"di-frequency":{"report-dur":100,"detect-level":0,"pullup-cfg":true}},"monitor":{"rate":1500,"cat":"data","inFeedback":false,"report":"change","throttle":0,"threshold":10}}}' -t '"glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/di/5"'")
-	result_logs "din_port_test" ${test_num} ${LOG_DIN_PORT}  ${start_time} "${pub}"
+	result_logs "din_port_test" ${LOG_DIN_PORT}  ${start_time} "${pub}"
 
 }
 
@@ -87,7 +87,7 @@ din_port_test6()
 	parse_logger
 	result "logger"
 	pub=("mosquitto_pub -m '{"di-val":{"value":{"type":"level","di-level":{"report-dur":1000,"detect-level":0,"pullup-cfg":true},"di-pulse":{"report-dur":10,"detect-level":0,"pullup-cfg":true},"di-frequency":{"report-dur":100,"detect-level":0,"pullup-cfg":true}},"monitor":{"rate":1500,"cat":"data","inFeedback":false,"report":"change","throttle":0,"threshold":10}}}' -t '"glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/di/6"'")
-	result_logs "din_port_test" ${test_num} ${LOG_DIN_PORT}  ${start_time} "${pub}"
+	result_logs "din_port_test" ${LOG_DIN_PORT}  ${start_time} "${pub}"
 
 }
 
@@ -101,7 +101,7 @@ din_port_test7()
 	parse_logger
 	result "logger"
 	pub=("mosquitto_pub -m '{"di-val":{"value":{"type":"level","di-level":{"report-dur":1000,"detect-level":0,"pullup-cfg":true},"di-pulse":{"report-dur":10,"detect-level":0,"pullup-cfg":true},"di-frequency":{"report-dur":100,"detect-level":0,"pullup-cfg":true}},"monitor":{"rate":1500,"cat":"data","inFeedback":false,"report":"change","throttle":0,"threshold":10}}}' -t '"glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/di/7"'")
-	result_logs "din_port_test" ${test_num} ${LOG_DIN_PORT}  ${start_time} "${pub}"
+	result_logs "din_port_test" ${LOG_DIN_PORT}  ${start_time} "${pub}"
 
 }
 
@@ -115,7 +115,7 @@ din_port_test8()
 	parse_logger
 	result "logger"
 	pub=("mosquitto_pub -m '{"di-val":{"value":{"type":"level","di-level":{"report-dur":1000,"detect-level":0,"pullup-cfg":true},"di-pulse":{"report-dur":10,"detect-level":0,"pullup-cfg":true},"di-frequency":{"report-dur":100,"detect-level":0,"pullup-cfg":true}},"monitor":{"rate":1500,"cat":"data","inFeedback":false,"report":"change","throttle":0,"threshold":10}}}' -t '"glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/di/8"'")
-	result_logs "din_port_test" ${test_num} ${LOG_DIN_PORT}  ${start_time} "${pub}"
+	result_logs "din_port_test" ${LOG_DIN_PORT}  ${start_time} "${pub}"
 
 }
 
@@ -129,7 +129,7 @@ din_port_test9()
 	parse_logger "${invalid_port}"
 	result "logger"
 	pub=("mosquitto_pub -m '{"di-val":{"value":{"type":"level","di-level":{"report-dur":1000,"detect-level":0,"pullup-cfg":true},"di-pulse":{"report-dur":10,"detect-level":0,"pullup-cfg":true},"di-frequency":{"report-dur":100,"detect-level":0,"pullup-cfg":true}},"monitor":{"rate":1500,"cat":"data","inFeedback":false,"report":"change","throttle":0,"threshold":10}}}' -t '"glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/di/10"'")
-	result_logs "din_port_test" ${test_num} ${LOG_DIN_PORT}  ${start_time} "${pub}"
+	result_logs "din_port_test" ${LOG_DIN_PORT}  ${start_time} "${pub}"
 }
 
 setup_time

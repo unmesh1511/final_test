@@ -8,9 +8,6 @@ source ${IOX_PATH}"/errors.sh"
 LOG_EVENT_LOGGER=${IOX_PATH}"/dio/logger"
 LOG_DIO_RESET=${IOX_PATH}"/dio/dio_reset_log"
 
-
-test_num=1
-
 dio_reset_test1()
 {
 	start_time=$(date | awk '{print $4}')
@@ -20,7 +17,7 @@ dio_reset_test1()
 	parse_logger "${err_reset_hndl}"
 	result "logger"
 	pub=("mosquitto_pub -m '{"action":"reset"}' -t '"glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/do"'")
-	result_logs "dio_reset_test" ${test_num} ${LOG_DIO_RESET}  ${start_time} "${pub}"
+	result_logs "dio_reset_test" ${LOG_DIO_RESET}  ${start_time} "${pub}"
 }
 
 setup_time

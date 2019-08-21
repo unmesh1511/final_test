@@ -17,7 +17,7 @@ do_mode_test1()
 	mosquitto_pub -m '{"do-val":{"value":{"type":"level","level":true,"frequency":0,"pulse":0,"pwm":{"frequency":0,"duty-cycle":0}}}}' -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/do/1"
 	parse_logger
 	result "logger"
-	result_logs "do_mode_test" ${test_num} ${LOG_DO_MODE}  ${start_time} "${pub}"
+	result_logs "do_mode_test" ${LOG_DO_MODE}  ${start_time} "${pub}"
 
 }
 
@@ -30,7 +30,7 @@ do_mode_test2()
 	mosquitto_pub -m '{"do-val":{"value":{"type":"level","level":false,"frequency":0,"pulse":0,"pwm":{"frequency":0,"duty-cycle":0}}}}' -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/do/1"
 	parse_logger
 	result "logger"
-	result_logs "do_mode_test" ${test_num} ${LOG_DO_MODE}  ${start_time} "${pub}"
+	result_logs "do_mode_test" ${LOG_DO_MODE}  ${start_time} "${pub}"
 
 }
 
@@ -42,7 +42,7 @@ do_mode_test3()
 	mosquitto_pub -m '{"do-val":{"value":{"type":"level","level":"true","frequency":0,"pulse":0,"pwm":{"frequency":20000,"duty-cycle":90}}}}' -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/do/1"
 	parse_logger
 	result "logger"
-	result_logs "do_mode_test" ${test_num} ${LOG_DO_MODE}  ${start_time} "${pub}"
+	result_logs "do_mode_test" ${LOG_DO_MODE}  ${start_time} "${pub}"
 
 }
 
@@ -55,7 +55,7 @@ do_mode_test4()
 	mosquitto_pub -m '{"do-val":{"value":{"type":"pulse","level":false,"frequency":0,"pulse":1000,"pwm":{"frequency":0,"duty-cycle":0}}}}' -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/do/1"
 	parse_logger
 	result "logger"
-	result_logs "do_mode_test" ${test_num} ${LOG_DO_MODE}  ${start_time} "${pub}"
+	result_logs "do_mode_test" ${LOG_DO_MODE}  ${start_time} "${pub}"
 
 }
 
@@ -68,7 +68,7 @@ do_mode_test5()
 	mosquitto_pub -m '{"do-val":{"value":{"type":"pulse","level":false,"frequency":0,"pulse":60000,"pwm":{"frequency":0,"duty-cycle":0}}}}' -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/do/1"
 	parse_logger
 	result "logger"
-	result_logs "do_mode_test" ${test_num} ${LOG_DO_MODE}  ${start_time} "${pub}"
+	result_logs "do_mode_test" ${LOG_DO_MODE}  ${start_time} "${pub}"
 
 }
 
@@ -80,7 +80,7 @@ do_mode_test6()
 	mosquitto_pub -m '{"do-val":{"value":{"type":"pulse","level":true,"frequency":0,"pulse":"test","pwm":{"frequency":20000,"duty-cycle":90}}}}' -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/do/1"
 	parse_logger
 	result "logger"
-	result_logs "do_mode_test" ${test_num} ${LOG_DO_MODE}  ${start_time} "${pub}"
+	result_logs "do_mode_test" ${LOG_DO_MODE}  ${start_time} "${pub}"
 
 }
 
@@ -93,7 +93,7 @@ do_mode_test7()
 	mosquitto_pub -m '{"do-val":{"value":{"type":"frequency","level":false,"frequency":1,"pulse":0,"pwm":{"frequency":0,"duty-cycle":0}}}}' -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/do/1"
 	parse_logger
 	result "logger"
-	result_logs "do_mode_test" ${test_num} ${LOG_DO_MODE}  ${start_time} "${pub}"
+	result_logs "do_mode_test" ${LOG_DO_MODE}  ${start_time} "${pub}"
 
 }
 
@@ -106,7 +106,7 @@ do_mode_test8()
 	mosquitto_pub -m '{"do-val":{"value":{"type":"frequency","level":false,"frequency":20000,"pulse":0,"pwm":{"frequency":0,"duty-cycle":0}}}}' -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/do/1"
 	parse_logger
 	result "logger"
-	result_logs "do_mode_test" ${test_num} ${LOG_DO_MODE}  ${start_time} "${pub}"
+	result_logs "do_mode_test" ${LOG_DO_MODE}  ${start_time} "${pub}"
 
 }
 
@@ -118,7 +118,7 @@ do_mode_test9()
 	mosquitto_pub -m '{"do-val":{"value":{"type":"frequency","level":true,"frequency":"test","pulse":0,"pwm":{"frequency":20000,"duty-cycle":90}}}}' -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/do/1"
 	parse_logger
 	result "logger"
-	result_logs "do_mode_test" ${test_num} ${LOG_DO_MODE}  ${start_time} "${pub}"
+	result_logs "do_mode_test" ${LOG_DO_MODE}  ${start_time} "${pub}"
 
 }
 
@@ -131,7 +131,7 @@ do_mode_test10()
 	mosquitto_pub -m '{"do-val":{"value":{"type":"pwm","level":false,"frequency":0,"pulse":0,"pwm":{"frequency":1,"duty-cycle":10}}}}' -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/do/1"
 	parse_logger
 	result "logger"
-	result_logs "do_mode_test" ${test_num} ${LOG_DO_MODE}  ${start_time} "${pub}"
+	result_logs "do_mode_test" ${LOG_DO_MODE}  ${start_time} "${pub}"
 
 }
 
@@ -144,7 +144,7 @@ do_mode_test11()
 	mosquitto_pub -m '{"do-val":{"value":{"type":"pwm","level":false,"frequency":0,"pulse":0,"pwm":{"frequency":20000,"duty-cycle":90}}}}' -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/do/1"
 	parse_logger
 	result "logger"
-	result_logs "do_mode_test" ${test_num} ${LOG_DO_MODE}  ${start_time} "${pub}"
+	result_logs "do_mode_test" ${LOG_DO_MODE}  ${start_time} "${pub}"
 
 }
 
@@ -156,7 +156,7 @@ do_mode_test12()
 	mosquitto_pub -m '{"do-val":{"value":{"type":"pwm","level":true,"frequency":0,"pulse":0,"pwm":{"frequency":"test","duty-cycle":90}}}}' -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/do/1"
 	parse_logger
 	result "logger"
-	result_logs "do_mode_test" ${test_num} ${LOG_DO_MODE}  ${start_time} "${pub}"
+	result_logs "do_mode_test" ${LOG_DO_MODE}  ${start_time} "${pub}"
 }
 
 do_mode_test13()
@@ -167,8 +167,10 @@ do_mode_test13()
 	mosquitto_pub -m '{"do-val":{"value":{"type":"pwm","level":true,"frequency":0,"pulse":0,"pwm":{"frequency":"test","duty-cycle":90}}}}' -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/do/1"
 	parse_logger
 	result "logger"
-	result_logs "do_mode_test" ${test_num} ${LOG_DO_MODE}  ${start_time} "${pub}"
+	result_logs "do_mode_test" ${LOG_DO_MODE}  ${start_time} "${pub}"
 }
+
+setup_time
 
 do_mode_test1
 do_mode_test2

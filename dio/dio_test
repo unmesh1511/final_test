@@ -9,8 +9,6 @@ LOG_EVENT_LOGGER=${IOX_PATH}"/dio/logger"
 LOG_DIO_TEST=${IOX_PATH}"/dio/dio_test_log"
 
 
-test_num=1
-
 dio_test_test1()
 {
 	start_time=$(date | awk '{print $4}')
@@ -20,7 +18,7 @@ dio_test_test1()
 	parse_logger "${err_test_hndl}"
 	result "logger"
 	pub=("mosquitto_pub -m '{"action":"test"}' -t '"glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/do"'")
-	result_logs "dio_test_test" ${test_num} ${LOG_DIO_TEST}  ${start_time} "${pub}"
+	result_logs "dio_test_test" ${LOG_DIO_TEST}  ${start_time} "${pub}"
 }
 
 dio_test_test2()
@@ -32,6 +30,7 @@ dio_test_test2()
 	parse_logger "${err_test_hndl}"
 	result "logger"
 	pub=("mosquitto_pub -m '{"action":"test"}' -t '"glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/do"'")
+	result_logs "dio_test_test" ${LOG_DIO_TEST}  ${start_time} "${pub}"
 }
 
 dio_test_test3()
@@ -43,6 +42,7 @@ dio_test_test3()
 	parse_logger "${err_test_hndl}"
 	result "logger"
 	pub=("mosquitto_pub -m '{"action":"test"}' -t '"glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/do"'")
+	result_logs "dio_test_test" ${LOG_DIO_TEST}  ${start_time} "${pub}"
 }
 
 dio_test_test4()
@@ -54,6 +54,7 @@ dio_test_test4()
 	parse_logger "${err_test_hndl}"
 	result "logger"
 	pub=("mosquitto_pub -m '{"action":"test"}' -t '"glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/do"'")
+	result_logs "dio_test_test" ${LOG_DIO_TEST}  ${start_time} "${pub}"
 }
 
 setup_time

@@ -24,30 +24,29 @@ execution_time()
 result_logs()
 {
 	((++increment))
-	test_num=${2}
-	echo -n ${increment} | tee -a ${RESULT_LOG} ${3}
-	echo -n " | ${1}${test_num}" | tee -a ${RESULT_LOG} ${3}
-	((test_num++)) 
+	((++test_num)) 
+	echo -n ${increment} | tee -a ${RESULT_LOG} ${2}
+	echo -n " | ${1}${test_num}" | tee -a ${RESULT_LOG} ${2}
 	echo -n " | ${RESULT}" | tee -a ${RESULT_LOG}
 	echo -n " | ${DESCRIPTION}" | tee -a ${RESULT_LOG}
-	echo "" >> ${3}
-	echo "START_TIME : "${4} >> ${3}
-	echo ${5} >> ${DIO_CREATE_LOG} 
+	echo "" >> ${2}
+	echo "START_TIME : "${3} >> ${2}
+	echo ${4} >> ${2} 
 	if [[ ! -z ${out_sts} ]];
 	then
-		echo "STATUS_OUTPUT : "${out_sts} >> ${3}
+		echo "STATUS_OUTPUT : "${out_sts} >> ${2}
 		unset out_sts
 	fi	
 	if [[ ! -z ${out_logger} ]];
 	then
-		echo "LOGGER_OUTPUT : "${out_logger} >> ${3}
+		echo "LOGGER_OUTPUT : "${out_logger} >> ${2}
 		unset out_logger
 	fi
 	end_time=$(date | awk '{print $4}')
-	echo "END_TIME : "${end_time} >> ${3}
-	execution_time ${4} ${end_time}
-	echo "" | tee -a ${RESULT_LOG} ${3}
-	echo "==============================================================================" | tee -a ${3}
+	echo "END_TIME : "${end_time} >> ${2}
+	execution_time ${3} ${end_time}
+	echo "" | tee -a ${RESULT_LOG} ${2}
+	echo "==============================================================================" | tee -a ${2}
 }
 
 parse_logger()

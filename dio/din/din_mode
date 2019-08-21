@@ -7,7 +7,6 @@ source ${IOX_PATH}"/errors.sh"
 
 LOG_EVENT_LOGGER=${IOX_PATH}"/dio/din/logger"
 
-test_num=1
 
 wrong_config_level="Wrong configuration for level"
 wrong_config_pulse="Wrong configuration for Pulse output"
@@ -23,7 +22,7 @@ din_mode_test1()
 	parse_logger
 	result "logger"
 	pub=("mosquitto_pub -m '{"di-val":{"value":{"type":"level","di-level":{"report-dur":1000,"detect-level":0,"pullup-cfg":true},"di-pulse":{"report-dur":10,"detect-level":0,"pullup-cfg":true},"di-frequency":{"report-dur":100,"detect-level":0,"pullup-cfg":true}},"monitor":{"rate":1500,"cat":"data","inFeedback":true,"report":"change","throttle":0,"threshold":10}}}' -t '"glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/di/1"'")
-	result_logs "din_mode_test" ${test_num} ${LOG_DIN_MODE}  ${start_time} "${pub}"
+	result_logs "din_mode_test" ${LOG_DIN_MODE}  ${start_time} "${pub}"
 
 }
 
@@ -37,7 +36,7 @@ din_mode_test2()
 	parse_logger
 	result "logger"
 	pub=("mosquitto_pub -m '{"do-val":{"value":{"type":"level","level":false,"frequency":0,"pulse":0,"pwm":{"frequency":0,"duty-cycle":0}}}}' -t '"glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/do/1"'")
-	result_logs "din_mode_test" ${test_num} ${LOG_DIN_MODE}  ${start_time} "${pub}"
+	result_logs "din_mode_test" ${LOG_DIN_MODE}  ${start_time} "${pub}"
 
 }
 
@@ -51,7 +50,7 @@ din_mode_test3()
 	parse_logger "${wrong_config_level}"
 	result "logger"
 	pub=("mosquitto_pub -m '{"do-val":{"value":{"type":"level","level":"true","frequency":0,"pulse":0,"pwm":{"frequency":20000,"duty-cycle":90}}}}' -t '"glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/do/1"'")
-	result_logs "din_mode_test" ${test_num} ${LOG_DIN_MODE}  ${start_time} "${pub}"
+	result_logs "din_mode_test" ${LOG_DIN_MODE}  ${start_time} "${pub}"
 
 }
 
@@ -66,7 +65,7 @@ din_mode_test4()
 	parse_logger
 	result "logger"
 	pub=("mosquitto_pub -m '{"di-val":{"value":{"type":"pulse","di-level":{"report-dur":1000,"detect-level":0,"pullup-cfg":true},"di-pulse":{"report-dur":10,"detect-level":0,"pullup-cfg":true},"di-frequency":{"report-dur":100,"detect-level":0,"pullup-cfg":true}},"monitor":{"rate":15,"cat":"data","inFeedback":true,"report":"change","throttle":0,"threshold":10}}}' -t '"glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/do/1"'")
-	result_logs "din_mode_test" ${test_num} ${LOG_DIN_MODE}  ${start_time} "${pub}"
+	result_logs "din_mode_test" ${LOG_DIN_MODE}  ${start_time} "${pub}"
 
 }
 
@@ -80,7 +79,7 @@ din_mode_test5()
 	parse_logger "${wrong_config_pulse}"
 	result "logger"
 	pub=("mosquitto_pub -m '{"do-val":{"value":{"type":"pulse","level":true,"frequency":0,"pulse":"test","pwm":{"frequency":20000,"duty-cycle":90}}}}' -t '"glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/do/1"'")
-	result_logs "din_mode_test" ${test_num} ${LOG_DIN_MODE}  ${start_time} "${pub}"
+	result_logs "din_mode_test" ${LOG_DIN_MODE}  ${start_time} "${pub}"
 }
 
 din_mode_test6()
@@ -94,7 +93,7 @@ din_mode_test6()
 	parse_logger
 	result "logger"
 	pub=("mosquitto_pub -m '{"di-val":{"value":{"type":"frequency","di-level":{"report-dur":1000,"detect-level":0,"pullup-cfg":true},"di-pulse":{"report-dur":10,"detect-level":0,"pullup-cfg":true},"di-frequency":{"report-dur":100,"detect-level":0,"pullup-cfg":true}},"monitor":{"rate":15,"cat":"data","inFeedback":true,"report":"change","throttle":0,"threshold":10}}}' -t '"glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/di/1"'")
-	result_logs "din_mode_test" ${test_num} ${LOG_DIN_MODE}  ${start_time} "${pub}"
+	result_logs "din_mode_test" ${LOG_DIN_MODE}  ${start_time} "${pub}"
 
 }
 
@@ -107,7 +106,7 @@ din_mode_test7()
 	parse_logger "${wrong_config_freq}"
 	result "logger"
 	pub=("mosquitto_pub -m '{"do-val":{"value":{"type":"frequency","level":true,"frequency":"test","pulse":0,"pwm":{"frequency":20000,"duty-cycle":90}}}}' -t '"glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/do/1"'")
-	result_logs "din_mode_test" ${test_num} ${LOG_DIN_MODE}  ${start_time} "${pub}"
+	result_logs "din_mode_test" ${LOG_DIN_MODE}  ${start_time} "${pub}"
 }
 
 setup_time

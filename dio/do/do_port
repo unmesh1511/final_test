@@ -19,7 +19,7 @@ do_port_test1()
 	mosquitto_pub -m '{"do-val":{"value":{"type":"level","level":true,"frequency":0,"pulse":0,"pwm":{"frequency":0,"duty-cycle":0}}}}' -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/do/1"
 	parse_logger
 	result "logger"
-	result_logs "do_port_test" ${test_num} ${LOG_DO_PORT}  ${start_time} "${pub}"
+	result_logs "do_port_test" ${LOG_DO_PORT}  ${start_time} "${pub}"
 }
 
 do_port_test2()
@@ -31,7 +31,7 @@ do_port_test2()
 	mosquitto_pub -m '{"do-val":{"value":{"type":"level","level":true,"frequency":0,"pulse":0,"pwm":{"frequency":0,"duty-cycle":0}}}}' -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/do/2"
 	parse_logger
 	result "logger"
-	result_logs "do_port_test" ${test_num} ${LOG_DO_PORT}  ${start_time} "${pub}"
+	result_logs "do_port_test" ${LOG_DO_PORT}  ${start_time} "${pub}"
 }
 
 do_port_test3()
@@ -43,7 +43,7 @@ do_port_test3()
 	mosquitto_pub -m '{"do-val":{"value":{"type":"level","level":true,"frequency":0,"pulse":0,"pwm":{"frequency":0,"duty-cycle":0}}}}' -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/do/3"
 	parse_logger
 	result "logger"
-	result_logs "do_port_test" ${test_num} ${LOG_DO_PORT}  ${start_time} "${pub}"
+	result_logs "do_port_test" ${LOG_DO_PORT}  ${start_time} "${pub}"
 }
 
 do_port_test4()
@@ -55,7 +55,7 @@ do_port_test4()
 	mosquitto_pub -m '{"do-val":{"value":{"type":"level","level":true,"frequency":0,"pulse":0,"pwm":{"frequency":0,"duty-cycle":0}}}}' -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/do/4"
 	parse_logger
 	result "logger"
-	result_logs "do_port_test" ${test_num} ${LOG_DO_PORT}  ${start_time} "${pub}"
+	result_logs "do_port_test" ${LOG_DO_PORT}  ${start_time} "${pub}"
 }
 
 do_port_test5()
@@ -67,7 +67,7 @@ do_port_test5()
 	mosquitto_pub -m '{"do-val":{"value":{"type":"level","level":true,"frequency":0,"pulse":0,"pwm":{"frequency":0,"duty-cycle":0}}}}' -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/do/5"
 	parse_logger
 	result "logger"
-	result_logs "do_port_test" ${test_num} ${LOG_DO_PORT}  ${start_time} "${pub}"
+	result_logs "do_port_test" ${LOG_DO_PORT}  ${start_time} "${pub}"
 }
 
 do_port_test6()
@@ -79,7 +79,7 @@ do_port_test6()
 	mosquitto_pub -m '{"do-val":{"value":{"type":"level","level":true,"frequency":0,"pulse":0,"pwm":{"frequency":0,"duty-cycle":0}}}}' -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/do/6"
 	parse_logger
 	result "logger"
-	result_logs "do_port_test" ${test_num} ${LOG_DO_PORT}  ${start_time} "${pub}"
+	result_logs "do_port_test" ${LOG_DO_PORT}  ${start_time} "${pub}"
 }
 
 do_port_test7()
@@ -91,8 +91,10 @@ do_port_test7()
 	mosquitto_pub -m '{"do-val":{"value":{"type":"level","level":true,"frequency":0,"pulse":0,"pwm":{"frequency":0,"duty-cycle":0}}}}' -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/do/8"
 	parse_logger
 	result "logger"
-	result_logs "do_port_test" ${test_num} ${LOG_DO_PORT}  ${start_time} "${pub}"
+	result_logs "do_port_test" ${LOG_DO_PORT}  ${start_time} "${pub}"
 }
+
+setup_time
 
 do_port_test1
 do_port_test2

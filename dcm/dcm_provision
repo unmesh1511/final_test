@@ -1,35 +1,15 @@
 #!/bin/bash
 
-LOGGER_PATH="/home/unmesh/iox_test/dcm/logger"
-STS_PATH="/home/unmesh/iox_test/dcm/sts"
+source env_var.sh
+source ${IOX_PATH}"/common.sh"
+source ${IOX_PATH}"/iox.config"
+source ${IOX_PATH}"/errors.sh"
 
-kill_process()
-{
-	pkill mosquitto_sub 
-	if [[ $? -eq 1 ]];
-	then
-		echo "failed to kill mosquitto_sub process"
-	fi
-}
+LOG_EVENT_LOGGER=${IOX_PATH}"/dcm/logger"
+LOG_STS=${IOX_PATH}"/dcm/sts"
+LOG_DCM_PROV=${IOX_PATH}"/dcm/dcm_prov_log"
 
-parse_sts()
-{
-	mosquitto_sub -t "glp/0/17q2d9v/fb/dev/iox/dio/sts" > ${STS_PATH} &
-	sleep 5
-	if [[ -s ${STS_PATH} ]];
-	then 
-		out=$(awk -F "," '/mru/{print $NF}' ${STS_PATH} | grep -oP '[[:digit:]].*(?= [[:space:]]*UTC.*)' | sort -k1,2 -ur | head -n1 | xargs -Iregex grep -m1 "regex" ${STS_PATH})
-		sleep 2
-		state=$(echo ${out} | python -c 'import sys, json; print json.load(sys.stdin)["state"]')
-		if [[ ${state} == "unprovisioned" ]];
-		then
-			STS_RESULT="PASS"
-		else
-			STS_RESULT="FAIL"
-		fi
-	fi
-	rm ${STS_PATH}
-}
+dcm_prov_state="provisioning"
 
 subscribe_sts_event()
 {
@@ -38,26 +18,35 @@ subscribe_sts_event()
 
 dcm_provision_test1()
 {
-	mosquitto_sub -t "" &
+	start_time=$(date | awk '{print $4}')
 	mosquitto_pub -m '{"action":"provision"}' -t "glp/0/17q2d9v/rq/con/test10/do"
 
 }
 
 dcm_provision_test2()
 {
+	start_time=$(date | awk '{print $4}')
 	subscribe_sts_event &
 	mosquitto_pub -m '' -t "glp/0/17q2d9v/rq/con/test2/do"
-	parse_sts
+	parse_sts "${dcm_prov_state}"
+	result "sts"
+	pub=("mosquitto_pub -m '{"action":"prov"}' -t '"glp/0/17q2d9v/rq/con/test20/do"'")
+	result_logs "dcm_prov_test" ${LOG_DCM_PROV}  ${start_time} "${pub}"
 }
 
 dcm_provision_test3()
 {
+	start_time=$(date | awk '{print $4}')
 	subscribe_sts_event &
 	mosquitto_sub -t "glp/0/17q2d9v/fb/con/test2/cfg" &
 	mosquitto_pub -m '{"action":"provision"}' -t "glp/0/17q2d9v/rq/con/test2/do"
-	parse_sts
+	parse_sts "${dcm_prov_state}"
+	result "sts"
+	pub=("mosquitto_pub -m '{"action":"prov"}' -t '"glp/0/17q2d9v/rq/con/test20/do"'")
+	result_logs "dcm_prov_test" ${LOG_DCM_PROV}  ${start_time} "${pub}"
 }
 
+setup_time
 
 dcm_provision_test1
 dcm_provision_test2

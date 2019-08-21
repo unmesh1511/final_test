@@ -9,7 +9,6 @@ LOG_EVENT_LOGGER=${IOX_PATH}"/dio/relay/logger"
 LOG_STS=${IOX_PATH}"/dio/relay/sts"
 LOG_RELAY_VALUE=${IOX_PATH}"/dio/relay/relay_value_log"
 
-test_num=1
 
 relay_value_test1()
 {
@@ -19,12 +18,13 @@ relay_value_test1()
 	mosquitto_pub -m '{"relay-val":{"value":{"level":"asdasdsd"}}}' -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/relay/1"
 	parse_logger
 	result "logger"
-	result_logs "relay_value_test" ${test_num} ${LOG_RELAY_VALUE}  ${start_time} "${pub}"
+	result_logs "relay_value_test" ${LOG_RELAY_VALUE}  ${start_time} "${pub}"
 }
 
 relay_value_test2()
 {
 	mosquitto_sub -t "glp/0/${SID}/fb/dev/iox/${DIO_DEV_NAME}/if/relay/2" &
+	pids+=($!)
 	mosquitto_pub -m '{"relay-val":{"value":{"level":false}}}' -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/relay/1"
 }
 

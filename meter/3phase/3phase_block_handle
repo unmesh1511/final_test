@@ -1,58 +1,32 @@
 #!/bin/bash
 
-LOGGER_PATH="/home/unmesh/iox_test/meter/3phase/logger"
+source env_var.sh
+source ${IOX_PATH}"/common.sh"
+source ${IOX_PATH}"/iox.config"
+source ${IOX_PATH}"/errors.sh"
 
-kill_process()
-{
-	pkill mosquitto_sub 
-	if [[ $? -eq 1 ]];
-	then
-		echo "failed to kill mosquitto_sub process"
-	fi
-}
+LOG_EVENT_LOGGER=${IOX_PATH}"/meter/3phase/logger"
+LOG_STS=${IOX_PATH}"/meter/3phase/sts"
+LOG_3PHASE_BLOCK=${IOX_PATH}"/meter/3phase/3phase_block_log"
 
-parse_logger()
-{
-	sleep 5
-	if [[ -s ${LOGGER_PATH} ]];
-	then 
-		out=$(awk -F "," '/utc/{print $4}' ${LOGGER_PATH} | grep -oP '[[:digit:]].*(?= [[:space:]]*UTC.*)' | sort -k1,2 -ur | head -n1 | xargs -Iregex grep -m1 "regex" ${LOGGER_PATH})
-		out_time=$(awk -F "," '/utc/{print $4}' ${LOGGER_PATH} | grep -oP '[[:digit:]].*(?= [[:space:]]*UTC.*)' | sort -k1,2 -ur | head -n1 | awk '{print $2}')
-		if [[ ${last_out_time} == ${out_time} ]];
-		then
-			echo "NO NEW MESSAGE FROM LOGGER"
-		else
-			parse=$(echo ${out} | python -c 'import sys, json; print json.load(sys.stdin)["message"]')
-			if [[ ${parse} == ${1} ]];
-			then
-				LOGGER_RESULT="PASS"
-			else
-				LOGGER_RESULT="FAIL"
-			fi
-			last_out_time=${out_time}
-		fi
-	fi
-	rm ${LOGGER_PATH}
-}
-
-subscribe_logger_event()
-{
-    mosquitto_sub -t "glp/0/./=logger/event" > ${LOGGER_PATH}
-}
+phase_invalid="The phase asked for is not valid"
 
 3phase_block_handle_test1()
 {
-	subscribe_logger_event &
-	mosquitto_sub -t "glp/0/17q2d9v/rq/dev/iox/meter/if/phase/0" &
-	mosquitto_pub -m '{"cpPhaseEnable":{"L1_Phase":1,"L2_Phase":1,"L3_Phase":1},"cpCtRatio":{"L1_ctRatio":{"multiplier":10},"L2_ctRatio":{"multiplier":10},"L3_ctRatio":{"multiplier":10}},"nvoVoltageRMS":{"monitor":{"rate":500,"cat":"data","inFeedback":false,"report":"change","throttle":21,"threshold":31}},"nvoVoltageAvg":{"monitor":{"rate":300,"cat":"data","inFeedback":false,"report":"change","throttle":21,"threshold":31}},"nvoCurrentRMS":{"monitor":{"rate":550,"cat":"data","inFeedback":false,"report":"change","throttle":22,"threshold":32}},"nvoActiveEnergy":{"monitor":{"rate":250,"cat":"data","inFeedback":false,"report":"change","throttle":22,"threshold":32}},"nvoReactEnergy":{"monitor":{"rate":300,"cat":"data","inFeedback":false,"report":"change","throttle":22,"threshold":32}},"nvoAppEnergy":{"monitor":{"rate":350,"cat":"data","inFeedback":false,"report":"change","throttle":22,"threshold":32}},"nvoPhaseActEnergy":{"monitor":{"rate":400,"cat":"data","inFeedback":false,"report":"change","throttle":22,"threshold":32}},"nvoPhaseRctEnergy":{"monitor":{"rate":450,"cat":"data","inFeedback":false,"report":"change","throttle":22,"threshold":32}},"nvoPhaseAppEnergy":{"monitor":{"rate":500,"cat":"data","inFeedback":false,"report":"change","throttle":22,"threshold":32}},"nvoPower":{"monitor":{"rate":550,"cat":"data","inFeedback":false,"report":"change","throttle":22,"threshold":32}},"nvoPhaseActPwr":{"monitor":{"rate":600,"cat":"data","inFeedback":false,"report":"change","throttle":22,"threshold":32}},"nvoPhaseReactPwr":{"monitor":{"rate":650,"cat":"data","inFeedback":false,"report":"change","throttle":22,"threshold":32}},"nvoPhaseAppPwr":{"monitor":{"rate":700,"cat":"data","inFeedback":false,"report":"change","throttle":22,"threshold":32}},"nvoPowerStatus":{"monitor":{"rate":500,"cat":"data","inFeedback":false,"report":"change","throttle":22,"threshold":32}},"nvoPhaseFrequency":{"monitor":{"rate":400,"cat":"data","inFeedback":false,"report":"change","throttle":22,"threshold":32}}}' -t "glp/0/17q2d9v/rq/dev/iox/meter/if/phase/0"
-	parse_logger
+	mosquitto_sub -t "glp/0/${SID}/rq/dev/iox/${METER_DEV_NAME}/if/phase/0" &
+	mosquitto_pub -m '{"cpPhaseEnable":{"L1_Phase":1,"L2_Phase":1,"L3_Phase":1},"cpCtRatio":{"L1_ctRatio":{"multiplier":10},"L2_ctRatio":{"multiplier":10},"L3_ctRatio":{"multiplier":10}},"nvoVoltageRMS":{"monitor":{"rate":500,"cat":"data","inFeedback":false,"report":"change","throttle":21,"threshold":31}},"nvoVoltageAvg":{"monitor":{"rate":300,"cat":"data","inFeedback":false,"report":"change","throttle":21,"threshold":31}},"nvoCurrentRMS":{"monitor":{"rate":550,"cat":"data","inFeedback":false,"report":"change","throttle":22,"threshold":32}},"nvoActiveEnergy":{"monitor":{"rate":250,"cat":"data","inFeedback":false,"report":"change","throttle":22,"threshold":32}},"nvoReactEnergy":{"monitor":{"rate":300,"cat":"data","inFeedback":false,"report":"change","throttle":22,"threshold":32}},"nvoAppEnergy":{"monitor":{"rate":350,"cat":"data","inFeedback":false,"report":"change","throttle":22,"threshold":32}},"nvoPhaseActEnergy":{"monitor":{"rate":400,"cat":"data","inFeedback":false,"report":"change","throttle":22,"threshold":32}},"nvoPhaseRctEnergy":{"monitor":{"rate":450,"cat":"data","inFeedback":false,"report":"change","throttle":22,"threshold":32}},"nvoPhaseAppEnergy":{"monitor":{"rate":500,"cat":"data","inFeedback":false,"report":"change","throttle":22,"threshold":32}},"nvoPower":{"monitor":{"rate":550,"cat":"data","inFeedback":false,"report":"change","throttle":22,"threshold":32}},"nvoPhaseActPwr":{"monitor":{"rate":600,"cat":"data","inFeedback":false,"report":"change","throttle":22,"threshold":32}},"nvoPhaseReactPwr":{"monitor":{"rate":650,"cat":"data","inFeedback":false,"report":"change","throttle":22,"threshold":32}},"nvoPhaseAppPwr":{"monitor":{"rate":700,"cat":"data","inFeedback":false,"report":"change","throttle":22,"threshold":32}},"nvoPowerStatus":{"monitor":{"rate":500,"cat":"data","inFeedback":false,"report":"change","throttle":22,"threshold":32}},"nvoPhaseFrequency":{"monitor":{"rate":400,"cat":"data","inFeedback":false,"report":"change","throttle":22,"threshold":32}}}' -t "glp/0/${SID}/rq/dev/iox/${METER_DEV_NAME}/if/phase/0"
 }
 
 3phase_block_handle_test2()
 {
-	subscribe_logger_event &
-	mosquitto_pub -m '{"cpPhaseEnable":{"L1_Phase":1,"L2_Phase":1,"L3_Phase":1},"cpCtRatio":{"L1_ctRatio":{"multiplier":10},"L2_ctRatio":{"multiplier":10},"L3_ctRatio":{"multiplier":10}},"nvoVoltageRMS":{"monitor":{"rate":500,"cat":"data","inFeedback":false,"report":"change","throttle":21,"threshold":31}},"nvoVoltageAvg":{"monitor":{"rate":300,"cat":"data","inFeedback":false,"report":"change","throttle":21,"threshold":31}},"nvoCurrentRMS":{"monitor":{"rate":550,"cat":"data","inFeedback":false,"report":"change","throttle":22,"threshold":32}},"nvoActiveEnergy":{"monitor":{"rate":250,"cat":"data","inFeedback":false,"report":"change","throttle":22,"threshold":32}},"nvoReactEnergy":{"monitor":{"rate":300,"cat":"data","inFeedback":false,"report":"change","throttle":22,"threshold":32}},"nvoAppEnergy":{"monitor":{"rate":350,"cat":"data","inFeedback":false,"report":"change","throttle":22,"threshold":32}},"nvoPhaseActEnergy":{"monitor":{"rate":400,"cat":"data","inFeedback":false,"report":"change","throttle":22,"threshold":32}},"nvoPhaseRctEnergy":{"monitor":{"rate":450,"cat":"data","inFeedback":false,"report":"change","throttle":22,"threshold":32}},"nvoPhaseAppEnergy":{"monitor":{"rate":500,"cat":"data","inFeedback":false,"report":"change","throttle":22,"threshold":32}},"nvoPower":{"monitor":{"rate":550,"cat":"data","inFeedback":false,"report":"change","throttle":22,"threshold":32}},"nvoPhaseActPwr":{"monitor":{"rate":600,"cat":"data","inFeedback":false,"report":"change","throttle":22,"threshold":32}},"nvoPhaseReactPwr":{"monitor":{"rate":650,"cat":"data","inFeedback":false,"report":"change","throttle":22,"threshold":32}},"nvoPhaseAppPwr":{"monitor":{"rate":700,"cat":"data","inFeedback":false,"report":"change","throttle":22,"threshold":32}},"nvoPowerStatus":{"monitor":{"rate":500,"cat":"data","inFeedback":false,"report":"change","throttle":22,"threshold":32}},"nvoPhaseFrequency":{"monitor":{"rate":400,"cat":"data","inFeedback":false,"report":"change","throttle":22,"threshold":32}}}' -t "glp/0/17q2d9v/rq/dev/iox/meter/if/phase/1"
-	parse_logger
+	start_time=$(date | awk '{print $4}')
+  	subscribe_logger_event &
+	pids+=($!)
+	mosquitto_pub -m '{"cpPhaseEnable":{"L1_Phase":1,"L2_Phase":1,"L3_Phase":1},"cpCtRatio":{"L1_ctRatio":{"multiplier":10},"L2_ctRatio":{"multiplier":10},"L3_ctRatio":{"multiplier":10}},"nvoVoltageRMS":{"monitor":{"rate":500,"cat":"data","inFeedback":false,"report":"change","throttle":21,"threshold":31}},"nvoVoltageAvg":{"monitor":{"rate":300,"cat":"data","inFeedback":false,"report":"change","throttle":21,"threshold":31}},"nvoCurrentRMS":{"monitor":{"rate":550,"cat":"data","inFeedback":false,"report":"change","throttle":22,"threshold":32}},"nvoActiveEnergy":{"monitor":{"rate":250,"cat":"data","inFeedback":false,"report":"change","throttle":22,"threshold":32}},"nvoReactEnergy":{"monitor":{"rate":300,"cat":"data","inFeedback":false,"report":"change","throttle":22,"threshold":32}},"nvoAppEnergy":{"monitor":{"rate":350,"cat":"data","inFeedback":false,"report":"change","throttle":22,"threshold":32}},"nvoPhaseActEnergy":{"monitor":{"rate":400,"cat":"data","inFeedback":false,"report":"change","throttle":22,"threshold":32}},"nvoPhaseRctEnergy":{"monitor":{"rate":450,"cat":"data","inFeedback":false,"report":"change","throttle":22,"threshold":32}},"nvoPhaseAppEnergy":{"monitor":{"rate":500,"cat":"data","inFeedback":false,"report":"change","throttle":22,"threshold":32}},"nvoPower":{"monitor":{"rate":550,"cat":"data","inFeedback":false,"report":"change","throttle":22,"threshold":32}},"nvoPhaseActPwr":{"monitor":{"rate":600,"cat":"data","inFeedback":false,"report":"change","throttle":22,"threshold":32}},"nvoPhaseReactPwr":{"monitor":{"rate":650,"cat":"data","inFeedback":false,"report":"change","throttle":22,"threshold":32}},"nvoPhaseAppPwr":{"monitor":{"rate":700,"cat":"data","inFeedback":false,"report":"change","throttle":22,"threshold":32}},"nvoPowerStatus":{"monitor":{"rate":500,"cat":"data","inFeedback":false,"report":"change","throttle":22,"threshold":32}},"nvoPhaseFrequency":{"monitor":{"rate":400,"cat":"data","inFeedback":false,"report":"change","throttle":22,"threshold":32}}}' -t "glp/0/${SID}/rq/dev/iox/${METER_DEV_NAME}/if/phase/1"
+	parse_logger "${phase_invalid}"
+	result "logger"
+	pub=("")
+	result_logs "3phase_block_test" ${LOG_3PHASE_BLOCK}  ${start_time} "${pub}"
 }
 
 3phase_block_handle_test1

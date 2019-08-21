@@ -9,7 +9,6 @@ LOG_EVENT_LOGGER=${IOX_PATH}"/dio/logger"
 LOG_STS=${IOX_PATH}"/dio/sts"
 LOG_DIO_DELETE=${IOX_PATH}"/dio/dio_delete_log"
 
-test_num=1
 
 subscribe_sts_event()
 {
@@ -28,7 +27,7 @@ dio_delete_test1()
 	parse_logger "${del_without_mru}" 
 	result "sts"
 	pub=("mosquitto_pub -m '{"action":"delete"}' -t '"glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/do"'")
-	result_logs "dio_delete_test" ${test_num} ${LOG_DIO_DELETE} ${start_time} "${pub}"
+	result_logs "dio_delete_test" ${LOG_DIO_DELETE} ${start_time} "${pub}"
 }
 
 dio_delete_test2()
@@ -43,7 +42,7 @@ dio_delete_test2()
 	parse_logger "${del_without_mru}"
 	result "sts"
 	pub=("mosquitto_pub -m '{"action":"delete"}' -t '"glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/do"'")
-	result_logs "dio_delete_test" ${test_num} ${LOG_DIO_DELETE} ${start_time} "${pub}"
+	result_logs "dio_delete_test" ${LOG_DIO_DELETE} ${start_time} "${pub}"
 }
 
 dio_delete_test3()
@@ -58,7 +57,7 @@ dio_delete_test3()
 	parse_logger "${del_without_mru}"
 	result "sts"
 	pub=("mosquitto_pub -m '{"action":"delete"}' -t '"glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/do"'")
-	result_logs "dio_delete_test" ${test_num} ${LOG_DIO_DELETE} ${start_time} "${pub}"
+	result_logs "dio_delete_test" ${LOG_DIO_DELETE} ${start_time} "${pub}"
 }
 
 dio_delete_test4()
@@ -73,7 +72,7 @@ dio_delete_test4()
 	parse_logger "${del_without_mru}"
 	result "sts"
 	pub=("mosquitto_pub -m '{"action":"delete"}' -t '"glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/do"'")
-	result_logs "dio_delete_test" ${test_num} ${LOG_DIO_DELETE} ${start_time} "${pub}"
+	result_logs "dio_delete_test" ${LOG_DIO_DELETE} ${start_time} "${pub}"
 }
 
 dio_delete_test5()
@@ -88,7 +87,7 @@ dio_delete_test5()
 	parse_logger "${del_without_mru}"
 	result "sts"
 	pub=("mosquitto_pub -m '{"action":"delete"}' -t '"glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/do"'")
-	result_logs "dio_delete_test" ${test_num} ${LOG_DIO_DELETE} ${start_time} "${pub}"
+	result_logs "dio_delete_test" ${LOG_DIO_DELETE} ${start_time} "${pub}"
 }
 
 setup_time

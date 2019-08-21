@@ -9,7 +9,6 @@ LOG_EVENT_LOGGER=${IOX_PATH}"/dio/relay/logger"
 LOG_STS=${IOX_PATH}"/dio/relay/sts"
 LOG_RELAY_PORT=${IOX_PATH}"/dio/relay/relay_port_log"
 
-test_num=1
 
 relay_port_test1()
 {

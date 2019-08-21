@@ -10,8 +10,6 @@ LOG_STS=${IOX_PATH}"/dio/sts"
 LOG_DIO_DEPROVISION=${IOX_PATH}"/dio/dio_deprovision_log"
 
 
-test_num=1
-
 subscribe_sts_event()
 {
 	mosquitto_sub -t "glp/0/${SID}/fb/dev/iox/${DIO_DEV_NAME}/sts" > ${LOG_STS}
@@ -27,7 +25,7 @@ dio_deprovision_test1()
 	parse_logger "${device_not_provisioned}"
 	result "logger"
 	pub=("mosquitto_pub -m '{"action":"deprovision"}' -t '"glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/do"'")
-	result_logs "dio_delete_test" ${test_num} ${LOG_DIO_DEPROVISION}  ${start_time} "${pub}"
+	result_logs "dio_delete_test" ${LOG_DIO_DEPROVISION}  ${start_time} "${pub}"
 }
 
 dio_deprovision_test2()
@@ -39,7 +37,7 @@ dio_deprovision_test2()
 	parse_logger "${device_not_provisioned}"
 	result "logger"
 	pub=("mosquitto_pub -m '{"action":"deprovision"}' -t '"glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/do"'")
-	result_logs "dio_delete_test" ${test_num} ${LOG_DIO_DEPROVISION}  ${start_time} "${pub}"
+	result_logs "dio_delete_test" ${LOG_DIO_DEPROVISION}  ${start_time} "${pub}"
 }
 
 dio_deprovision_test3()
@@ -51,7 +49,7 @@ dio_deprovision_test3()
 	parse_sts "${deprov_expected_state}"
 	result "sts"
 	pub=("mosquitto_pub -m '{"action":"deprovision"}' -t '"glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/do"'")
-	result_logs "dio_delete_test" ${test_num} ${LOG_DIO_DEPROVISION}  ${start_time} "${pub}"
+	result_logs "dio_delete_test" ${LOG_DIO_DEPROVISION}  ${start_time} "${pub}"
 }
 
 dio_deprovision_test4()
@@ -63,7 +61,7 @@ dio_deprovision_test4()
 	parse_logger "${device_not_provisioned}"
 	result "logger"
 	pub=("mosquitto_pub -m '{"action":"deprovision"}' -t '"glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/do"'")
-	result_logs "dio_delete_test" ${test_num} ${LOG_DIO_DEPROVISION}  ${start_time} "${pub}"
+	result_logs "dio_delete_test" ${LOG_DIO_DEPROVISION}  ${start_time} "${pub}"
 }
 
 setup_time

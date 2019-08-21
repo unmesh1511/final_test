@@ -9,7 +9,6 @@ LOG_EVENT_LOGGER=${IOX_PATH}"/dio/relay/logger"
 LOG_STS=${IOX_PATH}"/dio/relay/sts"
 LOG_RELAY_DEEP=${IOX_PATH}"/dio/relay/relay_deep_log"
 
-test_num=1
 
 relay_deep_test1()
 {
@@ -19,7 +18,7 @@ relay_deep_test1()
 	mosquitto_pub -m 'true' -t "glp/0/${SID}/rq/dev/iox/relay/if/relay/1/relay-val/value/level12"
 	parse_logger
 	result "logger"
-	result_logs "relay_deep_test" ${test_num} ${LOG_RELAY_DEEP}  ${start_time} "${pub}"
+	result_logs "relay_deep_test" ${LOG_RELAY_DEEP}  ${start_time} "${pub}"
 }
 
 relay_deep_test2()
@@ -31,7 +30,7 @@ relay_deep_test2()
 	mosquitto_pub -m 'true' -t "glp/0/${SID}/rq/dev/iox/relay/if/relay/1/relay-val/value/level"
 	parse_logger
 	result "logger"
-	result_logs "relay_deep_test" ${test_num} ${LOG_RELAY_DEEP}  ${start_time} "${pub}"
+	result_logs "relay_deep_test" ${LOG_RELAY_DEEP}  ${start_time} "${pub}"
 }
 
 setup_time

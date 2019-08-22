@@ -71,7 +71,7 @@ Inside each device directories there are testcases for different actions such as
 ├── env_var.sh
 │
 ├── errors.sh
-|
+│
 ├── generic
 │
 ├── meter

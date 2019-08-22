@@ -1,0 +1,12 @@
+dcm_create_test1
+START_TIME : 15:06:41
+mosquitto_pub -m '{action:create,args:{sources:[glp/0/17q2d9v/fb/dev/iox/dio/if/di/1/di-val123/value],destinations:[glp/0/17q2d9v/rq/dev/iox/dio/if/relay/1/relay-val/value],policy:smart,map:{level:$.di-level.level}}}' -t 'glp/0/17q2d9v/rq/con/test0/do'
+END_TIME : 15:06:46
+
+==============================================================================
+dcm_create_test2
+START_TIME : 15:06:46
+mosquitto_pub -m '{action:create,args:{sources:[glp/0/17q2d9v/fb/dev/iox/dio/if/di/1/di-val/value],destinations:[glp/0/17q2d9v/rq/dev/iox/dio/if/relay/1/relay-val/value],policy:smart,map:{level:$.di-level.level}}}' -t 'glp/0/17q2d9v/rq/con/test2/do'
+END_TIME : 15:06:51
+
+==============================================================================

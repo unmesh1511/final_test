@@ -1,64 +1,13 @@
 #!/bin/bash
 
-LOGGER_PATH="/home/unmesh/iox_test/modbus/logger"
-STS_PATH="/home/unmesh/iox_test/modbus/sts"
+source env_var.sh
+source ${IOX_PATH}"/common.sh"
+source ${IOX_PATH}"/iox.config"
+source ${IOX_PATH}"/errors.sh"
 
-kill_process()
-{
-	pkill mosquitto_sub 
-	if [[ $? -eq 1 ]];
-	then
-		echo "failed to kill mosquitto_sub process"
-	fi
-}
-
-parse_logger()
-{
-	sleep 5
-	if [[ -s ${LOGGER_PATH} ]];
-	then 
-		out=$(awk -F "," '/utc/{print $4}' ${LOGGER_PATH} | grep -oP '[[:digit:]].*(?= [[:space:]]*UTC.*)' | sort -k1,2 -ur | head -n1 | xargs -Iregex grep -m1 "regex" ${LOGGER_PATH})
-		out_time=$(awk -F "," '/utc/{print $4}' ${LOGGER_PATH} | grep -oP '[[:digit:]].*(?= [[:space:]]*UTC.*)' | sort -k1,2 -ur | head -n1 | awk '{print $2}')
-		if [[ ${last_out_time} == ${out_time} ]];
-		then
-			echo "NO NEW MESSAGE FROM LOGGER"
-		else
-			parse=$(echo ${out} | python -c 'import sys, json; print json.load(sys.stdin)["message"]')
-			if [[ ${parse} == ${1} ]];
-			then
-				LOGGER_RESULT="PASS"
-			else
-				LOGGER_RESULT="FAIL"
-			fi
-			last_out_time=${out_time}
-		fi
-	fi
-	rm ${LOGGER_PATH}
-}
-
-parse_sts()
-{
-	mosquitto_sub -t "glp/0/17q2d9v/fb/dev/iox/dio/sts" > ${STS_PATH} &
-	sleep 5
-	if [[ -s ${STS_PATH} ]];
-	then 
-		out=$(awk -F "," '/mru/{print $NF}' ${STS_PATH} | grep -oP '[[:digit:]].*(?= [[:space:]]*UTC.*)' | sort -k1,2 -ur | head -n1 | xargs -Iregex grep -m1 "regex" ${STS_PATH})
-		sleep 2
-		state=$(echo ${out} | python -c 'import sys, json; print json.load(sys.stdin)["state"]')
-		if [[ ${state} == "unprovisioned" ]];
-		then
-			STS_RESULT="PASS"
-		else
-			STS_RESULT="FAIL"
-		fi
-	fi
-	rm ${STS_PATH}
-}
-
-subscribe_logger_event()
-{
-    mosquitto_sub -t "glp/0/./=logger/event" > ${LOGGER_PATH}
-}
+LOG_EVENT_LOGGER=${IOX_PATH}"/modbus/logger"
+LOG_STS=${IOX_PATH}"/modbus/sts"
+LOG_MODBUS_REPLACE=${IOX_PATH}"/modbus/modbus_replace_log"
 
 subscribe_sts_event()
 {
@@ -67,40 +16,64 @@ subscribe_sts_event()
 
 modbus_replace_test1()
 {
-	subscribe_logger_event &
+	start_time=$(date | awk '{print $4}') 
+	subscribe_logger_event & 
+	pids+=($!)
 	mosquitto_pub -m '{"action":"replace"}' -t "glp/0/17q2d9v/rq/dev/iox/pm820/do"
-	parse_logger
+	parse_logger "replace : invalid unid"
 }
 
 modbus_replace_test2()
 {
-	subscribe_logger_event &
+	start_time=$(date | awk '{print $4}') 
+	subscribe_logger_event & 
+	pids+=($!)
 	mosquitto_pub -m '{"action":"replace","args":{"unid":"01:43"}}' -t "glp/0/17q2d9v/rq/dev/iox/pm820/do"
-	parse_logger
+	parse_logger "01:43 : invalid unid"
+	result "logger"
+	pub=("mosquitto_pub -m '{"action":"replace","args":{"unid":"01:43"}}' -t '"glp/0/17q2d9v/rq/dev/iox/pm820/do"'")
+	result_logs "modbus_replace_test" ${LOG_MODBUS_REPLACE}  ${start_time} "${pub}"
 }
+
 
 modbus_replace_test3()
 {
-	subscribe_logger_event &
+	start_time=$(date | awk '{print $4}') 
+	subscribe_logger_event & 
+	pids+=($!)
 	mosquitto_pub -m '{"action":"replace","args":{"unid":1000}}' -t "glp/0/17q2d9v/rq/dev/iox/pm820/do"
-	parse_logger
+	parse_logger "1000 : invalid unid"
+	result "logger"
+	pub=("mosquitto_pub -m '{"action":"replace","args":{"unid":1000}}' -t '"glp/0/17q2d9v/rq/dev/iox/pm820/do"'")
+	result_logs "modbus_replace_test" ${LOG_MODBUS_REPLACE}  ${start_time} "${pub}"
 }
 
 modbus_replace_test4()
 {
-	subscribe_logger_event &
+	start_time=$(date | awk '{print $4}') 
+	subscribe_logger_event & 
+	pids+=($!)
 	mosquitto_pub -m '{"action":"replace","args":{"unid":"01:1"}}' -t "glp/0/17q2d9v/rq/dev/iox/pm820/do"
-	parse_logger
+	parse_logger "01:1 : invalid unid"
+	result "logger"
+	pub=("mosquitto_pub -m '{"action":"replace","args":{"unid":"01:1"}}' -t '"glp/0/17q2d9v/rq/dev/iox/pm820/do"'")
+	result_logs "modbus_replace_test" ${LOG_MODBUS_REPLACE}  ${start_time} "${pub}"
 }
+
 
 modbus_replace_test5()
 {
-	subscribe_logger_event &
+	start_time=$(date | awk '{print $4}') 
 	subscribe_sts_event &
+	pids+=($!)
 	mosquitto_pub -m '{"action":"replace","args":{"unid":"01:2"}}' -t "glp/0/17q2d9v/rq/dev/iox/pm820/do"
-	parse_logger
-	parse_sts
+	parse_sts "provisioned"
+	result "sts"
+	pub=("mosquitto_pub -m '{"action":"replace","args":{"unid":"01:2"}}' -t '"glp/0/17q2d9v/rq/dev/iox/pm820/do"'")
+	result_logs "modbus_replace_test" ${LOG_MODBUS_REPLACE}  ${start_time} "${pub}"
 }
+
+setup_time
 
 modbus_replace_test1
 modbus_replace_test2

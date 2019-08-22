@@ -132,7 +132,6 @@ din_port_test9()
 	result_logs "din_port_test" ${LOG_DIN_PORT}  ${start_time} "${pub}"
 }
 
-setup_time
 
 din_port_test1
 din_port_test2

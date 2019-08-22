@@ -7,14 +7,14 @@ source ${IOX_PATH}"/errors.sh"
 
 LOG_EVENT_LOGGER=${IOX_PATH}"/meter/3phase/logger"
 LOG_STS=${IOX_PATH}"/meter/3phase/sts"
-LOG_3PHASE_DEL=${IOX_PATH}"/meter/3phase/3phase_create_log"
+LOG_3PHASE_DEL=${IOX_PATH}"/meter/3phase/3phase_delete_log"
 
 phase_wo_timestamp="Deleted item without MRU timestamp"
 phase_del_state="deleted"
 
 subscribe_sts_event()
 {
-	 mosquitto_sub -t "glp/0/17q2d9v/fb/dev/iox/${METER_DEV_NAME}/sts" > ${STS_PATH} 
+	 mosquitto_sub -t "glp/0/${SID}/fb/dev/iox/${METER_DEV_NAME}/sts" > ${STS_PATH} 
 }
 
 3phase_delete_test1()
@@ -24,11 +24,11 @@ subscribe_sts_event()
 	pids+=($!)
 	subscribe_logger_event &
 	pids+=($!)
-	mosquitto_pub -m '{"action":"delete"}' -t "glp/0/17q2d9v/rq/dev/iox/${METER_DEV_NAME}/do"
+	mosquitto_pub -m '{"action":"delete"}' -t "glp/0/${SID}/rq/dev/iox/${METER_DEV_NAME}/do"
 	parse_sts "${phase_wo_timestamp}"
 	parse_logger "${phase_del_state}"
 	result "sts"
-	pub=("mosquitto_pub -m '{"action":"delete"}' -t '"glp/0/17q2d9v/rq/dev/iox/${METER_DEV_NAME}/do"'")
+	pub=("mosquitto_pub -m '{"action":"delete"}' -t '"glp/0/${SID}/rq/dev/iox/${METER_DEV_NAME}/do"'")
 	result_logs "3phase_delete_test" ${LOG_3PHASE_DEL}  ${start_time} "${pub}"
 }
 
@@ -39,11 +39,11 @@ subscribe_sts_event()
 	pids+=($!)
 	subscribe_logger_event &
 	pids+=($!)
-	mosquitto_pub -m '{"action":"delete"}' -t "glp/0/17q2d9v/rq/dev/iox/${METER_DEV_NAME}/do"
+	mosquitto_pub -m '{"action":"delete"}' -t "glp/0/${SID}/rq/dev/iox/${METER_DEV_NAME}/do"
 	parse_sts "${phase_wo_timestamp}"
 	parse_logger "${phase_del_state}"
 	result "sts"
-	pub=("mosquitto_pub -m '{"action":"delete"}' -t '"glp/0/17q2d9v/rq/dev/iox/${METER_DEV_NAME}/do"'")
+	pub=("mosquitto_pub -m '{"action":"delete"}' -t '"glp/0/${SID}/rq/dev/iox/${METER_DEV_NAME}/do"'")
 	result_logs "3phase_delete_test" ${LOG_3PHASE_DEL}  ${start_time} "${pub}"
 }
 
@@ -54,11 +54,11 @@ subscribe_sts_event()
 	pids+=($!)
 	subscribe_logger_event &
 	pids+=($!)
-	mosquitto_pub -m '{"action":"delete"}' -t "glp/0/17q2d9v/rq/dev/iox/${METER_DEV_NAME}/do"
+	mosquitto_pub -m '{"action":"delete"}' -t "glp/0/${SID}/rq/dev/iox/${METER_DEV_NAME}/do"
 	parse_sts "${phase_wo_timestamp}"
 	parse_logger "${phase_del_state}"
 	result "sts"
-	pub=("mosquitto_pub -m '{"action":"delete"}' -t '"glp/0/17q2d9v/rq/dev/iox/${METER_DEV_NAME}/do"'")
+	pub=("mosquitto_pub -m '{"action":"delete"}' -t '"glp/0/${SID}/rq/dev/iox/${METER_DEV_NAME}/do"'")
 	result_logs "3phase_delete_test" ${LOG_3PHASE_DEL}  ${start_time} "${pub}"
 }
 
@@ -69,11 +69,11 @@ subscribe_sts_event()
 	pids+=($!)
 	subscribe_logger_event &
 	pids+=($!)
-	mosquitto_pub -m '{"action":"delete"}' -t "glp/0/17q2d9v/rq/dev/iox/${METER_DEV_NAME}/do"
+	mosquitto_pub -m '{"action":"delete"}' -t "glp/0/${SID}/rq/dev/iox/${METER_DEV_NAME}/do"
 	parse_sts "${phase_wo_timestamp}"
 	parse_logger "${phase_del_state}"
 	result "sts"
-	pub=("mosquitto_pub -m '{"action":"delete"}' -t '"glp/0/17q2d9v/rq/dev/iox/${METER_DEV_NAME}/do"'")
+	pub=("mosquitto_pub -m '{"action":"delete"}' -t '"glp/0/${SID}/rq/dev/iox/${METER_DEV_NAME}/do"'")
 	result_logs "3phase_delete_test" ${LOG_3PHASE_DEL}  ${start_time} "${pub}"
 }
 
@@ -84,11 +84,11 @@ subscribe_sts_event()
 	pids+=($!)
 	subscribe_logger_event &
 	pids+=($!)
-	mosquitto_pub -m '{"action":"delete"}' -t "glp/0/17q2d9v/rq/dev/iox/${METER_DEV_NAME}/do"
+	mosquitto_pub -m '{"action":"delete"}' -t "glp/0/${SID}/rq/dev/iox/${METER_DEV_NAME}/do"
 	parse_sts "${phase_wo_timestamp}"
 	parse_logger "${phase_del_state}"
 	result "sts"
-	pub=("mosquitto_pub -m '{"action":"delete"}' -t '"glp/0/17q2d9v/rq/dev/iox/${METER_DEV_NAME}/do"'")
+	pub=("mosquitto_pub -m '{"action":"delete"}' -t '"glp/0/${SID}/rq/dev/iox/${METER_DEV_NAME}/do"'")
 	result_logs "3phase_delete_test" ${LOG_3PHASE_DEL}  ${start_time} "${pub}"
 }
 

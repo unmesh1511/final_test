@@ -31,7 +31,6 @@ din_device_test2()
 
 }
 
-setup_time
 
 din_device_test1
 din_device_test2

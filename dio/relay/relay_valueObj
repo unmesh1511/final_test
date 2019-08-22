@@ -15,7 +15,6 @@ relay_valueObj_test1()
 	mosquitto_pub -m '{"relay-val":{"value":{"level":false}}}' -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/relay/1"
 }
 
-setup_time
 
 relay_valueObj_test1
 

@@ -109,7 +109,6 @@ din_mode_test7()
 	result_logs "din_mode_test" ${LOG_DIN_MODE}  ${start_time} "${pub}"
 }
 
-setup_time
 
 din_mode_test1
 din_mode_test2

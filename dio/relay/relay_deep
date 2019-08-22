@@ -33,7 +33,6 @@ relay_deep_test2()
 	result_logs "relay_deep_test" ${LOG_RELAY_DEEP}  ${start_time} "${pub}"
 }
 
-setup_time
 
 relay_deep_test1
 relay_deep_test2

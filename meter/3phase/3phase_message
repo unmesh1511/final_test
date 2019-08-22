@@ -17,6 +17,7 @@ phase_unspport="Unsupported Action"
   	subscribe_logger_event &
 	pids+=($!)
 	mosquitto_pub -m '{"action":"message"}' -t "glp/0/${SID}/rq/dev/iox/${METER_DEV_NAME}/do"
+	parse_logger "${phase_unspport}"
 	result "logger"
 	pub=("mosquitto_pub -m '{"action":"message"}' -t '"glp/0/${SID}/rq/dev/iox/${METER_DEV_NAME}/do"'")
 	result_logs "3phase_message_test" ${LOG_3PHASE_MESSAGE}  ${start_time} "${pub}"

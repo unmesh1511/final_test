@@ -1,0 +1,14 @@
+modbus_wink_test1
+START_TIME : 14:44:20
+mosquitto_pub -m '{action:wink}' -t 'glp/0/17q2d9v/rq/dev/iox/pm820/do'
+LOGGER_OUTPUT : {"cat":"error","source":"modbus","topic":"glp/0/17q2d9v/rq/dev/iox/pm820/do","utc":"2018-07-12 12:47:01.000 UTC","message":"pm820 : device not found"}
+END_TIME : 14:44:25
+
+==============================================================================
+modbus_wink_test1
+START_TIME : 14:44:48
+mosquitto_pub -m '{action:wink}' -t 'glp/0/17q2d9v/rq/dev/iox/pm820/do'
+LOGGER_OUTPUT : {"cat":"error","source":"modbus","topic":"glp/0/17q2d9v/rq/dev/iox/pm820/do","utc":"2018-07-12 12:47:30.000 UTC","message":"pm820 : device not found"}
+END_TIME : 14:44:53
+
+==============================================================================

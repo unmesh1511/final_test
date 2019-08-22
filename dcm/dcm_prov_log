@@ -1,0 +1,12 @@
+dcm_prov_test1
+START_TIME : 15:07:26
+mosquitto_pub -m '{action:prov}' -t 'glp/0/17q2d9v/rq/con/test20/do'
+END_TIME : 15:07:31
+
+==============================================================================
+dcm_prov_test2
+START_TIME : 15:07:31
+mosquitto_pub -m '{action:prov}' -t 'glp/0/17q2d9v/rq/con/test20/do'
+END_TIME : 15:07:36
+
+==============================================================================

@@ -1,0 +1,7 @@
+3phase_phase_config_test1
+START_TIME : 11:12:48
+mosquitto_pub -m '30' -t 'glp/0/17q2d9v/rq/dev/iox/dio/if/dia/1/di-val/monitor/rate'
+LOGGER_OUTPUT : {"cat":"error","topic":"gl","message":"Error in parsing json object","utc":"2018-07-12 12:32:01.770 UTC"}
+END_TIME : 11:12:53
+
+==============================================================================

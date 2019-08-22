@@ -78,13 +78,14 @@ exec_RUN_LIST_PATH()
 	echo "" >> ${RESULT_PATH}
 
 	echo -n "Sr.No" >> ${RESULT_PATH}
-	echo -n " | TEST_NAME" >> ${RESULT_PATH}
+	echo -n " |  TEST_NAME" >> ${RESULT_PATH}
 	echo -n " | RESULT" >> ${RESULT_PATH}
 	echo -n " | DESCRIPTION" >> ${RESULT_PATH}
 	echo -n " | EXECUTION_TIME" >> ${RESULT_PATH}
 	tac ${RESULT_PATH} | awk 'NR==1 {line =$0; next} 1; END{print line}' | tac > temp | mv temp ${RESULT_PATH}
 	column ${RESULT_PATH} -t -s '|' > temp
 	mv temp ${RESULT_PATH}
+	sed -i '6,$d' ${IOX_CONFIG_PATH}
 }
 
 

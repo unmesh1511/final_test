@@ -33,7 +33,6 @@ relay_device_test2()
 	result_logs "relay_device_test" ${LOG_RELAY_DEVICE}  ${start_time} "${pub}"
 }
 
-setup_time
 
 relay_device_test1
 relay_device_test2

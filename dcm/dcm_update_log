@@ -1,0 +1,24 @@
+dcm_update_test1
+START_TIME : 15:07:52
+mosquitto_pub -m '{action:update,args:{sources:[glp/0/17q2d9v/fb/dev/iox/dio/if/di/2/di-val/value],destinations:[glp/0/17q2d9v/rq/dev/iox/dio/if/relay/1/relay-val123/value],policy:smart,map:{level:$.di-level.level}}}' -t 'glp/0/17q2d9v/rq/con/test20/do'
+END_TIME : 15:07:57
+
+==============================================================================
+dcm_update_test2
+START_TIME : 15:07:57
+mosquitto_pub -m '{action:update,args:{sources:[glp/0/17q2d9v/fb/dev/iox/dio/if/di/2/di-val/value],destinations:[glp/0/17q2d9v/rq/dev/iox/dio/if/relay/2/relay-val/value],policy:smart,map:{level:$.di-level.level}}}' -t 'glp/0/17q2d9v/rq/con/test20/do'
+END_TIME : 15:08:02
+
+==============================================================================
+dcm_update_test1
+START_TIME : 15:08:02
+mosquitto_pub -m '{action:update,args:{sources:[glp/0/17q2d9v/fb/dev/iox/meter/if/phase/0/nvoCurrentRMS/value],destinations:[glp/0/17q2d9v/rq/dev/iox/dio/if/do/2/do-val123/value],policy:smart,map:{frequency:$.L1_current}}}' -t 'glp/0/17q2d9v/rq/con/test1/do'
+END_TIME : 15:08:07
+
+==============================================================================
+dcm_update_test2
+START_TIME : 15:08:07
+mosquitto_pub -m '{action:update,args:{sources:[glp/0/17q2d9v/fb/dev/iox/meter/if/phase/0/nvoCurrentRMS/value],destinations:[glp/0/17q2d9v/rq/dev/iox/dio/if/do/2/do-val/value],policy:smart,map:{frequency:$.L1_current}}}' -t 'glp/0/17q2d9v/rq/con/test0/do'
+END_TIME : 15:08:12
+
+==============================================================================

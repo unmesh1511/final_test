@@ -1,35 +1,17 @@
-Sr.No    TEST_NAME                 RESULT    DESCRIPTION                                       EXECUTION_TIME
-1         dio_create_test1         PASS      -                                                 5s
-2         dio_create_test2         PASS      -                                                 5s
-3         dio_create_test3         PASS      -                                                 5s
-4         dio_create_test4         PASS      -                                                 6s
-5         dio_create_test5         PASS      -                                                 5s
-6         dio_create_test6         PASS      -                                                 5s
-7         dio_create_test7         PASS      -                                                 12s
-8         dio_create_test8         FAIL      LOGGER [  Invalid unid string ]                   5s
-9         dio_create_test9         PASS      -                                                 5s
-10        dio_delete_test1         FAIL      STS [ Built-in DIO Device can not be deleted ]    12s
-11        dio_delete_test2         FAIL      STS [ Built-in DIO Device can not be deleted ]    12s
-12        dio_delete_test3         FAIL      STS [ Built-in DIO Device can not be deleted ]    12s
-13        dio_delete_test4         FAIL      STS [ Built-in DIO Device can not be deleted ]    12s
-14        dio_delete_test5         FAIL      STS [ Built-in DIO Device can not be deleted ]    13s
-15        dio_deprovision_test1    PASS      -                                                 5s
-16        dio_deprovision_test2    PASS      -                                                 5s
-17        dio_deprovision_test3    FAIL      STS [ TIMESTAMP ]                                 7s
-18        dio_deprovision_test4    PASS      -                                                 5s
-19        dio_load_test1           PASS      -                                                 5s
-20        dio_message_test1        PASS      -                                                 5s
-21        dio_provision_test1      FAIL      LOGGER [ TIMESTAMP ]                              5s
-22        dio_provision_test2      PASS      -                                                 12s
-23        dio_provision_test3      FAIL      STS [ TIMESTAMP ]                                 7s
-24        dio_provision_test4      FAIL      STS [ TIMESTAMP ]                                 7s
-25        dio_provision_test5      PASS      -                                                 5s
-26        dio_provision_test6      FAIL      STS [ TIMESTAMP ]                                 7s
-27        dio_repair_test1         PASS      -                                                 5s
-28        dio_replace_test1        PASS      -                                                 5s
-29        dio_reset_test1          PASS      -                                                 5s
-30        dio_test_test1           PASS      -                                                 5s
-31        dio_test_test2           PASS      -                                                 5s
-32        dio_test_test3           PASS      -                                                 5s
-33        dio_test_test4           PASS      -                                                 5s
-34        dio_wink_test1           FAIL      LOGGER [ TIMESTAMP ]                              5s
+Sr.No     TEST_NAME                RESULT    DESCRIPTION          EXECUTION_TIME
+1         dcm_create_test1         FAIL      STS [ TIMESTAMP ]    5s
+2         dcm_create_test2         FAIL      STS [ TIMESTAMP ]    5s
+3         dcm_Create_test1         FAIL      STS [ TIMESTAMP ]    5s
+4         dcm_Create_test2         FAIL      STS [ TIMESTAMP ]    5s
+5         dcm_deprovision_test1    FAIL      STS [ TIMESTAMP ]    5s
+6         dcm_deprovision_test2    FAIL      STS [ TIMESTAMP ]    5s
+7         dcm_Deprovision_test1    FAIL      STS [ TIMESTAMP ]    5s
+8         dcm_Deprovision_test2    FAIL      STS [ TIMESTAMP ]    5s
+9         dcm_prov_test1           FAIL      STS [ TIMESTAMP ]    5s
+10        dcm_prov_test2           FAIL      STS [ TIMESTAMP ]    5s
+11        dcm_Prov_test1           FAIL      STS [ TIMESTAMP ]    5s
+12        dcm_Prov_test2           FAIL      STS [ TIMESTAMP ]    5s
+13        dcm_update_test1         FAIL      STS [ TIMESTAMP ]    5s
+14        dcm_update_test2         FAIL      STS [ TIMESTAMP ]    5s
+15        dcm_update_test1         FAIL      STS [ TIMESTAMP ]    5s
+16        dcm_update_test2         FAIL      STS [ TIMESTAMP ]    5s

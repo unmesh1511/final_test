@@ -1,0 +1,35 @@
+3phase_delete_test1
+START_TIME : 11:12:58
+mosquitto_pub -m '{action:delete}' -t 'glp/0/17q2d9v/rq/dev/iox/meter/do'
+LOGGER_OUTPUT : {"cat":"error","topic":"glp/0/17q2d9v/rq/dev/iox/meter/do","message":"Built-in Meter Device can not be deleted","utc":"2018-07-12 12:32:14.270 UTC"}
+END_TIME : 11:13:08
+
+==============================================================================
+3phase_delete_test2
+START_TIME : 11:13:08
+mosquitto_pub -m '{action:delete}' -t 'glp/0/17q2d9v/rq/dev/iox/meter/do'
+LOGGER_OUTPUT : {"cat":"error","topic":"glp/0/17q2d9v/rq/dev/iox/meter/do","message":"Built-in Meter Device can not be deleted","utc":"2018-07-12 12:32:21.850 UTC"}
+END_TIME : 11:13:18
+
+==============================================================================
+3phase_delete_test3
+START_TIME : 11:13:18
+mosquitto_pub -m '{action:delete}' -t 'glp/0/17q2d9v/rq/dev/iox/meter/do'
+LOGGER_OUTPUT : {"cat":"error","topic":"glp/0/17q2d9v/rq/dev/iox/meter/do","message":"Built-in Meter Device can not be deleted","utc":"2018-07-12 12:32:31.940 UTC"}
+END_TIME : 11:13:28
+
+==============================================================================
+3phase_delete_test4
+START_TIME : 11:13:28
+mosquitto_pub -m '{action:delete}' -t 'glp/0/17q2d9v/rq/dev/iox/meter/do'
+LOGGER_OUTPUT : {"cat":"error","topic":"glp/0/17q2d9v/rq/dev/iox/meter/do","message":"Built-in Meter Device can not be deleted","utc":"2018-07-12 12:32:42.30 UTC"}
+END_TIME : 11:13:38
+
+==============================================================================
+3phase_delete_test5
+START_TIME : 11:13:38
+mosquitto_pub -m '{action:delete}' -t 'glp/0/17q2d9v/rq/dev/iox/meter/do'
+LOGGER_OUTPUT : {"cat":"error","topic":"glp/0/17q2d9v/rq/dev/iox/meter/do","message":"Built-in Meter Device can not be deleted","utc":"2018-07-12 12:32:52.120 UTC"}
+END_TIME : 11:13:48
+
+==============================================================================

@@ -1,0 +1,12 @@
+dcm_deprovision_test1
+START_TIME : 15:07:01
+mosquitto_pub -m '{action:deprovision}' -t 'glp/0/17q2d9v/rq/con/test11/do'
+END_TIME : 15:07:06
+
+==============================================================================
+dcm_deprovision_test2
+START_TIME : 15:07:06
+mosquitto_pub -m '{action:deprovision}' -t 'glp/0/17q2d9v/rq/con/test2/do'
+END_TIME : 15:07:11
+
+==============================================================================

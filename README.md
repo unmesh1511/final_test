@@ -2,7 +2,7 @@
 IOX Test Project is used for testing different IOX Devices such as DIO, MODBUS, METER, DCM.
 This testsuite contains a collection of options such as executing individual testcases, executing testcases using a file, executing all testcases of a device, excluding a specific test, exclude using     a file containing testcases to be excluded or all the testcases.
 
-The latest image is available at : [iox_test_suite](https://github.com/unmesh1511/iox_test_shell.git)
+The latest image is available at : [iox_test_suite](https://github.com/unmesh1511/final_test.git)
 
 ## How to install the testsuite
 

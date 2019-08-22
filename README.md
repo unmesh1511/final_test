@@ -67,9 +67,9 @@ Inside each device directories there are testcases for different actions such as
 │   ├── files.list
 │
 ├── common.sh
-|
+│
 ├── env_var.sh
-|
+│
 ├── errors.sh
 |
 ├── generic
@@ -78,7 +78,9 @@ Inside each device directories there are testcases for different actions such as
 │   ├── 3phase
 │       ├── 3phase_*
 │       ├── files.list 
-│   
+│
+├── iox.config
+│
 ├── modbus
 │   ├── modbus_*
 │   ├── files.list

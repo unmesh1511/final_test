@@ -67,3 +67,64 @@ mosquitto_pub -m '{action:create,args:{unid:257,type:meter,provision:true}}' -t 
 END_TIME : 11:12:48
 
 ==============================================================================
+3phase_create_test1
+START_TIME : 16:08:29
+mosquitto_pub -m '{action:create}' -t 'glp/0/17q2d9v/rq/dev/iox/meter/do'
+END_TIME : 16:08:34
+
+==============================================================================
+3phase_create_test2
+START_TIME : 16:08:34
+mosquitto_pub -m '{action:create,args:{type:ABCDEFG}}' -t 'glp/0/17q2d9v/rq/dev/iox/meter/do'
+END_TIME : 16:08:39
+
+==============================================================================
+3phase_create_test3
+START_TIME : 16:08:39
+mosquitto_pub -m '{action:create,args:{type:meter}}' -t 'glp/0/17q2d9v/rq/dev/iox/meter/do'
+END_TIME : 16:08:44
+
+==============================================================================
+3phase_create_test4
+START_TIME : 16:08:44
+mosquitto_pub -m '{action:create,args:{type:meter}}' -t 'glp/0/17q2d9v/rq/dev/iox/meter/do'
+END_TIME : 16:08:49
+
+==============================================================================
+3phase_create_test5
+START_TIME : 16:08:49
+mosquitto_pub -m '{action:create,args:{type:ABCDEFG}}' -t 'glp/0/17q2d9v/rq/dev/iox/meter/do'
+END_TIME : 16:08:54
+
+==============================================================================
+3phase_create_test6
+START_TIME : 16:08:54
+mosquitto_pub -m '{action:create,args:{type:meter,provision:true}}' -t 'glp/0/17q2d9v/rq/dev/iox/amik_1/do'
+END_TIME : 16:08:59
+
+==============================================================================
+3phase_create_test7
+START_TIME : 16:08:59
+mosquitto_pub -m '{action:create,args:{type:meter,provision:true,unid:abcd}}' -t 'glp/0/17q2d9v/rq/dev/iox/meter/do'
+END_TIME : 16:09:04
+
+==============================================================================
+3phase_create_test8
+START_TIME : 16:09:04
+mosquitto_pub -m '{action:create,args:{type:meter,provision:true,unid:257}}' -t 'glp/0/17q2d9v/rq/dev/iox/meter/do'
+END_TIME : 16:09:09
+
+==============================================================================
+3phase_create_test9
+START_TIME : 16:09:09
+mosquitto_pub -m '{action:create,args:{unid:257,type:meter,provision:false}}' -t 'glp/0/17q2d9v/rq/dev/iox/meter/do'
+STATUS_OUTPUT :  "mru": "2018-07-12 14:05:13.720 UTC"
+END_TIME : 16:09:16
+
+==============================================================================
+3phase_create_test10
+START_TIME : 16:09:16
+mosquitto_pub -m '{action:create,args:{unid:257,type:meter,provision:true}}' -t 'glp/0/17q2d9v/rq/dev/iox/meter/do'
+END_TIME : 16:09:21
+
+==============================================================================

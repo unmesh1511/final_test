@@ -10,3 +10,27 @@ mosquitto_pub -m '{action:deprovision}' -t 'glp/0/17q2d9v/rq/con/test0/do'
 END_TIME : 15:07:21
 
 ==============================================================================
+dcm_Deprovision_test1
+START_TIME : 15:33:27
+mosquitto_pub -m '{action:deprovision}' -t 'glp/0/17q2d9v/rq/con/test2/do'
+END_TIME : 15:33:32
+
+==============================================================================
+dcm_Deprovision_test2
+START_TIME : 15:33:32
+mosquitto_pub -m '{action:deprovision}' -t 'glp/0/17q2d9v/rq/con/test0/do'
+END_TIME : 15:33:37
+
+==============================================================================
+dcm_Deprovision_test1
+START_TIME : 15:55:54
+mosquitto_pub -m '{action:deprovision}' -t 'glp/0/17q2d9v/rq/con/test2/do'
+END_TIME : 15:55:59
+
+==============================================================================
+dcm_Deprovision_test2
+START_TIME : 15:55:59
+mosquitto_pub -m '{action:deprovision}' -t 'glp/0/17q2d9v/rq/con/test0/do'
+END_TIME : 15:56:04
+
+==============================================================================

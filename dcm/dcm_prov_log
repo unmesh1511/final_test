@@ -10,3 +10,27 @@ mosquitto_pub -m '{action:prov}' -t 'glp/0/17q2d9v/rq/con/test20/do'
 END_TIME : 15:07:36
 
 ==============================================================================
+dcm_prov_test1
+START_TIME : 15:33:42
+mosquitto_pub -m '{action:prov}' -t 'glp/0/17q2d9v/rq/con/test20/do'
+END_TIME : 15:33:47
+
+==============================================================================
+dcm_prov_test2
+START_TIME : 15:33:47
+mosquitto_pub -m '{action:prov}' -t 'glp/0/17q2d9v/rq/con/test20/do'
+END_TIME : 15:33:52
+
+==============================================================================
+dcm_prov_test1
+START_TIME : 15:56:09
+mosquitto_pub -m '{action:prov}' -t 'glp/0/17q2d9v/rq/con/test20/do'
+END_TIME : 15:56:14
+
+==============================================================================
+dcm_prov_test2
+START_TIME : 15:56:14
+mosquitto_pub -m '{action:prov}' -t 'glp/0/17q2d9v/rq/con/test20/do'
+END_TIME : 15:56:19
+
+==============================================================================

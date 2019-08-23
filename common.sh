@@ -165,11 +165,13 @@ setup_time()
 	if [[ -s ${LOG_EVENT_LOGGER} ]];
 	then
 		logger_last_time=$(awk -F "," '/utc/{print $4}' ${LOG_EVENT_LOGGER} | grep -oP '[[:digit:]].*(?= [[:space:]]*UTC.*)' | sort -k1,2 -ur | head -n1 | awk '{print $2}')
+		rm ${LOG_EVENT_LOGGER}
 	fi
 
 	if [[ -s ${LOG_STS} ]];
 	then
 		sts_last_time=$(awk -F "," '/mru/{print $NF}' ${LOG_STS} | grep -oP '[[:digit:]].*(?= [[:space:]]*UTC.*)' | sort -k1,2 -ur | head -n1 | awk '{print $2}')
+		rm ${LOG_STS}
 	fi
 
 }

@@ -1,27 +1,37 @@
 #!/bin/bash
+
+source ../iox.config
+DIO_UNID="${IOX_INSTALL_ID}.256"
+METER_UNID="${IOX_INSTALL_ID}.257"
+
 # Recommend syntax for setting an infinite while loop
 echo "*********** starting test *************"
-mosquitto_pub -t glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/do -m '{
-    "action":"create",
-        "args": {
-               "unid":"256",
-                      "type":"900001050304DD00-5",
-                             "provision":true
-                                 }  
-                             }'
+#mosquitto_pub -t glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/do -m '{
+#    "action":"create",
+#        "args": {
+#               "unid":"'${DIO_UNID}'",
+#                      "type":"900001050304DD00-5",
+#                             "provision":true
+#                                 }  
+#                             }'
+#
+#sleep 10   
+#mosquitto_pub -t glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${METER_DEV_NAME}/do -m '{
+#    "action":"create",
+#        "args": {
+#               "unid":"'${METER_UNID}'",
+#                      "type":"900001150004DD00",
+#                             "provision":true
+#                           }  
+#                         }'
+#                         
+#sleep 10
+mosquitto_pub -m '{"action":"provision","args":{"unid":"'${DIO_UNID}'"}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/do"
+sleep 2
+mosquitto_pub -m '{"action":"provision","args":{"unid":"'${METER_UNID}'"}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${METER_DEV_NAME}/do"
+sleep 2
 
-sleep 10   
-mosquitto_pub -t glp/0/${SID}/rq/dev/iox/${METER_DEV_NAME}/do -m '{
-    "action":"create",
-        "args": {
-               "unid":"257",
-                      "type":"900001150004DD00",
-                             "provision":true
-                           }  
-                         }'
-                         
-sleep 10
-mosquitto_pub -t glp/0/${SID}/rq/dev/iox/${METER_DEV_NAME}/if/phase/0 -m '{
+mosquitto_pub -t glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${METER_DEV_NAME}/if/phase/0 -m '{
  "cpPhaseEnable": {
                  "value" : {
                          "L1_Phase" : 1,
@@ -194,7 +204,7 @@ mosquitto_pub -t glp/0/${SID}/rq/dev/iox/${METER_DEV_NAME}/if/phase/0 -m '{
     }
 }'
 sleep 5
-mosquitto_pub -t glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/di/1 -m '{
+mosquitto_pub -t glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/di/1 -m '{
 "input": {
 "monitor": {
 "rate": 200,
@@ -224,7 +234,7 @@ mosquitto_pub -t glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/di/1 -m '{
                          }
                      }'
                      sleep 2;
-mosquitto_pub -t glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/di/2 -m '{
+mosquitto_pub -t glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/di/2 -m '{
 "input": {
 "monitor": {
 "rate": 200,
@@ -254,7 +264,7 @@ mosquitto_pub -t glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/di/2 -m '{
                          }
                      }'
                      sleep 2;
-mosquitto_pub -t glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/di/3 -m '{
+mosquitto_pub -t glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/di/3 -m '{
 "input": {
 "monitor": {
 "rate": 200,
@@ -284,7 +294,7 @@ mosquitto_pub -t glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/di/3 -m '{
                          }
                      }'
                      sleep 2;
-mosquitto_pub -t glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/di/4 -m '{
+mosquitto_pub -t glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/di/4 -m '{
 "input": {
 "monitor": {
 "rate": 200,
@@ -314,7 +324,7 @@ mosquitto_pub -t glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/di/4 -m '{
                          }
                      }'
                      sleep 2;
-mosquitto_pub -t glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/di/5 -m '{
+mosquitto_pub -t glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/di/5 -m '{
 "input": {
 "monitor": {
 "rate": 200,
@@ -344,7 +354,7 @@ mosquitto_pub -t glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/di/5 -m '{
                          }
                      }'
                      sleep 2;
-mosquitto_pub -t glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/di/6 -m '{
+mosquitto_pub -t glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/di/6 -m '{
 "input": {
 "monitor": {
 "rate": 200,
@@ -374,7 +384,7 @@ mosquitto_pub -t glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/di/6 -m '{
                          }
                      }'
                      sleep 2;
-mosquitto_pub -t glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/di/7 -m '{
+mosquitto_pub -t glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/di/7 -m '{
 "input": {
 "monitor": {
 "rate": 200,
@@ -404,7 +414,7 @@ mosquitto_pub -t glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/di/7 -m '{
                          }
                      }'
                      sleep 2;
-mosquitto_pub -t glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/di/8 -m '{
+mosquitto_pub -t glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/di/8 -m '{
 "input": {
 "monitor": {
 "rate": 200,
@@ -437,7 +447,7 @@ mosquitto_pub -t glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/di/8 -m '{
 while :
 do
 	echo "*********** In test *************"
-	mosquitto_pub -t glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/relay/1 -m '{
+	mosquitto_pub -t glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/relay/1 -m '{
 	"relay-val": {
 	            "value": {
 	            "level": true
@@ -445,7 +455,7 @@ do
 	         }
 	}'
 	sleep 1
-	mosquitto_pub -t glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/relay/2 -m '{
+	mosquitto_pub -t glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/relay/2 -m '{
 	"relay-val": {
 	            "value": {
 	            "level": true
@@ -454,7 +464,7 @@ do
 	}'
 	
 	sleep 1
-	mosquitto_pub -t glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/do/1 -m '{
+	mosquitto_pub -t glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/do/1 -m '{
 	"output": {
 	          "value": {
 	                 "level": false,
@@ -477,7 +487,7 @@ do
 	        }
 	}'
 	sleep 1
-	mosquitto_pub -t glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/do/2 -m '{
+	mosquitto_pub -t glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/do/2 -m '{
 	"output": {
 	          "value": {
 	                 "level": false,
@@ -500,7 +510,7 @@ do
 	        }
 	}'
 	sleep 1
-	mosquitto_pub -t glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/do/3 -m '{
+	mosquitto_pub -t glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/do/3 -m '{
 	"output": {
 	          "value": {
 	                 "level": false,
@@ -523,7 +533,7 @@ do
 	        }
 	}'
 	sleep 1
-	mosquitto_pub -t glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/do/4 -m '{
+	mosquitto_pub -t glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/do/4 -m '{
 	"output": {
 	          "value": {
 	                 "level": false,
@@ -546,7 +556,7 @@ do
 	        }
 	}'
 	sleep 1
-	mosquitto_pub -t glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/do/5 -m '{
+	mosquitto_pub -t glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/do/5 -m '{
 	"output": {
 	          "value": {
 	                 "level": false,
@@ -569,7 +579,7 @@ do
 	        }
 	}'
 	sleep 1
-	mosquitto_pub -t glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/do/6 -m '{
+	mosquitto_pub -t glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/do/6 -m '{
 	"output": {
 	          "value": {
 	                 "level": false,
@@ -592,7 +602,7 @@ do
 	        }
 	}'
 	    sleep 40
-	   mosquitto_pub -t glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/relay/1 -m '{
+	   mosquitto_pub -t glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/relay/1 -m '{
 	"relay-val": {
 	            "value": {
 	            "level": false
@@ -600,7 +610,7 @@ do
 	         }
 	}'
 	sleep 1
-	mosquitto_pub -t glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/relay/2 -m '{
+	mosquitto_pub -t glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/relay/2 -m '{
 	"relay-val": {
 	            "value": {
 	            "level": false
@@ -608,7 +618,7 @@ do
 	         }
 	}'
 	sleep 1
-	mosquitto_pub -t glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/do/1 -m '{
+	mosquitto_pub -t glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/do/1 -m '{
 	"output": {
 	          "value": {
 	                 "level": false,
@@ -631,7 +641,7 @@ do
 	        }
 	}'
 	sleep 1
-	mosquitto_pub -t glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/do/2 -m '{
+	mosquitto_pub -t glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/do/2 -m '{
 	"output": {
 	          "value": {
 	                 "level": false,
@@ -654,7 +664,7 @@ do
 	        }
 	}'
 	sleep 1
-	mosquitto_pub -t glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/do/3 -m '{
+	mosquitto_pub -t glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/do/3 -m '{
 	"output": {
 	          "value": {
 	                 "level": false,
@@ -677,7 +687,7 @@ do
 	        }
 	}'
 	sleep 1
-	mosquitto_pub -t glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/do/4 -m '{
+	mosquitto_pub -t glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/do/4 -m '{
 	"output": {
 	          "value": {
 	                 "level": false,
@@ -700,7 +710,7 @@ do
 	        }
 	}'
 	sleep 1
-	mosquitto_pub -t glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/do/5 -m '{
+	mosquitto_pub -t glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/do/5 -m '{
 	"output": {
 	          "value": {
 	                 "level": false,
@@ -723,7 +733,7 @@ do
 	        }
 	}'
 	sleep 1
-	mosquitto_pub -t glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/do/6 -m '{
+	mosquitto_pub -t glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/do/6 -m '{
 	"output": {
 	          "value": {
 	                 "level": false,

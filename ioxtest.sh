@@ -3,7 +3,7 @@
 source env_var.sh
 source iox.config
 
-gnome-terminal --tab -- ${MINICOM_SCRIPT}
+xterm -e ${MINICOM_SCRIPT}
 
 get_info()
 {
@@ -87,7 +87,7 @@ exec_RUN_LIST_PATH()
 	tac ${RESULT_PATH} | awk 'NR==1 {line =$0; next} 1; END{print line}' | tac > temp | mv temp ${RESULT_PATH}
 	column ${RESULT_PATH} -t -s '|' > temp
 	mv temp ${RESULT_PATH}
-	sed -i '6,$d' ${IOX_CONFIG_PATH}
+	sed -i '8,$d' ${IOX_CONFIG_PATH}
 	
 	id=$(ps -ef | grep 'grabserial' | head -n1 | awk '{print $2}')
 	sudo kill -9 ${id}

@@ -15,7 +15,7 @@ modbus_wink_test1()
 	subscribe_logger_event & 
 	pids+=($!)
 	mosquitto_pub -m '{"action":"wink"}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/pm820/do"
-	parse_logger "wink : action not found"
+	parse_logger "${WINK_NOT_FOUND}"
 	result "logger"
 	pub=("mosquitto_pub -m '{"action":"wink"}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/pm820/do"'")
 	result_logs "modbus_wink_test" ${LOG_MODBUS_WINK}  ${start_time} "${pub}"

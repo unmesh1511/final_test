@@ -9,12 +9,6 @@ LOG_EVENT_LOGGER=${IOX_PATH}"/modbus/logger"
 LOG_STS=${IOX_PATH}"/modbus/sts"
 LOG_MODBUS_CREATE=${IOX_PATH}"/modbus/modbus_create_log"
 
-mod_create_err="create : error in object"
-mod_unprov_state="unprovisioned"
-mod_amik_slave="amik : slave already created"
-mod_pm820_slave="pm820 : slave already created"
-mod_invalid_unid="abcd : invalid unid"
-
 subscribe_sts_event()
 {
 	 mosquitto_sub -t "glp/0/${SID}/fb/dev/${IOX_PROTOCOL}/pm820/sts" > ${STS_PATH} 
@@ -26,7 +20,7 @@ modbus_create_test1()
   	subscribe_logger_event &
 	pids+=($!)
 	mosquitto_pub -m '{"action":"create"}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/pm820/do"
-	parse_logger "${mod_create_err}"
+	parse_logger "${ERR_MOD_CREATE}"
 	result "logger"
 	pub=("mosquitto_pub -m '{"action":"create"}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/pm820/do"'")
 	result_logs "modbus_create_test" ${LOG_MODBUS_CREATE}  ${start_time} "${pub}"
@@ -41,7 +35,7 @@ modbus_create_test3()
 	mosquitto_sub -t "glp/0/${SID}/fb/dev/${IOX_PROTOCOL}/pm820/cfg" &	
 	pids+=($!)
 	mosquitto_pub -m '{"action":"create","args":{"type":"900014150040DB00"}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/pm820/do"
-	parse_sts "${mod_unprov_state}"
+	parse_sts "${UNPROVISION_STATE}"
 	result "sts"
 	pub=("mosquitto_pub -m '{"action":"create","args":{"type":"900014150040DB00"}}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/pm820/do"'")
 	result_logs "modbus_create_test" ${LOG_MODBUS_CREATE}  ${start_time} "${pub}"
@@ -53,7 +47,7 @@ modbus_create_test4()
 	subscribe_logger_event &
 	pids+=($!)
 	mosquitto_pub -m '{"action":"create","args":{"type":"900014150040DB00"}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/pm820/do"
-	parse_logger "${mod_amik_slave}"
+	parse_logger "${SLAVE_ALREADY_CREATED}"
 	result "logger"
 	pub=("mosquitto_pub -m '{"action":"create","args":{"type":"900014150040DB00"}}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/pm820/do"'")
 	result_logs "modbus_create_test" ${LOG_MODBUS_CREATE}  ${start_time} "${pub}"
@@ -65,7 +59,7 @@ modbus_create_test5()
 	subscribe_logger_event &
 	pids+=($!)
 	mosquitto_pub -m '{"action":"create","args":{"type":"900000000000DB00"}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/pm820/do"
-	parse_logger "${mod_pm820_slave}"
+	parse_logger "${SLAVE_ALREADY_CREATED}"
 	result "logger"
 	pub=("mosquitto_pub -m '{"action":"create","args":{"type":"900000000000DB00"}}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/pm820/do"'")
 	result_logs "modbus_create_test" ${LOG_MODBUS_CREATE}  ${start_time} "${pub}"
@@ -96,7 +90,7 @@ modbus_create_test8()
 	mosquitto_sub -t "glp/0/${SID}/fb/dev/${IOX_PROTOCOL}/pm820/cfg" &
 	pids+=($!)
 	mosquitto_pub -m '{"action":"create","args":{"type":"900014150040DB00","provision":"false","unid":"01:43"}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/pm820/do"
-	parse_sts "${mod_unprov_state}"
+	parse_sts "${UNPROVISION_STATE}"
 	result "sts"
 	pub=("mosquitto_pub -m '{"action":"create","args":{"type":"900014150040DB00","provision":"false","unid":"01:43"}}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/pm820/do"'")
 	result_logs "modbus_create_test" ${LOG_MODBUS_CREATE}  ${start_time} "${pub}"
@@ -108,7 +102,7 @@ modbus_create_test9()
 	subscribe_logger_event &
 	pids+=($!)
 	mosquitto_pub -m '{"action":"create","args":{"type":"900014150040DB00","provision":"true","unid":"abcd"}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/pm820/do"
-	parse_logger "${mod_invalid_unid}"
+	parse_logger "${INVALID_UNID}"
 	result "logger"
 	pub=("mosquitto_pub -m '{"action":"create","args":{"type":"900014150040DB00","provision":"true","unid":"abcd"}}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/pm820/do"'")
 	result_logs "modbus_create_test" ${LOG_MODBUS_CREATE}  ${start_time} "${pub}"
@@ -126,7 +120,7 @@ modbus_create_test10()
 	mosquitto_sub -t "glp/0/${SID}/fb/dev/${IOX_PROTOCOL}/pm820/if/block/0" &
 	pids+=($!)
 	mosquitto_pub -m '{"action":"create","args":{"type":"900014150040DB00","provision":"true","unid":"01:1"}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/pm820/do"
-	parse_sts "${mod_unprov_state}"
+	parse_sts "${UNPROVISION_STATE}"
 	result "sts"
 	pub=("mosquitto_pub -m '{"action":"create","args":{"type":"900014150040DB00","provision":"true","unid":"01:1"}}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/pm820/do"'")
 	result_logs "modbus_create_test" ${LOG_MODBUS_CREATE}  ${start_time} "${pub}"

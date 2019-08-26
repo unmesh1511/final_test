@@ -3,7 +3,9 @@
 source env_var.sh
 source iox.config
 
-xterm -e ${MINICOM_SCRIPT}
+#xterm -e ${MINICOM_SCRIPT}
+
+cat /dev/ttyUSB${IOX_LOG_PORT} > ${MINICOM_LOGS} &
 
 get_info()
 {

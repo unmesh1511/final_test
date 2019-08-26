@@ -9,8 +9,6 @@ LOG_EVENT_LOGGER=${IOX_PATH}"/dcm/logger"
 LOG_STS=${IOX_PATH}"/dcm/sts"
 LOG_DCM_CREATE=${IOX_PATH}"/dcm/dcm_Create_log"
 
-dcm_fail_state="failed"
-
 dcm_Create_test1()
 {
 	start_time=$(date | awk '{print $4}')
@@ -23,7 +21,7 @@ dcm_Create_test1()
 	mosquitto_sub -t "glp/0/${SID}/fb/con/test1/cfg" &
 	pids+=($!)
 	mosquitto_pub -m '{"action":"create","args":{"sources":["glp/0/${SID}/fb/dev/iox/${METER_DEV_NAME}/if/phase/0/nvoCurrentRMS123/value"],"destinations":["glp/0/${SID}/rq/dev/iox/dio/if/do/1/do-val/value"],"policy":"smart","map":{"frequency":"$.L1_current"}}}' -t "glp/0/${SID}/rq/con/test1/do"
-	parse_sts "${dcm_fail_state}"
+	parse_sts "${FAILED_STATE}"
 	result "sts"
 	pub=("mosquitto_pub -m '{"action":"create","args":{"sources":["glp/0/${SID}/fb/dev/iox/${METER_DEV_NAME}/if/phase/0/nvoCurrentRMS123/value"],"destinations":["glp/0/${SID}/rq/dev/iox/dio/if/do/1/do-val/value"],"policy":"smart","map":{"frequency":"$.L1_current"}}}' -t '"glp/0/${SID}/rq/con/test1/do"'")
 	result_logs "dcm_Create_test" ${LOG_DCM_CREATE}  ${start_time} "${pub}"

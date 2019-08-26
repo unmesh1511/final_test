@@ -9,9 +9,6 @@ LOG_EVENT_LOGGER=${IOX_PATH}"/dcm/logger"
 LOG_STS=${IOX_PATH}"/dcm/sts"
 LOG_DCM_UPDATE=${IOX_PATH}"/dcm/dcm_update_log"
 
-dcm_fail_state="failed"
-dcm_update_state="updated"
-
 subscribe_sts_event()
 {
 	 mosquitto_sub -t "glp/0/${SID}/fb/con/test20/sts" > ${STS_PATH} 
@@ -23,7 +20,7 @@ dcm_update_test1()
 	subscribe_sts_event &
 	pids+=($!)
 	mosquitto_pub -m '{"action":"update","args":{"sources":["glp/0/${SID}/fb/dev/iox/dio/if/di/2/di-val/value"],"destinations":["glp/0/${SID}/rq/dev/iox/dio/if/relay/1/relay-val123/value"],"policy":"smart","map":{"level":"$.di-level.level"}}}' -t "glp/0/${SID}/rq/con/test20/do"
-	parse_sts "${dcm_fail_state}"
+	parse_sts "${FAILED_STATE}"
 	result "sts"
 	pub=("mosquitto_pub -m '{"action":"update","args":{"sources":["glp/0/${SID}/fb/dev/iox/dio/if/di/2/di-val/value"],"destinations":["glp/0/${SID}/rq/dev/iox/dio/if/relay/1/relay-val123/value"],"policy":"smart","map":{"level":"$.di-level.level"}}}' -t '"glp/0/${SID}/rq/con/test20/do"'")
 	result_logs "dcm_update_test" ${LOG_DCM_UPDATE}  ${start_time} "${pub}"
@@ -50,7 +47,7 @@ dcm_update_test4()
 	mosquitto_sub -t "glp/0/${SID}/fb/con/test20/cfg" &
 	pids+=($!)
 	mosquitto_pub -m '{"action":"update","args":{"sources":["glp/0/${SID}/fb/dev/iox/dio/if/di/2/di-val/value"],"destinations":["glp/0/${SID}/rq/dev/iox/dio/if/relay/2/relay-val/value"],"policy":"smart","map":{"level":"$.di-level.level"}}}' -t "glp/0/${SID}/rq/con/test20/do"
-	parse_sts "${dcm_update_state}"
+	parse_sts "${UPDATED_STATE}"
 	result "sts"
 	pub=("mosquitto_pub -m '{"action":"update","args":{"sources":["glp/0/${SID}/fb/dev/iox/dio/if/di/2/di-val/value"],"destinations":["glp/0/${SID}/rq/dev/iox/dio/if/relay/2/relay-val/value"],"policy":"smart","map":{"level":"$.di-level.level"}}}' -t '"glp/0/${SID}/rq/con/test20/do"'")
 	result_logs "dcm_update_test" ${LOG_DCM_UPDATE}  ${start_time} "${pub}"

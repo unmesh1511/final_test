@@ -12,7 +12,7 @@ LOG_DIO_DEPROVISION=${IOX_PATH}"/dio/dio_deprovision_log"
 
 subscribe_sts_event()
 {
-	mosquitto_sub -t "glp/0/${SID}/fb/dev/iox/${DIO_DEV_NAME}/sts" > ${LOG_STS}
+	mosquitto_sub -t "glp/0/${SID}/fb/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/sts" > ${LOG_STS}
 	pids+=($!)
 }
 
@@ -21,10 +21,10 @@ dio_deprovision_test1()
 	start_time=$(date | awk '{print $4}')
  	subscribe_logger_event &
 	pids+=($!)
-	mosquitto_pub -m '{"action":"deprovision"}' -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/do"
-	parse_logger "${device_not_provisioned}"
+	mosquitto_pub -m '{"action":"deprovision"}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/do"
+	parse_logger "${DEV_NOT_PROV}"
 	result "logger"
-	pub=("mosquitto_pub -m '{"action":"deprovision"}' -t '"glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/do"'")
+	pub=("mosquitto_pub -m '{"action":"deprovision"}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/do"'")
 	result_logs "dio_deprovision_test" ${LOG_DIO_DEPROVISION}  ${start_time} "${pub}"
 }
 
@@ -33,10 +33,10 @@ dio_deprovision_test2()
 	start_time=$(date | awk '{print $4}')
  	subscribe_logger_event &
 	pids+=($!)
-	mosquitto_pub -m '{"action":"deprovision"}' -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/do" 
-	parse_logger "${device_not_provisioned}"
+	mosquitto_pub -m '{"action":"deprovision"}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/do" 
+	parse_logger "${DEV_NOT_PROV}"
 	result "logger"
-	pub=("mosquitto_pub -m '{"action":"deprovision"}' -t '"glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/do"'")
+	pub=("mosquitto_pub -m '{"action":"deprovision"}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/do"'")
 	result_logs "dio_deprovision_test" ${LOG_DIO_DEPROVISION}  ${start_time} "${pub}"
 }
 
@@ -45,10 +45,10 @@ dio_deprovision_test3()
 	start_time=$(date | awk '{print $4}')
  	subscribe_sts_event &
 	pids+=($!)
-	mosquitto_pub -m '{"action":"deprovision"}' -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/do"
-	parse_sts "${deprov_expected_state}"
+	mosquitto_pub -m '{"action":"deprovision"}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/do"
+	parse_sts "${UNPROVISION_STATE}"
 	result "sts"
-	pub=("mosquitto_pub -m '{"action":"deprovision"}' -t '"glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/do"'")
+	pub=("mosquitto_pub -m '{"action":"deprovision"}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/do"'")
 	result_logs "dio_deprovision_test" ${LOG_DIO_DEPROVISION}  ${start_time} "${pub}"
 }
 
@@ -57,10 +57,10 @@ dio_deprovision_test4()
 	start_time=$(date | awk '{print $4}')
 	subscribe_logger_event &
 	pids+=($!)
-	mosquitto_pub -m '{"action":"deprovision"}' -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/do"
-	parse_logger "${device_not_provisioned}"
+	mosquitto_pub -m '{"action":"deprovision"}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/do"
+	parse_logger "${DEV_NOT_PROV}"
 	result "logger"
-	pub=("mosquitto_pub -m '{"action":"deprovision"}' -t '"glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/do"'")
+	pub=("mosquitto_pub -m '{"action":"deprovision"}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/do"'")
 	result_logs "dio_deprovision_test" ${LOG_DIO_DEPROVISION}  ${start_time} "${pub}"
 }
 

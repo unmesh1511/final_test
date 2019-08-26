@@ -9,10 +9,6 @@ LOG_EVENT_LOGGER=${IOX_PATH}"/dcm/logger"
 LOG_STS=${IOX_PATH}"/dcm/sts"
 LOG_DCM_CREATE=${IOX_PATH}"/dcm/dcm_create_log"
 
-dcm_fail_state="failed"
-dcm_create_state="created"
-
-
 dcm_create_test1()
 {
 	start_time=$(date | awk '{print $4}')
@@ -21,7 +17,7 @@ dcm_create_test1()
 	mosquitto_sub -t "glp/0/${SID}/fb/con/test0/cfg" &
 	pids+=($!)
 	mosquitto_pub -m '{"action":"create","args":{"sources":["glp/0/${SID}/fb/dev/${IOX_PROTOCOL}/dio/if/di/1/di-val123/value"],"destinations":["glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/dio/if/relay/1/relay-val/value"],"policy":"smart","map":{"level":"$.di-level.level"}}}' -t "glp/0/${SID}/rq/con/test0/do"
-	parse_sts "${dcm_fail_state}"
+	parse_sts "${FAILED_STATE}"
 	result "sts"
 	pub=("mosquitto_pub -m '{"action":"create","args":{"sources":["glp/0/${SID}/fb/dev/${IOX_PROTOCOL}/dio/if/di/1/di-val123/value"],"destinations":["glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/dio/if/relay/1/relay-val/value"],"policy":"smart","map":{"level":"$.di-level.level"}}}' -t '"glp/0/${SID}/rq/con/test0/do"'")
 	result_logs "dcm_create_test" ${LOG_DCM_CREATE}  ${start_time} "${pub}"
@@ -49,7 +45,7 @@ dcm_create_test4()
 	mosquitto_sub -t "glp/0/${SID}/fb/con/test2/cfg" &
 	pids+=($!)
 	mosquitto_pub -m '{"action":"create","args":{"sources":["glp/0/${SID}/fb/dev/${IOX_PROTOCOL}/dio/if/di/1/di-val/value"],"destinations":["glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/dio/if/relay/1/relay-val/value"],"policy":"smart","map":{"level":"$.di-level.level"}}}' -t "glp/0/${SID}/rq/con/test2/do"
-	parse_sts "${dcm_create_state}"
+	parse_sts "${CREATED_STATE}"
 	result "sts"
 	pub=("mosquitto_pub -m '{"action":"create","args":{"sources":["glp/0/${SID}/fb/dev/${IOX_PROTOCOL}/dio/if/di/1/di-val/value"],"destinations":["glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/dio/if/relay/1/relay-val/value"],"policy":"smart","map":{"level":"$.di-level.level"}}}' -t '"glp/0/${SID}/rq/con/test2/do"'")
 	result_logs "dcm_create_test" ${LOG_DCM_CREATE}  ${start_time} "${pub}"

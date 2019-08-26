@@ -20,7 +20,7 @@ modbus_replace_test1()
 	subscribe_logger_event & 
 	pids+=($!)
 	mosquitto_pub -m '{"action":"replace"}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/pm820/do"
-	parse_logger "replace : invalid unid"
+	parse_logger "${INVALID_UNID}"
 }
 
 modbus_replace_test2()
@@ -29,7 +29,7 @@ modbus_replace_test2()
 	subscribe_logger_event & 
 	pids+=($!)
 	mosquitto_pub -m '{"action":"replace","args":{"unid":"01:43"}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/pm820/do"
-	parse_logger "01:43 : invalid unid"
+	parse_logger "${INVALID_UNID}"
 	result "logger"
 	pub=("mosquitto_pub -m '{"action":"replace","args":{"unid":"01:43"}}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/pm820/do"'")
 	result_logs "modbus_replace_test" ${LOG_MODBUS_REPLACE}  ${start_time} "${pub}"
@@ -42,7 +42,7 @@ modbus_replace_test3()
 	subscribe_logger_event & 
 	pids+=($!)
 	mosquitto_pub -m '{"action":"replace","args":{"unid":1000}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/pm820/do"
-	parse_logger "1000 : invalid unid"
+	parse_logger "${INVALID_UNID}"
 	result "logger"
 	pub=("mosquitto_pub -m '{"action":"replace","args":{"unid":1000}}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/pm820/do"'")
 	result_logs "modbus_replace_test" ${LOG_MODBUS_REPLACE}  ${start_time} "${pub}"
@@ -54,7 +54,7 @@ modbus_replace_test4()
 	subscribe_logger_event & 
 	pids+=($!)
 	mosquitto_pub -m '{"action":"replace","args":{"unid":"01:1"}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/pm820/do"
-	parse_logger "01:1 : invalid unid"
+	parse_logger "${INVALID_UNID}"
 	result "logger"
 	pub=("mosquitto_pub -m '{"action":"replace","args":{"unid":"01:1"}}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/pm820/do"'")
 	result_logs "modbus_replace_test" ${LOG_MODBUS_REPLACE}  ${start_time} "${pub}"
@@ -67,7 +67,7 @@ modbus_replace_test5()
 	subscribe_sts_event &
 	pids+=($!)
 	mosquitto_pub -m '{"action":"replace","args":{"unid":"01:2"}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/pm820/do"
-	parse_sts "provisioned"
+	parse_sts "${PROVISION_STATE}"
 	result "sts"
 	pub=("mosquitto_pub -m '{"action":"replace","args":{"unid":"01:2"}}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/pm820/do"'")
 	result_logs "modbus_replace_test" ${LOG_MODBUS_REPLACE}  ${start_time} "${pub}"

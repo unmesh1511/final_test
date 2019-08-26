@@ -11,9 +11,6 @@ LOG_3PHASE_PROVISION=${IOX_PATH}"/meter/3phase/3phase_prov_log"
 DIO_UNID="${IOX_INSTALL_ID}.dio"
 METER_UNID="${IOX_INSTALL_ID}.meter"
 
-phase_already_prov="Device is already in PROVISION STATE"
-phase_prov_state="provisioned"
-
 subscribe_sts_event()
 {
 	 mosquitto_sub -t "glp/0/${SID}/fb/dev/${IOX_PROTOCOL}/${METER_DEV_NAME}/sts" > ${STS_PATH} 
@@ -25,7 +22,7 @@ subscribe_sts_event()
   	subscribe_logger_event &
 	pids+=($!)
 	mosquitto_pub -m '{"action":"provision","args":{"unid":'"${DIO_UNID}"'}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${METER_DEV_NAME}/do"
-	parse_logger "${phase_already_prov}"
+	parse_logger "${DEV_ALREADY_PROV}"
 	result "logger"
 	pub=("mosquitto_pub -m '{"action":"provision","args":{"unid":'"${DIO_UNID}"'}}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${METER_DEV_NAME}/do"'")
 	result_logs "3phase_provision_test" ${LOG_3PHASE_PROVISION}  ${start_time} "${pub}"
@@ -37,7 +34,7 @@ subscribe_sts_event()
 	subscribe_sts_event &
 	pids+=($!)
 	mosquitto_pub -m '{"action":"provision","args":{}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${METER_DEV_NAME}/do"
-	parse_sts "${phase_prov_state}"
+	parse_sts "${PROVISION_STATE}"
 	result "sts"
 	pub=("mosquitto_pub -m '{"action":"provision","args":{}}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${METER_DEV_NAME}/do"'")
 	result_logs "3phase_provision_test" ${LOG_3PHASE_PROVISION}  ${start_time} "${pub}"
@@ -49,7 +46,7 @@ subscribe_sts_event()
 	subscribe_sts_event &
 	pids+=($!)
 	mosquitto_pub -m '{"action":"provision","args":{"unid":"abcd"}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${METER_DEV_NAME}/do"
-	parse_sts "${phase_prov_state}"
+	parse_sts "${PROVISION_STATE}"
 	result "sts"
 	pub=("mosquitto_pub -m '{"action":"provision","args":{"unid":"abcd"}}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${METER_DEV_NAME}/do"'")
 	result_logs "3phase_provision_test" ${LOG_3PHASE_PROVISION}  ${start_time} "${pub}"
@@ -61,7 +58,7 @@ subscribe_sts_event()
 	subscribe_sts_event &
 	pids+=($!)
 	mosquitto_pub -m '{"action":"provision"}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${METER_DEV_NAME}/do"
-	parse_sts "${phase_prov_state}"
+	parse_sts "${PROVISION_STATE}"
 	result "sts"
 	pub=("mosquitto_pub -m '{"action":"provision"}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${METER_DEV_NAME}/do"'")
 	result_logs "3phase_provision_test" ${LOG_3PHASE_PROVISION}  ${start_time} "${pub}"
@@ -75,8 +72,8 @@ subscribe_sts_event()
   	subscribe_logger_event &
 	pids+=($!)
 	mosquitto_pub -m '{"action":"provision","args":{"unid":'"${METER_UNID}"'}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${METER_DEV_NAME}/do"
-	parse_sts "${phase_prov_state}"
-	parse_logger "${phase_already_prov}"
+	parse_sts "${PROVISION_STATE}"
+	parse_logger "${DEV_ALREADY_PROV}"
 	result "sts"
 	pub=("mosquitto_pub -m '{"action":"provision","args":{"unid":'"${METER_UNID}"'}}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${METER_DEV_NAME}/do"'")
 	result_logs "3phase_provision_test" ${LOG_3PHASE_PROVISION}  ${start_time} "${pub}"
@@ -88,7 +85,7 @@ subscribe_sts_event()
 	subscribe_sts_event &
 	pids+=($!)
 	mosquitto_pub -m '{"action":"provision"}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${METER_DEV_NAME}/do"
-	parse_sts "${phase_prov_state}"
+	parse_sts "${PROVISION_STATE}"
 	result "sts"
 	pub=("mosquitto_pub -m '{"action":"provision"}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${METER_DEV_NAME}/do"'")
 	result_logs "3phase_provision_test" ${LOG_3PHASE_PROVISION}  ${start_time} "${pub}"
@@ -100,7 +97,7 @@ subscribe_sts_event()
   	subscribe_logger_event &
 	pids+=($!)
 	mosquitto_pub -m '{"action":"provision"}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${METER_DEV_NAME}/do"
-	parse_logger "${phase_already_prov}"
+	parse_logger "${DEV_ALREADY_PROV}"
 	result "logger"
 	pub=("mosquitto_pub -m '{"action":"provision"}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${METER_DEV_NAME}/do"'")
 	result_logs "3phase_provision_test" ${LOG_3PHASE_PROVISION}  ${start_time} "${pub}"

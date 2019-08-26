@@ -9,8 +9,6 @@ LOG_EVENT_LOGGER=${IOX_PATH}"/dcm/logger"
 LOG_STS=${IOX_PATH}"/dcm/sts"
 LOG_DCM_DELETE=${IOX_PATH}"/dcm/dcm_delete_log"
 
-dcm_del_state="deleted"
-
 dcm_delete_test1()
 {
 	mosquitto_pub -m '{"action":"delete"}' -t "glp/0/${SID}/rq/con/test30/do"
@@ -24,7 +22,7 @@ dcm_delete_test2()
 	mosquitto_sub -t "glp/0/${SID}/fb/con/test20/cfg" &
 	pids+=($!)
 	mosquitto_pub -m '{"action":"delete"}' -t "glp/0/${SID}/rq/con/test20/do"
-	parse_sts "${dcm_del_state}"
+	parse_sts "${DELETED_STATE}"
 	result "sts"
 	pub=("mosquitto_pub -m '{"action":"delete"}' -t '"glp/0/${SID}/rq/con/test20/do"'")
 	result_logs "dcm_delete_test" ${LOG_DCM_DELETE}  ${start_time} "${pub}"
@@ -36,7 +34,7 @@ dcm_delete_test3()
 	mosquitto_sub -t "glp/0/${SID}/fb/con/test11/sts" > ${STS_PATH} &
 	pids+=($!)
 	mosquitto_pub -m '{"action":"delete"}' -t "glp/0/${SID}/rq/con/test11/do"
-	parse_sts "${dcm_del_state}"
+	parse_sts "${DELETED_STATE}"
 	result "sts"
 	pub=("mosquitto_pub -m '{"action":"delete"}' -t '"glp/0/${SID}/rq/con/test11/do"'")
 	result_logs "dcm_delete_test" ${LOG_DCM_DELETE}  ${start_time} "${pub}"

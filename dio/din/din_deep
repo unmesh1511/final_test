@@ -9,15 +9,13 @@ LOG_EVENT_LOGGER=${IOX_PATH}"/dio/din/logger"
 LOG_STS=${IOX_PATH}"/dio/din/sts"
 LOG_DIN_DEEP=${IOX_PATH}"/dio/din/din_deep_log"
 
-din_err_parse_json="Error in parsing json object"
-
 din_deep_test1()
 {
 	start_time=$(date | awk '{print $4}')
 	subscribe_logger_event &
 	pids+=($!)
 	mosquitto_pub -m '30' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/dia/1/di-val/monitor/rate" 
-	parse_logger "${din_err_parse_json}"
+	parse_logger "${ERR_PARSE_JSON}"
 	result "logger"
 	pub=("mosquitto_pub -m '30' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/dia/1/di-val/monitor/rate"'")
 	result_logs "din_deep_test" ${LOG_DIN_DEEP}  ${start_time} "${pub}"

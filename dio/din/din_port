@@ -8,8 +8,6 @@ source ${IOX_PATH}"/errors.sh"
 LOG_EVENT_LOGGER=${IOX_PATH}"/dio/din/logger"
 LOG_DIN_PORT=${IOX_PATH}"/dio/din/din_port_log"
 
-invalid_port="The port asked for is not valid"
-
 din_port_test1()
 {
 	start_time=$(date | awk '{print $4}')
@@ -126,7 +124,7 @@ din_port_test9()
 	pids+=($!)
 #	mosquitto_sub -t "glp/0/${SID}/fb/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/di/10" &
 	mosquitto_pub -m '{"di-val":{"value":{"type":"level","di-level":{"report-dur":1000,"detect-level":0,"pullup-cfg":true},"di-pulse":{"report-dur":10,"detect-level":0,"pullup-cfg":true},"di-frequency":{"report-dur":100,"detect-level":0,"pullup-cfg":true}},"monitor":{"rate":1500,"cat":"data","inFeedback":false,"report":"change","throttle":0,"threshold":10}}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/di/10"
-	parse_logger "${invalid_port}"
+	parse_logger "${INVALID_PORT}"
 	result "logger"
 	pub=("mosquitto_pub -m '{"di-val":{"value":{"type":"level","di-level":{"report-dur":1000,"detect-level":0,"pullup-cfg":true},"di-pulse":{"report-dur":10,"detect-level":0,"pullup-cfg":true},"di-frequency":{"report-dur":100,"detect-level":0,"pullup-cfg":true}},"monitor":{"rate":1500,"cat":"data","inFeedback":false,"report":"change","throttle":0,"threshold":10}}}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/di/10"'")
 	result_logs "din_port_test" ${LOG_DIN_PORT}  ${start_time} "${pub}"

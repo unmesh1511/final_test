@@ -15,7 +15,7 @@ dio_message_test1()
 	subscribe_logger_event &
 	pids+=($!)
 	mosquitto_pub -m '{"action":"message"}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/do"
-	parse_logger "${err_msg_hndl}"
+	parse_logger "${ERR_MSG_HNDL}"
 	result "logger"
 	pub=("mosquitto_pub -m '{"action":"message"}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/do"'")
 	result_logs "dio_message_test" ${LOG_DIO_MSG}  ${start_time} "${pub}"

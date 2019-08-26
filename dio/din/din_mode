@@ -7,11 +7,6 @@ source ${IOX_PATH}"/errors.sh"
 
 LOG_EVENT_LOGGER=${IOX_PATH}"/dio/din/logger"
 
-
-wrong_config_level="Wrong configuration for level"
-wrong_config_pulse="Wrong configuration for Pulse output"
-wrong_config_freq="Wrong configuration for Frequency output"
-
 din_mode_test1()
 {  
 	start_time=$(date | awk '{print $4}')
@@ -47,7 +42,7 @@ din_mode_test3()
   	subscribe_logger_event &
 	pids+=($!)
 	mosquitto_pub -m '{"do-val":{"value":{"type":"level","level":"true","frequency":0,"pulse":0,"pwm":{"frequency":20000,"duty-cycle":90}}}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/do/1"
-	parse_logger "${wrong_config_level}"
+	parse_logger "${WRONG_CONFIG_LEVEL}"
 	result "logger"
 	pub=("mosquitto_pub -m '{"do-val":{"value":{"type":"level","level":"true","frequency":0,"pulse":0,"pwm":{"frequency":20000,"duty-cycle":90}}}}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/do/1"'")
 	result_logs "din_mode_test" ${LOG_DIN_MODE}  ${start_time} "${pub}"
@@ -76,7 +71,7 @@ din_mode_test5()
   	subscribe_logger_event &
 	pids+=($!)
 	mosquitto_pub -m '{"do-val":{"value":{"type":"pulse","level":true,"frequency":0,"pulse":"test","pwm":{"frequency":20000,"duty-cycle":90}}}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/do/1"
-	parse_logger "${wrong_config_pulse}"
+	parse_logger "${WRONG_CONFIG_PULSE}"
 	result "logger"
 	pub=("mosquitto_pub -m '{"do-val":{"value":{"type":"pulse","level":true,"frequency":0,"pulse":"test","pwm":{"frequency":20000,"duty-cycle":90}}}}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/do/1"'")
 	result_logs "din_mode_test" ${LOG_DIN_MODE}  ${start_time} "${pub}"
@@ -103,7 +98,7 @@ din_mode_test7()
   	subscribe_logger_event &	
 	pids+=($!)
 	mosquitto_pub -m '{"do-val":{"value":{"type":"frequency","level":true,"frequency":"test","pulse":0,"pwm":{"frequency":20000,"duty-cycle":90}}}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/do/1"
-	parse_logger "${wrong_config_freq}"
+	parse_logger "${WRONG_CONFIG_FREQ}"
 	result "logger"
 	pub=("mosquitto_pub -m '{"do-val":{"value":{"type":"frequency","level":true,"frequency":"test","pulse":0,"pwm":{"frequency":20000,"duty-cycle":90}}}}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/do/1"'")
 	result_logs "din_mode_test" ${LOG_DIN_MODE}  ${start_time} "${pub}"

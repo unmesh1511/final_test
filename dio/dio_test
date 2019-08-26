@@ -15,7 +15,7 @@ dio_test_test1()
 	subscribe_logger_event &
 	pids+=($!)
 	mosquitto_pub -m '{"action":"test"}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/do"
-	parse_logger "${err_test_hndl}"
+	parse_logger "${ERR_TEST_HNDL}"
 	result "logger"
 	pub=("mosquitto_pub -m '{"action":"test"}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/do"'")
 	result_logs "dio_test_test" ${LOG_DIO_TEST}  ${start_time} "${pub}"
@@ -27,7 +27,7 @@ dio_test_test2()
 	subscribe_logger_event &
 	pids+=($!)
 	mosquitto_pub -m '{"action":"test"}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/do"
-	parse_logger "${err_test_hndl}"
+	parse_logger "${ERR_TEST_HNDL}"
 	result "logger"
 	pub=("mosquitto_pub -m '{"action":"test"}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/do"'")
 	result_logs "dio_test_test" ${LOG_DIO_TEST}  ${start_time} "${pub}"
@@ -39,7 +39,7 @@ dio_test_test3()
 	subscribe_logger_event &
 	pids+=($!)
 	mosquitto_pub -m '{"action":"test"}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/do"
-	parse_logger "${err_test_hndl}"
+	parse_logger "${ERR_TEST_HNDL}"
 	result "logger"
 	pub=("mosquitto_pub -m '{"action":"test"}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/do"'")
 	result_logs "dio_test_test" ${LOG_DIO_TEST}  ${start_time} "${pub}"
@@ -51,7 +51,7 @@ dio_test_test4()
 	subscribe_logger_event &
 	pids+=($!)
 	mosquitto_pub -m '{"action":"test"}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/do"
-	parse_logger "${err_test_hndl}"
+	parse_logger "${ERR_TEST_HNDL}"
 	result "logger"
 	pub=("mosquitto_pub -m '{"action":"test"}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/do"'")
 	result_logs "dio_test_test" ${LOG_DIO_TEST}  ${start_time} "${pub}"

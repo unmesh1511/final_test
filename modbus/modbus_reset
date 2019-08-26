@@ -15,7 +15,7 @@ modbus_reset_test1()
 	subscribe_logger_event & 
 	pids+=($!)
 	mosquitto_pub -m '{"action":"reset"}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/pm820/do"
-	parse_logger "reset : action not found"
+	parse_logger "${RESET_NOT_FOUND}"
 	result "logger"
 	pub=("mosquitto_pub -m '{"action":"reset"}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/pm820/do"'")
 	result_logs "modbus_reset_test" ${LOG_MODBUS_RESET}  ${start_time} "${pub}"

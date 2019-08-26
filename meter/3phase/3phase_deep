@@ -9,46 +9,44 @@ LOG_EVENT_LOGGER=${IOX_PATH}"/meter/3phase/logger"
 LOG_STS=${IOX_PATH}"/meter/3phase/sts"
 LOG_3PHASE_PHASE_CONFIG=${IOX_PATH}"/meter/3phase/3phase_phase_config_log"
 
-phase_err_json="Error in parsing json object"
-
 3phase_deep_test1()
 {
 	start_time=$(date | awk '{print $4}')
   	subscribe_logger_event &
 	pids+=($!)
-	mosquitto_pub -m '30' -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/dia/1/di-val/monitor/rate"
-	parse_logger "${phase_err_json}"
+	mosquitto_pub -m '30' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/dia/1/di-val/monitor/rate"
+	parse_logger "${ERR_PARSE_JSON}"
 	result "logger"
-	pub=("mosquitto_pub -m '30' -t '"glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/dia/1/di-val/monitor/rate"'")
+	pub=("mosquitto_pub -m '30' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/dia/1/di-val/monitor/rate"'")
 	result_logs "3phase_phase_config_test" ${LOG_3PHASE_PHASE_CONFIG}  ${start_time} "${pub}"
 }
 
 3phase_deep_test2()
 {
 	start_time=$(date | awk '{print $4}')
-	mosquitto_pub -m '30' -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/di/1/di-vala/monitor/rate"
+	mosquitto_pub -m '30' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/di/1/di-vala/monitor/rate"
 }
 
 3phase_deep_test3()
 {
 	start_time=$(date | awk '{print $4}')
-	mosquitto_sub -t "glp/0/${SID}/fb/dev/iox/${METER_DEV_NAME}/if/phase/0" &
+	mosquitto_sub -t "glp/0/${SID}/fb/dev/${IOX_PROTOCOL}/${METER_DEV_NAME}/if/phase/0" &
 	pids+=($!)
-	mosquitto_pub -m '{"monitor":{"rate":100}}' -t "glp/0/${SID}/rq/dev/iox/${METER_DEV_NAME}/if/phase/0/nvoVoltageRMS"
+	mosquitto_pub -m '{"monitor":{"rate":100}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${METER_DEV_NAME}/if/phase/0/nvoVoltageRMS"
 }
 
 3phase_deep_test4()
 {
-	mosquitto_sub -t "glp/0/${SID}/fb/dev/iox/${METER_DEV_NAME}/if/phase/0" &
+	mosquitto_sub -t "glp/0/${SID}/fb/dev/${IOX_PROTOCOL}/${METER_DEV_NAME}/if/phase/0" &
 	pids+=($!)
-	mosquitto_pub -m '{"rate":100}' -t "glp/0/${SID}/rq/dev/iox/${METER_DEV_NAME}/if/phase/0/nvoVoltageRMS/monitor"
+	mosquitto_pub -m '{"rate":100}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${METER_DEV_NAME}/if/phase/0/nvoVoltageRMS/monitor"
 }
 
 3phase_deep_test5()
 {
-	mosquitto_sub -t "glp/0/${SID}/fb/dev/iox/${METER_DEV_NAME}/if/phase/0" &
+	mosquitto_sub -t "glp/0/${SID}/fb/dev/${IOX_PROTOCOL}/${METER_DEV_NAME}/if/phase/0" &
 	pids+=($!)
-	mosquitto_pub -m '20' -t "glp/0/${SID}/rq/dev/iox/${METER_DEV_NAME}/if/phase/0/nvoVoltageRMS/monitor/rate"
+	mosquitto_pub -m '20' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${METER_DEV_NAME}/if/phase/0/nvoVoltageRMS/monitor/rate"
 }
 
 3phase_deep_test1

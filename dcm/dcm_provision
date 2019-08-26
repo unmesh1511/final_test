@@ -9,8 +9,6 @@ LOG_EVENT_LOGGER=${IOX_PATH}"/dcm/logger"
 LOG_STS=${IOX_PATH}"/dcm/sts"
 LOG_DCM_PROV=${IOX_PATH}"/dcm/dcm_prov_log"
 
-dcm_prov_state="provisioning"
-
 subscribe_sts_event()
 {
 	 mosquitto_sub -t "glp/0/${SID}/fb/con/test2/sts" > ${STS_PATH} 
@@ -28,7 +26,7 @@ dcm_provision_test2()
 	start_time=$(date | awk '{print $4}')
 	subscribe_sts_event &
 	mosquitto_pub -m '' -t "glp/0/${SID}/rq/con/test2/do"
-	parse_sts "${dcm_prov_state}"
+	parse_sts "${PROVISIONING_STATE}"
 	result "sts"
 	pub=("mosquitto_pub -m '{"action":"prov"}' -t '"glp/0/${SID}/rq/con/test20/do"'")
 	result_logs "dcm_prov_test" ${LOG_DCM_PROV}  ${start_time} "${pub}"
@@ -40,7 +38,7 @@ dcm_provision_test3()
 	subscribe_sts_event &
 	mosquitto_sub -t "glp/0/${SID}/fb/con/test2/cfg" &
 	mosquitto_pub -m '{"action":"provision"}' -t "glp/0/${SID}/rq/con/test2/do"
-	parse_sts "${dcm_prov_state}"
+	parse_sts "${PROVISIONING_STATE}"
 	result "sts"
 	pub=("mosquitto_pub -m '{"action":"prov"}' -t '"glp/0/${SID}/rq/con/test20/do"'")
 	result_logs "dcm_prov_test" ${LOG_DCM_PROV}  ${start_time} "${pub}"

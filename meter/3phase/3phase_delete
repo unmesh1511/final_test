@@ -9,9 +9,6 @@ LOG_EVENT_LOGGER=${IOX_PATH}"/meter/3phase/logger"
 LOG_STS=${IOX_PATH}"/meter/3phase/sts"
 LOG_3PHASE_DEL=${IOX_PATH}"/meter/3phase/3phase_delete_log"
 
-phase_wo_timestamp="Deleted item without MRU timestamp"
-phase_del_state="deleted"
-
 subscribe_sts_event()
 {
 	 mosquitto_sub -t "glp/0/${SID}/fb/dev/${IOX_PROTOCOL}/${METER_DEV_NAME}/sts" > ${STS_PATH} 
@@ -25,8 +22,8 @@ subscribe_sts_event()
 	subscribe_logger_event &
 	pids+=($!)
 	mosquitto_pub -m '{"action":"delete"}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${METER_DEV_NAME}/do"
-	parse_sts "${phase_wo_timestamp}"
-	parse_logger "${phase_del_state}"
+	parse_sts "${DEL_WO_MRU}"
+	parse_logger "${DELETED_STATE}"
 	result "sts"
 	pub=("mosquitto_pub -m '{"action":"delete"}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${METER_DEV_NAME}/do"'")
 	result_logs "3phase_delete_test" ${LOG_3PHASE_DEL}  ${start_time} "${pub}"
@@ -40,8 +37,8 @@ subscribe_sts_event()
 	subscribe_logger_event &
 	pids+=($!)
 	mosquitto_pub -m '{"action":"delete"}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${METER_DEV_NAME}/do"
-	parse_sts "${phase_wo_timestamp}"
-	parse_logger "${phase_del_state}"
+	parse_sts "${DEL_WO_MRU}"
+	parse_logger "${DELETED_STATE}"
 	result "sts"
 	pub=("mosquitto_pub -m '{"action":"delete"}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${METER_DEV_NAME}/do"'")
 	result_logs "3phase_delete_test" ${LOG_3PHASE_DEL}  ${start_time} "${pub}"
@@ -55,8 +52,8 @@ subscribe_sts_event()
 	subscribe_logger_event &
 	pids+=($!)
 	mosquitto_pub -m '{"action":"delete"}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${METER_DEV_NAME}/do"
-	parse_sts "${phase_wo_timestamp}"
-	parse_logger "${phase_del_state}"
+	parse_sts "${DEL_WO_MRU}"
+	parse_logger "${DELETED_STATE}"
 	result "sts"
 	pub=("mosquitto_pub -m '{"action":"delete"}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${METER_DEV_NAME}/do"'")
 	result_logs "3phase_delete_test" ${LOG_3PHASE_DEL}  ${start_time} "${pub}"
@@ -70,8 +67,8 @@ subscribe_sts_event()
 	subscribe_logger_event &
 	pids+=($!)
 	mosquitto_pub -m '{"action":"delete"}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${METER_DEV_NAME}/do"
-	parse_sts "${phase_wo_timestamp}"
-	parse_logger "${phase_del_state}"
+	parse_sts "${DEL_WO_MRU}"
+	parse_logger "${DELETED_STATE}"
 	result "sts"
 	pub=("mosquitto_pub -m '{"action":"delete"}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${METER_DEV_NAME}/do"'")
 	result_logs "3phase_delete_test" ${LOG_3PHASE_DEL}  ${start_time} "${pub}"
@@ -85,8 +82,8 @@ subscribe_sts_event()
 	subscribe_logger_event &
 	pids+=($!)
 	mosquitto_pub -m '{"action":"delete"}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${METER_DEV_NAME}/do"
-	parse_sts "${phase_wo_timestamp}"
-	parse_logger "${phase_del_state}"
+	parse_sts "${DEL_WO_MRU}"
+	parse_logger "${DELETED_STATE}"
 	result "sts"
 	pub=("mosquitto_pub -m '{"action":"delete"}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${METER_DEV_NAME}/do"'")
 	result_logs "3phase_delete_test" ${LOG_3PHASE_DEL}  ${start_time} "${pub}"

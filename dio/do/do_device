@@ -9,8 +9,6 @@ LOG_EVENT_LOGGER=${IOX_PATH}"/dio/do/logger"
 LOG_STS=${IOX_PATH}"/dio/do/sts"
 LOG_DO_DEVICE=${IOX_PATH}"/dio/do/do_device_log"
 
-
-
 do_device_test1()
 {
 	start_time=$(date | awk '{print $4}')

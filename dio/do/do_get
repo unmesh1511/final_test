@@ -5,8 +5,6 @@ source ${IOX_PATH}"/common.sh"
 source ${IOX_PATH}"/iox.config"
 source ${IOX_PATH}"/errors.sh"
 
-
-
 do_get_test1()
 {	
 

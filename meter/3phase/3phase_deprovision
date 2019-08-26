@@ -9,8 +9,7 @@ LOG_EVENT_LOGGER=${IOX_PATH}"/meter/3phase/logger"
 LOG_STS=${IOX_PATH}"/meter/3phase/sts"
 LOG_3PHASE_DEPROV=${IOX_PATH}"/meter/3phase/3phase_deprov_log"
 
-phase_not_prov="IOX_METER Device is NOT IN PROVISION STATE"
-phase_unprov_state="unprovisioned"
+UNPROVISION_STATE="unprovisioned"
 
 subscribe_sts_event()
 {
@@ -24,7 +23,7 @@ subscribe_sts_event()
   	subscribe_logger_event &
 	pids+=($!)
 	mosquitto_pub -m '{"action":"deprovision"}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${METER_DEV_NAME}/do"
-	parse_logger "${phase_not_prov}"
+	parse_logger "${IOX_METER_NOT_PROV}"
 	result "sts"
 	pub=("mosquitto_pub -m '{"action":"deprovision"}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${METER_DEV_NAME}/do"'")
 	result_logs "3phase_deprov_test" ${LOG_3PHASE_DEPROV}  ${start_time} "${pub}"
@@ -36,7 +35,7 @@ subscribe_sts_event()
   	subscribe_logger_event &
 	pids+=($!)
 	mosquitto_pub -m '{"action":"deprovision"}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${METER_DEV_NAME}/do"
-	parse_logger "${phase_not_prov}"
+	parse_logger "${IOX_METER_NOT_PROV}"
 	result "sts"
 	pub=("mosquitto_pub -m '{"action":"deprovision"}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${METER_DEV_NAME}/do"'")
 	result_logs "3phase_deprov_test" ${LOG_3PHASE_DEPROV}  ${start_time} "${pub}"
@@ -50,8 +49,8 @@ subscribe_sts_event()
   	subscribe_logger_event &
 	pids+=($!)
 	mosquitto_pub -m '{"action":"deprovision"}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${METER_DEV_NAME}/do"
-	parse_sts "${phase_unprov_state}"
-	parse_logger "${phase_not_prov}"
+	parse_sts "${UNPROVISION_STATE}"
+	parse_logger "${IOX_METER_NOT_PROV}"
 	result "sts"
 	pub=("mosquitto_pub -m '{"action":"deprovision"}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${METER_DEV_NAME}/do"'")
 	result_logs "3phase_deprov_test" ${LOG_3PHASE_DEPROV}  ${start_time} "${pub}"
@@ -63,7 +62,7 @@ subscribe_sts_event()
   	subscribe_logger_event &
 	pids+=($!)
 	mosquitto_pub -m '{"action":"deprovision"}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${METER_DEV_NAME}/do"
-	parse_logger "${phase_not_prov}"
+	parse_logger "${IOX_METER_NOT_PROV}"
 	result "sts"
 	pub=("mosquitto_pub -m '{"action":"deprovision"}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${METER_DEV_NAME}/do"'")
 	result_logs "3phase_deprov_test" ${LOG_3PHASE_DEPROV}  ${start_time} "${pub}"
@@ -75,7 +74,7 @@ subscribe_sts_event()
   	subscribe_logger_event &
 	pids+=($!)
 	mosquitto_pub -m '{"action":"deprovision"}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${METER_DEV_NAME}/do"
-	parse_logger "${phase_not_prov}"
+	parse_logger "${IOX_METER_NOT_PROV}"
 	result "sts"
 	pub=("mosquitto_pub -m '{"action":"deprovision"}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${METER_DEV_NAME}/do"'")
 	result_logs "3phase_deprov_test" ${LOG_3PHASE_DEPROV}  ${start_time} "${pub}"

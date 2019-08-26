@@ -9,15 +9,13 @@ LOG_EVENT_LOGGER=${IOX_PATH}"/meter/3phase/logger"
 LOG_STS=${IOX_PATH}"/meter/3phase/sts"
 LOG_3PHASE_WINK=${IOX_PATH}"/meter/3phase/3phase_wink_log"
 
-phase_unspport="Unsupported Action"
-
 3phase_wink_test1()
 {
 	start_time=$(date | awk '{print $4}')
   	subscribe_logger_event &
 	pids+=($!)
 	mosquitto_pub -m '{"action":"wink"}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${METER_DEV_NAME}/do"
-	parse_logger "${phase_unspport}"
+	parse_logger "${UNSUPPORTED_ACT}"
 	result "logger"
 	pub=("mosquitto_pub -m '{"action":"wink"}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${METER_DEV_NAME}/do"'")
 	result_logs "3phase_wink_test" ${LOG_3PHASE_WINK}  ${start_time} "${pub}"

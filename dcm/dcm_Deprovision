@@ -15,31 +15,31 @@ dcm_unprov_state="unprovisioned"
 dcm_Deprovision_test1()
 {
 	start_time=$(date | awk '{print $4}')
-	mosquitto_sub -t "glp/0/17q2d9v/fb/con/test2/sts" > ${STS_PATH} &
+	mosquitto_sub -t "glp/0/${SID}/fb/con/test2/sts" > ${STS_PATH} &
 	pids+=($!)
-	mosquitto_pub -m '{"action":"deprovision"}' -t "glp/0/17q2d9v/rq/con/test2/do"
+	mosquitto_pub -m '{"action":"deprovision"}' -t "glp/0/${SID}/rq/con/test2/do"
 	parse_sts "${dcm_fail_state}"
 	result "sts"
-	pub=("mosquitto_pub -m '{"action":"deprovision"}' -t '"glp/0/17q2d9v/rq/con/test2/do"'")
+	pub=("mosquitto_pub -m '{"action":"deprovision"}' -t '"glp/0/${SID}/rq/con/test2/do"'")
 	result_logs "dcm_Deprovision_test" ${LOG_DCM_DEPROVISION}  ${start_time} "${pub}"
 }
 
 dcm_Deprovision_test2()
 {	
-	mosquitto_pub -m '{"action":"deprovision"}' -t "glp/0/17q2d9v/rq/con/test0/do"
+	mosquitto_pub -m '{"action":"deprovision"}' -t "glp/0/${SID}/rq/con/test0/do"
 }
 
 dcm_Deprovision_test3()
 {
 	start_time=$(date | awk '{print $4}')
-	mosquitto_sub -t "glp/0/17q2d9v/fb/con/test0/sts" > ${STS_PATH} &
+	mosquitto_sub -t "glp/0/${SID}/fb/con/test0/sts" > ${STS_PATH} &
 	pids+=($!)
-	mosquitto_sub -t "glp/0/17q2d9v/fb/con/test0/cfg" &
+	mosquitto_sub -t "glp/0/${SID}/fb/con/test0/cfg" &
 	pids+=($!)
-	mosquitto_pub -m '{"action":"deprovision"}' -t "glp/0/17q2d9v/rq/con/test0/do"
+	mosquitto_pub -m '{"action":"deprovision"}' -t "glp/0/${SID}/rq/con/test0/do"
 	parse_sts "${dcm_unprov_state}"
 	result "sts"
-	pub=("mosquitto_pub -m '{"action":"deprovision"}' -t '"glp/0/17q2d9v/rq/con/test0/do"'")
+	pub=("mosquitto_pub -m '{"action":"deprovision"}' -t '"glp/0/${SID}/rq/con/test0/do"'")
 	result_logs "dcm_Deprovision_test" ${LOG_DCM_DEPROVISION}  ${start_time} "${pub}"
 }
 

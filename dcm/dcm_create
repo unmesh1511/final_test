@@ -20,24 +20,24 @@ dcm_create_test1()
 	pids+=($!)
 	mosquitto_sub -t "glp/0/${SID}/fb/con/test0/cfg" &
 	pids+=($!)
-	mosquitto_pub -m '{"action":"create","args":{"sources":["glp/0/${SID}/fb/dev/iox/dio/if/di/1/di-val123/value"],"destinations":["glp/0/${SID}/rq/dev/iox/dio/if/relay/1/relay-val/value"],"policy":"smart","map":{"level":"$.di-level.level"}}}' -t "glp/0/${SID}/rq/con/test0/do"
+	mosquitto_pub -m '{"action":"create","args":{"sources":["glp/0/${SID}/fb/dev/${IOX_PROTOCOL}/dio/if/di/1/di-val123/value"],"destinations":["glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/dio/if/relay/1/relay-val/value"],"policy":"smart","map":{"level":"$.di-level.level"}}}' -t "glp/0/${SID}/rq/con/test0/do"
 	parse_sts "${dcm_fail_state}"
 	result "sts"
-	pub=("mosquitto_pub -m '{"action":"create","args":{"sources":["glp/0/${SID}/fb/dev/iox/dio/if/di/1/di-val123/value"],"destinations":["glp/0/${SID}/rq/dev/iox/dio/if/relay/1/relay-val/value"],"policy":"smart","map":{"level":"$.di-level.level"}}}' -t '"glp/0/${SID}/rq/con/test0/do"'")
+	pub=("mosquitto_pub -m '{"action":"create","args":{"sources":["glp/0/${SID}/fb/dev/${IOX_PROTOCOL}/dio/if/di/1/di-val123/value"],"destinations":["glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/dio/if/relay/1/relay-val/value"],"policy":"smart","map":{"level":"$.di-level.level"}}}' -t '"glp/0/${SID}/rq/con/test0/do"'")
 	result_logs "dcm_create_test" ${LOG_DCM_CREATE}  ${start_time} "${pub}"
 }
 
 dcm_create_test2()
 {
 	start_time=$(date | awk '{print $4}')
-	mosquitto_pub -m '{"action":"create","args":{"sources":[],"destinations":["glp/0/${SID}/rq/dev/iox/dio/if/relay/0/relay-val/value"],"policy":"smart","map":{"level":"$.di-level.level"}}}' -t "glp/0/${SID}/rq/con/test0/do"
+	mosquitto_pub -m '{"action":"create","args":{"sources":[],"destinations":["glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/dio/if/relay/0/relay-val/value"],"policy":"smart","map":{"level":"$.di-level.level"}}}' -t "glp/0/${SID}/rq/con/test0/do"
 
 }
 
 dcm_create_test3()
 {
 	start_time=$(date | awk '{print $4}')
-	mosquitto_pub -m '{"action":"create","args":{"sources":["glp/0/${SID}/fb/dev/iox/dio/if/di/0/di-val/value"],"destinations":[],"policy":"smart","map":{"level":"$.di-level.level"}}}' -t "glp/0/${SID}/rq/con/test0/do"
+	mosquitto_pub -m '{"action":"create","args":{"sources":["glp/0/${SID}/fb/dev/${IOX_PROTOCOL}/dio/if/di/0/di-val/value"],"destinations":[],"policy":"smart","map":{"level":"$.di-level.level"}}}' -t "glp/0/${SID}/rq/con/test0/do"
 
 }
 
@@ -48,10 +48,10 @@ dcm_create_test4()
 	pids+=($!)
 	mosquitto_sub -t "glp/0/${SID}/fb/con/test2/cfg" &
 	pids+=($!)
-	mosquitto_pub -m '{"action":"create","args":{"sources":["glp/0/${SID}/fb/dev/iox/dio/if/di/1/di-val/value"],"destinations":["glp/0/${SID}/rq/dev/iox/dio/if/relay/1/relay-val/value"],"policy":"smart","map":{"level":"$.di-level.level"}}}' -t "glp/0/${SID}/rq/con/test2/do"
+	mosquitto_pub -m '{"action":"create","args":{"sources":["glp/0/${SID}/fb/dev/${IOX_PROTOCOL}/dio/if/di/1/di-val/value"],"destinations":["glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/dio/if/relay/1/relay-val/value"],"policy":"smart","map":{"level":"$.di-level.level"}}}' -t "glp/0/${SID}/rq/con/test2/do"
 	parse_sts "${dcm_create_state}"
 	result "sts"
-	pub=("mosquitto_pub -m '{"action":"create","args":{"sources":["glp/0/${SID}/fb/dev/iox/dio/if/di/1/di-val/value"],"destinations":["glp/0/${SID}/rq/dev/iox/dio/if/relay/1/relay-val/value"],"policy":"smart","map":{"level":"$.di-level.level"}}}' -t '"glp/0/${SID}/rq/con/test2/do"'")
+	pub=("mosquitto_pub -m '{"action":"create","args":{"sources":["glp/0/${SID}/fb/dev/${IOX_PROTOCOL}/dio/if/di/1/di-val/value"],"destinations":["glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/dio/if/relay/1/relay-val/value"],"policy":"smart","map":{"level":"$.di-level.level"}}}' -t '"glp/0/${SID}/rq/con/test2/do"'")
 	result_logs "dcm_create_test" ${LOG_DCM_CREATE}  ${start_time} "${pub}"
 }
 

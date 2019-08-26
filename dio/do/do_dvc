@@ -10,86 +10,86 @@ do_dvc_test1()
 {
 	mosquitto_sub -t "glp/0/./=control/service" &
 	mosquitto_sub -t "glp/0/./=engine/dvc/dio/do/1/respond" &
-	mosquitto_pub -m '{"value":{"type":"frequency","level":false,"frequency":17,"pulse":0,"pwm":{"frequency":0,"duty-cycle":0}}}' -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/do/1/do-val"
+	mosquitto_pub -m '{"value":{"type":"frequency","level":false,"frequency":17,"pulse":0,"pwm":{"frequency":0,"duty-cycle":0}}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/do/1/do-val"
 
 }
 
 do_dvc_test2()
 {
-	mosquitto_sub -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/do/1/do-val" &
-	mosquitto_pub -m '{"prio":16,"value":{"type":"frequency","level":false,"frequency":16,"pulse":0,"pwm":{"frequency":0,"duty-cycle":0}}}' -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/do/1/do-val"
+	mosquitto_sub -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/do/1/do-val" &
+	mosquitto_pub -m '{"prio":16,"value":{"type":"frequency","level":false,"frequency":16,"pulse":0,"pwm":{"frequency":0,"duty-cycle":0}}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/do/1/do-val"
 
 }
 
 do_dvc_test3()
 {
-	mosquitto_sub -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/do/1/do-val" &
-	mosquitto_pub -m '{"prio":15,"active":true,"value":{"type":"frequency","level":false,"frequency":15,"pulse":0,"pwm":{"frequency":0,"duty-cycle":0}}}' -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/do/1/do-val"
+	mosquitto_sub -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/do/1/do-val" &
+	mosquitto_pub -m '{"prio":15,"active":true,"value":{"type":"frequency","level":false,"frequency":15,"pulse":0,"pwm":{"frequency":0,"duty-cycle":0}}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/do/1/do-val"
 
 }
 
 do_dvc_test4()
 {
-	mosquitto_sub -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/do/1/do-val" &
-	mosquitto_pub -m '{"prio":14,"active":false,"value":{"type":"frequency","level":false,"frequency":14,"pulse":0,"pwm":{"frequency":0,"duty-cycle":0}}}' -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/do/1/do-val"
+	mosquitto_sub -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/do/1/do-val" &
+	mosquitto_pub -m '{"prio":14,"active":false,"value":{"type":"frequency","level":false,"frequency":14,"pulse":0,"pwm":{"frequency":0,"duty-cycle":0}}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/do/1/do-val"
 
 }
 
 do_dvc_test5()
 {
-	mosquitto_sub -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/do/1/do-val" &
-	mosquitto_pub -m '{"value":{"type":"frequency","level":false,"frequency":170,"pulse":0,"pwm":{"frequency":0,"duty-cycle":0}}}' -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/do/1/do-val"
+	mosquitto_sub -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/do/1/do-val" &
+	mosquitto_pub -m '{"value":{"type":"frequency","level":false,"frequency":170,"pulse":0,"pwm":{"frequency":0,"duty-cycle":0}}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/do/1/do-val"
 }
 
 do_dvc_test6()
 {
-	mosquitto_sub -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/do/1/do-val" &
-	mosquitto_pub -m '{"prio":15,"value":{"type":"frequency","level":false,"frequency":150,"pulse":0,"pwm":{"frequency":0,"duty-cycle":0}}}' -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/do/1/do-val"
+	mosquitto_sub -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/do/1/do-val" &
+	mosquitto_pub -m '{"prio":15,"value":{"type":"frequency","level":false,"frequency":150,"pulse":0,"pwm":{"frequency":0,"duty-cycle":0}}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/do/1/do-val"
 
 }
 
 do_dvc_test7()
 {
-	mosquitto_sub -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/do/1/do-val" &
-	mosquitto_pub -m '{"prio":14,"value":{"type":"frequency","level":false,"frequency":140,"pulse":0,"pwm":{"frequency":0,"duty-cycle":0}}}' -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/do/1/do-val"
+	mosquitto_sub -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/do/1/do-val" &
+	mosquitto_pub -m '{"prio":14,"value":{"type":"frequency","level":false,"frequency":140,"pulse":0,"pwm":{"frequency":0,"duty-cycle":0}}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/do/1/do-val"
 }
 
 do_dvc_test8()
 {
-	mosquitto_sub -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/do/1/do-val" &
-	mosquitto_pub -m '{"prio":15,"active":false,"value":{"type":"frequency","level":false,"frequency":15,"pulse":0,"pwm":{"frequency":0,"duty-cycle":0}}}' -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/do/1/do-val"
+	mosquitto_sub -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/do/1/do-val" &
+	mosquitto_pub -m '{"prio":15,"active":false,"value":{"type":"frequency","level":false,"frequency":15,"pulse":0,"pwm":{"frequency":0,"duty-cycle":0}}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/do/1/do-val"
 }
 
 do_dvc_test9()
 {
-	mosquitto_sub -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/do/1/do-val" &
-	mosquitto_pub -m '{"prio":14,"active":true,"value":{"type":"frequency","level":false,"frequency":14,"pulse":0,"pwm":{"frequency":0,"duty-cycle":0}}}' -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/do/1/do-val"
+	mosquitto_sub -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/do/1/do-val" &
+	mosquitto_pub -m '{"prio":14,"active":true,"value":{"type":"frequency","level":false,"frequency":14,"pulse":0,"pwm":{"frequency":0,"duty-cycle":0}}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/do/1/do-val"
 }
 
 do_dvc_test10()
 {
-	mosquitto_sub -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/do/1/do-val" &
-	mosquitto_pub -m '{"prio":17,"value":null}' -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/do/1/do-val"
+	mosquitto_sub -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/do/1/do-val" &
+	mosquitto_pub -m '{"prio":17,"value":null}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/do/1/do-val"
 }
 
 do_dvc_test11()
 {
-	mosquitto_sub -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/do/1/do-val" &
-	mosquitto_pub -m '{"prio":16,"value":null}' -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/do/1/do-val"
+	mosquitto_sub -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/do/1/do-val" &
+	mosquitto_pub -m '{"prio":16,"value":null}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/do/1/do-val"
 }
 
 
 do_dvc_test12()
 {
-	mosquitto_sub -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/do/1/do-val" &
-	mosquitto_pub -m '{"prio":14,"value":null}' -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/do/1/do-val"
+	mosquitto_sub -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/do/1/do-val" &
+	mosquitto_pub -m '{"prio":14,"value":null}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/do/1/do-val"
 }
 
 
 do_dvc_test13()
 {
-	mosquitto_sub -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/do/1/do-val" &
-	mosquitto_pub -m '{"prio":15,"value":null}' -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/do/1/do-val"
+	mosquitto_sub -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/do/1/do-val" &
+	mosquitto_pub -m '{"prio":15,"value":null}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/do/1/do-val"
 }
 
 

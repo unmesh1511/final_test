@@ -17,11 +17,11 @@ din_mode_test1()
 	start_time=$(date | awk '{print $4}')
   	subscribe_logger_event &
 	pids+=($!)
-#	mosquitto_sub -t "glp/0/${SID}/fb/dev/iox/${DIO_DEV_NAME}/if/di/1" &
-	mosquitto_pub -m '{"di-val":{"value":{"type":"level","di-level":{"report-dur":1000,"detect-level":0,"pullup-cfg":true},"di-pulse":{"report-dur":10,"detect-level":0,"pullup-cfg":true},"di-frequency":{"report-dur":100,"detect-level":0,"pullup-cfg":true}},"monitor":{"rate":1500,"cat":"data","inFeedback":true,"report":"change","throttle":0,"threshold":10}}}' -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/di/1"
+#	mosquitto_sub -t "glp/0/${SID}/fb/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/di/1" &
+	mosquitto_pub -m '{"di-val":{"value":{"type":"level","di-level":{"report-dur":1000,"detect-level":0,"pullup-cfg":true},"di-pulse":{"report-dur":10,"detect-level":0,"pullup-cfg":true},"di-frequency":{"report-dur":100,"detect-level":0,"pullup-cfg":true}},"monitor":{"rate":1500,"cat":"data","inFeedback":true,"report":"change","throttle":0,"threshold":10}}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/di/1"
 	parse_logger
 	result "logger"
-	pub=("mosquitto_pub -m '{"di-val":{"value":{"type":"level","di-level":{"report-dur":1000,"detect-level":0,"pullup-cfg":true},"di-pulse":{"report-dur":10,"detect-level":0,"pullup-cfg":true},"di-frequency":{"report-dur":100,"detect-level":0,"pullup-cfg":true}},"monitor":{"rate":1500,"cat":"data","inFeedback":true,"report":"change","throttle":0,"threshold":10}}}' -t '"glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/di/1"'")
+	pub=("mosquitto_pub -m '{"di-val":{"value":{"type":"level","di-level":{"report-dur":1000,"detect-level":0,"pullup-cfg":true},"di-pulse":{"report-dur":10,"detect-level":0,"pullup-cfg":true},"di-frequency":{"report-dur":100,"detect-level":0,"pullup-cfg":true}},"monitor":{"rate":1500,"cat":"data","inFeedback":true,"report":"change","throttle":0,"threshold":10}}}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/di/1"'")
 	result_logs "din_mode_test" ${LOG_DIN_MODE}  ${start_time} "${pub}"
 
 }
@@ -31,11 +31,11 @@ din_mode_test2()
 	start_time=$(date | awk '{print $4}')
   	subscribe_logger_event &
 	pids+=($!)
-#	mosquitto_sub -t "glp/0/${SID}/fb/dev/iox/${DIO_DEV_NAME}/if/relay/2" &
-	mosquitto_pub -m '{"do-val":{"value":{"type":"level","level":false,"frequency":0,"pulse":0,"pwm":{"frequency":0,"duty-cycle":0}}}}' -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/do/1"
+#	mosquitto_sub -t "glp/0/${SID}/fb/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/relay/2" &
+	mosquitto_pub -m '{"do-val":{"value":{"type":"level","level":false,"frequency":0,"pulse":0,"pwm":{"frequency":0,"duty-cycle":0}}}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/do/1"
 	parse_logger
 	result "logger"
-	pub=("mosquitto_pub -m '{"do-val":{"value":{"type":"level","level":false,"frequency":0,"pulse":0,"pwm":{"frequency":0,"duty-cycle":0}}}}' -t '"glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/do/1"'")
+	pub=("mosquitto_pub -m '{"do-val":{"value":{"type":"level","level":false,"frequency":0,"pulse":0,"pwm":{"frequency":0,"duty-cycle":0}}}}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/do/1"'")
 	result_logs "din_mode_test" ${LOG_DIN_MODE}  ${start_time} "${pub}"
 
 }
@@ -46,10 +46,10 @@ din_mode_test3()
 	start_time=$(date | awk '{print $4}')
   	subscribe_logger_event &
 	pids+=($!)
-	mosquitto_pub -m '{"do-val":{"value":{"type":"level","level":"true","frequency":0,"pulse":0,"pwm":{"frequency":20000,"duty-cycle":90}}}}' -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/do/1"
+	mosquitto_pub -m '{"do-val":{"value":{"type":"level","level":"true","frequency":0,"pulse":0,"pwm":{"frequency":20000,"duty-cycle":90}}}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/do/1"
 	parse_logger "${wrong_config_level}"
 	result "logger"
-	pub=("mosquitto_pub -m '{"do-val":{"value":{"type":"level","level":"true","frequency":0,"pulse":0,"pwm":{"frequency":20000,"duty-cycle":90}}}}' -t '"glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/do/1"'")
+	pub=("mosquitto_pub -m '{"do-val":{"value":{"type":"level","level":"true","frequency":0,"pulse":0,"pwm":{"frequency":20000,"duty-cycle":90}}}}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/do/1"'")
 	result_logs "din_mode_test" ${LOG_DIN_MODE}  ${start_time} "${pub}"
 
 }
@@ -60,11 +60,11 @@ din_mode_test4()
 	start_time=$(date | awk '{print $4}')
   	subscribe_logger_event &
 	pids+=($!)
-#	mosquitto_sub -t "glp/0/${SID}/fb/dev/iox/${DIO_DEV_NAME}/if/di/1" &
-	mosquitto_pub -m '{"di-val":{"value":{"type":"pulse","di-level":{"report-dur":1000,"detect-level":0,"pullup-cfg":true},"di-pulse":{"report-dur":10,"detect-level":0,"pullup-cfg":true},"di-frequency":{"report-dur":100,"detect-level":0,"pullup-cfg":true}},"monitor":{"rate":15,"cat":"data","inFeedback":true,"report":"change","throttle":0,"threshold":10}}}' -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/do/1"
+#	mosquitto_sub -t "glp/0/${SID}/fb/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/di/1" &
+	mosquitto_pub -m '{"di-val":{"value":{"type":"pulse","di-level":{"report-dur":1000,"detect-level":0,"pullup-cfg":true},"di-pulse":{"report-dur":10,"detect-level":0,"pullup-cfg":true},"di-frequency":{"report-dur":100,"detect-level":0,"pullup-cfg":true}},"monitor":{"rate":15,"cat":"data","inFeedback":true,"report":"change","throttle":0,"threshold":10}}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/do/1"
 	parse_logger
 	result "logger"
-	pub=("mosquitto_pub -m '{"di-val":{"value":{"type":"pulse","di-level":{"report-dur":1000,"detect-level":0,"pullup-cfg":true},"di-pulse":{"report-dur":10,"detect-level":0,"pullup-cfg":true},"di-frequency":{"report-dur":100,"detect-level":0,"pullup-cfg":true}},"monitor":{"rate":15,"cat":"data","inFeedback":true,"report":"change","throttle":0,"threshold":10}}}' -t '"glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/do/1"'")
+	pub=("mosquitto_pub -m '{"di-val":{"value":{"type":"pulse","di-level":{"report-dur":1000,"detect-level":0,"pullup-cfg":true},"di-pulse":{"report-dur":10,"detect-level":0,"pullup-cfg":true},"di-frequency":{"report-dur":100,"detect-level":0,"pullup-cfg":true}},"monitor":{"rate":15,"cat":"data","inFeedback":true,"report":"change","throttle":0,"threshold":10}}}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/do/1"'")
 	result_logs "din_mode_test" ${LOG_DIN_MODE}  ${start_time} "${pub}"
 
 }
@@ -75,10 +75,10 @@ din_mode_test5()
 	start_time=$(date | awk '{print $4}')
   	subscribe_logger_event &
 	pids+=($!)
-	mosquitto_pub -m '{"do-val":{"value":{"type":"pulse","level":true,"frequency":0,"pulse":"test","pwm":{"frequency":20000,"duty-cycle":90}}}}' -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/do/1"
+	mosquitto_pub -m '{"do-val":{"value":{"type":"pulse","level":true,"frequency":0,"pulse":"test","pwm":{"frequency":20000,"duty-cycle":90}}}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/do/1"
 	parse_logger "${wrong_config_pulse}"
 	result "logger"
-	pub=("mosquitto_pub -m '{"do-val":{"value":{"type":"pulse","level":true,"frequency":0,"pulse":"test","pwm":{"frequency":20000,"duty-cycle":90}}}}' -t '"glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/do/1"'")
+	pub=("mosquitto_pub -m '{"do-val":{"value":{"type":"pulse","level":true,"frequency":0,"pulse":"test","pwm":{"frequency":20000,"duty-cycle":90}}}}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/do/1"'")
 	result_logs "din_mode_test" ${LOG_DIN_MODE}  ${start_time} "${pub}"
 }
 
@@ -88,11 +88,11 @@ din_mode_test6()
 	start_time=$(date | awk '{print $4}')
   	subscribe_logger_event &
 	pids+=($!)
-#	mosquitto_sub -t "glp/0/${SID}/fb/dev/iox/${DIO_DEV_NAME}/if/di/1" &
-	mosquitto_pub -m '{"di-val":{"value":{"type":"frequency","di-level":{"report-dur":1000,"detect-level":0,"pullup-cfg":true},"di-pulse":{"report-dur":10,"detect-level":0,"pullup-cfg":true},"di-frequency":{"report-dur":100,"detect-level":0,"pullup-cfg":true}},"monitor":{"rate":15,"cat":"data","inFeedback":true,"report":"change","throttle":0,"threshold":10}}}' -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/di/1"
+#	mosquitto_sub -t "glp/0/${SID}/fb/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/di/1" &
+	mosquitto_pub -m '{"di-val":{"value":{"type":"frequency","di-level":{"report-dur":1000,"detect-level":0,"pullup-cfg":true},"di-pulse":{"report-dur":10,"detect-level":0,"pullup-cfg":true},"di-frequency":{"report-dur":100,"detect-level":0,"pullup-cfg":true}},"monitor":{"rate":15,"cat":"data","inFeedback":true,"report":"change","throttle":0,"threshold":10}}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/di/1"
 	parse_logger
 	result "logger"
-	pub=("mosquitto_pub -m '{"di-val":{"value":{"type":"frequency","di-level":{"report-dur":1000,"detect-level":0,"pullup-cfg":true},"di-pulse":{"report-dur":10,"detect-level":0,"pullup-cfg":true},"di-frequency":{"report-dur":100,"detect-level":0,"pullup-cfg":true}},"monitor":{"rate":15,"cat":"data","inFeedback":true,"report":"change","throttle":0,"threshold":10}}}' -t '"glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/di/1"'")
+	pub=("mosquitto_pub -m '{"di-val":{"value":{"type":"frequency","di-level":{"report-dur":1000,"detect-level":0,"pullup-cfg":true},"di-pulse":{"report-dur":10,"detect-level":0,"pullup-cfg":true},"di-frequency":{"report-dur":100,"detect-level":0,"pullup-cfg":true}},"monitor":{"rate":15,"cat":"data","inFeedback":true,"report":"change","throttle":0,"threshold":10}}}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/di/1"'")
 	result_logs "din_mode_test" ${LOG_DIN_MODE}  ${start_time} "${pub}"
 
 }
@@ -102,10 +102,10 @@ din_mode_test7()
 	start_time=$(date | awk '{print $4}')
   	subscribe_logger_event &	
 	pids+=($!)
-	mosquitto_pub -m '{"do-val":{"value":{"type":"frequency","level":true,"frequency":"test","pulse":0,"pwm":{"frequency":20000,"duty-cycle":90}}}}' -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/do/1"
+	mosquitto_pub -m '{"do-val":{"value":{"type":"frequency","level":true,"frequency":"test","pulse":0,"pwm":{"frequency":20000,"duty-cycle":90}}}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/do/1"
 	parse_logger "${wrong_config_freq}"
 	result "logger"
-	pub=("mosquitto_pub -m '{"do-val":{"value":{"type":"frequency","level":true,"frequency":"test","pulse":0,"pwm":{"frequency":20000,"duty-cycle":90}}}}' -t '"glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/do/1"'")
+	pub=("mosquitto_pub -m '{"do-val":{"value":{"type":"frequency","level":true,"frequency":"test","pulse":0,"pwm":{"frequency":20000,"duty-cycle":90}}}}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/do/1"'")
 	result_logs "din_mode_test" ${LOG_DIN_MODE}  ${start_time} "${pub}"
 }
 

@@ -11,7 +11,7 @@ do_get_test1()
 {	
 
 	mosquitto_sub -t "my/responses" &
-	mosquitto_pub -m '{"corr":"abcd","response":"my/responses","item":["dev/iox/dio/if/do/1/do-val"],"maxAge":1,"timeout":10}' -t "glp/0/./=get/dp/request"
+	mosquitto_pub -m '{"corr":"abcd","response":"my/responses","item":["dev/'${IOX_PROTOCOL}'/'${DIO_DEV_NAME}'/if/do/1/do-val"],"maxAge":1,"timeout":10}' -t "glp/0/./=get/dp/request"
 
 }
 
@@ -19,7 +19,7 @@ do_get_test2()
 {
 
 	mosquitto_sub -t "my/responses" &
-	mosquitto_pub -m '{"corr":"abcd","response":"my/responses","item":["dev/iox12/dio/if/do/1/do-val"],"maxAge":1,"timeout":10}' -t "glp/0/./=get/dp/request"
+	mosquitto_pub -m '{"corr":"abcd","response":"my/responses","item":["dev/iox12/'${DIO_DEV_NAME}'/if/do/1/do-val"],"maxAge":1,"timeout":10}' -t "glp/0/./=get/dp/request"
 
 }
 
@@ -27,7 +27,7 @@ do_get_test3()
 {
 
 	mosquitto_sub -t "my/responses" &
-	mosquitto_pub -m '{"corr":"abcd","response":"my/responses","item":["dev/iox/dio12/if/do/1/do-val"],"maxAge":1,"timeout":10}' -t "glp/0/./=get/dp/request"
+	mosquitto_pub -m '{"corr":"abcd","response":"my/responses","item":["dev/'${IOX_PROTOCOL}'/'${DIO_DEV_NAME}'12/if/do/1/do-val"],"maxAge":1,"timeout":10}' -t "glp/0/./=get/dp/request"
 
 }
 
@@ -35,7 +35,7 @@ do_get_test4()
 {
 
 	mosquitto_sub -t "my/responses" &
-	mosquitto_pub -m '{"corr":"abcd","response":"my/responses","item":["dev/iox/dio/if/do/8/do-val"],"maxAge":1,"timeout":10}' -t "glp/0/./=get/dp/request"
+	mosquitto_pub -m '{"corr":"abcd","response":"my/responses","item":["dev/'${IOX_PROTOCOL}'/'${DIO_DEV_NAME}'/if/do/8/do-val"],"maxAge":1,"timeout":10}' -t "glp/0/./=get/dp/request"
 
 }
 
@@ -43,7 +43,7 @@ do_get_test5()
 {
 	
 	mosquitto_sub -t "my/responses" &
-	mosquitto_pub -m '{"corr":"abcd","response":"my/responses","item":["dev/iox/dio/if/do/8/do-val"],"maxAge":1,"timeout":10}' -t "glp/0/./=get/dp/request"
+	mosquitto_pub -m '{"corr":"abcd","response":"my/responses","item":["dev/'${IOX_PROTOCOL}'/'${DIO_DEV_NAME}'/if/do/8/do-val"],"maxAge":1,"timeout":10}' -t "glp/0/./=get/dp/request"
 
 }
 
@@ -51,7 +51,7 @@ do_get_test6()
 {
 
 	mosquitto_sub -t "my/responses" &
-	mosquitto_pub -m '{"corr":"abcd","response":"my/responses","item":["dev/iox/dio/if/do/1/do-val","dev/iox/dio/if/do/2/do-val"],"maxAge":1,"timeout":10}' -t "glp/0/./=get/dp/request"
+	mosquitto_pub -m '{"corr":"abcd","response":"my/responses","item":["dev/'${IOX_PROTOCOL}'/'${DIO_DEV_NAME}'/if/do/1/do-val","dev/'${IOX_PROTOCOL}'/'${DIO_DEV_NAME}'/if/do/2/do-val"],"maxAge":1,"timeout":10}' -t "glp/0/./=get/dp/request"
 
 }
 

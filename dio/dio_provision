@@ -8,7 +8,7 @@ source ${IOX_PATH}"/errors.sh"
 LOG_EVENT_LOGGER=${IOX_PATH}"/dio/logger"
 LOG_STS=${IOX_PATH}"/dio/sts"
 LOG_DIO_PROV=${IOX_PATH}"/dio/dio_provision_log"
-DIO_UNID="${IOX_INSTALL_ID}.256"
+DIO_UNID="${IOX_INSTALL_ID}.dio"
 
 subscribe_sts_event()
 {

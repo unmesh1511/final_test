@@ -16,10 +16,10 @@ phase_unspport="Unsupported Action"
 	start_time=$(date | awk '{print $4}')
   	subscribe_logger_event &
 	pids+=($!)
-	mosquitto_pub -m '{"action":"repair"}' -t "glp/0/${SID}/rq/dev/iox/${METER_DEV_NAME}/do"
+	mosquitto_pub -m '{"action":"repair"}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${METER_DEV_NAME}/do"
 	parse_logger "${phase_unspport}"
 	result "logger"
-	pub=("mosquitto_pub -m '{"action":"repair"}' -t '"glp/0/${SID}/rq/dev/iox/${METER_DEV_NAME}/do"'")
+	pub=("mosquitto_pub -m '{"action":"repair"}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${METER_DEV_NAME}/do"'")
 	result_logs "3phase_repair_test" ${LOG_3PHASE_REPAIR}  ${start_time} "${pub}"
 }
 

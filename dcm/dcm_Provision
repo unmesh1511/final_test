@@ -13,22 +13,22 @@ dcm_Prov_state="provisioning"
 
 subscribe_sts_event()
 {
-	 mosquitto_sub -t "glp/0/17q2d9v/fb/con/test1/sts" > ${STS_PATH} 
+	 mosquitto_sub -t "glp/0/${SID}/fb/con/test1/sts" > ${STS_PATH} 
 }
 
 dcm_provision_test1()
 {
-	mosquitto_pub -m '{"action":"provision"}' -t "glp/0/17q2d9v/rq/con/test3/do"
+	mosquitto_pub -m '{"action":"provision"}' -t "glp/0/${SID}/rq/con/test3/do"
 }
 
 dcm_provision_test2()
 {	
 	start_time=$(date | awk '{print $4}')
 	subscribe_sts_event &
-	mosquitto_pub -m '{"action":"provision"}' -t "glp/0/17q2d9v/rq/con/test1/do"
+	mosquitto_pub -m '{"action":"provision"}' -t "glp/0/${SID}/rq/con/test1/do"
 	parse_sts "${dcm_Prov_state}"
 	result "sts"
-	pub=("mosquitto_pub -m '{"action":"provision"}' -t '"glp/0/17q2d9v/rq/con/test1/do"'")
+	pub=("mosquitto_pub -m '{"action":"provision"}' -t '"glp/0/${SID}/rq/con/test1/do"'")
 	result_logs "dcm_Prov_test" ${LOG_DCM_PROV}  ${start_time} "${pub}"
 }
 
@@ -36,11 +36,11 @@ dcm_provision_test3()
 {
 	start_time=$(date | awk '{print $4}')
 	subscribe_sts_event &
-	mosquitto_sub -t "glp/0/17q2d9v/fb/con/test1/cfg" &
-	mosquitto_pub -m '{"action":"provision"}' -t "glp/0/17q2d9v/rq/con/test1/do"
+	mosquitto_sub -t "glp/0/${SID}/fb/con/test1/cfg" &
+	mosquitto_pub -m '{"action":"provision"}' -t "glp/0/${SID}/rq/con/test1/do"
 	parse_sts "${dcm_Prov_state}"
 	result "sts"
-	pub=("mosquitto_pub -m '{"action":"provision"}' -t '"glp/0/17q2d9v/rq/con/test1/do"'")
+	pub=("mosquitto_pub -m '{"action":"provision"}' -t '"glp/0/${SID}/rq/con/test1/do"'")
 	result_logs "dcm_Prov_test" ${LOG_DCM_PROV}  ${start_time} "${pub}"
 }
 

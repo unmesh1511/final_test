@@ -8,6 +8,7 @@ source ${IOX_PATH}"/errors.sh"
 LOG_EVENT_LOGGER=${IOX_PATH}"/dio/logger"
 LOG_STS=${IOX_PATH}"/dio/sts"
 LOG_DIO_CREATE=${IOX_PATH}"/dio/dio_create_log"
+DIO_UNID="${IOX_INSTALL_ID}.dio"
 
 subscribe_sts_event()
 {
@@ -93,11 +94,11 @@ dio_create_test7()
 	pids+=($!)
   	subscribe_logger_event &
 	pids+=($!)
-	mosquitto_pub -m '{"action":"create","args":{"type":"900001050304DD00","provision":false,"unid":"256"}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${LOGICAL_ID}dio/do"
+	mosquitto_pub -m '{"action":"create","args":{"type":"900001050304DD00","provision":false,"unid":'"${DIO_UNID}"'}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${LOGICAL_ID}dio/do"
 	parse_sts "${create_expected_state}"
 	parse_logger "${no_unid}"
 	result "sts"
-	pub=("mosquitto_pub -m '{"action":"create","args":{"type":"900001050304DD00","provision":false,"unid":"256"}}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${LOGICAL_ID}dio/do"'")
+	pub=("mosquitto_pub -m '{"action":"create","args":{"type":"900001050304DD00","provision":false,"unid":'"${DIO_UNID}"'}}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${LOGICAL_ID}dio/do"'")
 	result_logs "dio_create_test" ${LOG_DIO_CREATE}  ${start_time} "${pub}"
 }
 
@@ -118,10 +119,10 @@ dio_create_test9()
 	start_time=$(date | awk '{print $4}')
  	subscribe_logger_event &
 	pids+=($!)
-	mosquitto_pub -m '{"action":"create","args":{"type":"900001050304DD00","provision":"true","unid":"256"}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${LOGICAL_ID}dio/do"
+	mosquitto_pub -m '{"action":"create","args":{"type":"900001050304DD00","provision":"true","unid":'"${DIO_UNID}"'}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${LOGICAL_ID}dio/do"
 	parse_logger "${invalid_provision}"
 	result "logger"
-	pub=("mosquitto_pub -m '{"action":"create","args":{"type":"900001050304DD00","provision":"true","unid":"256"}}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${LOGICAL_ID}dio/do"'")
+	pub=("mosquitto_pub -m '{"action":"create","args":{"type":"900001050304DD00","provision":"true","unid":'"${DIO_UNID}"'}}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${LOGICAL_ID}dio/do"'")
 	result_logs "dio_create_test" ${LOG_DIO_CREATE} ${start_time} "${pub}"
 }
 

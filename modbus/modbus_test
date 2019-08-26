@@ -15,7 +15,7 @@ mod_prov_state="provisioned"
 
 subscribe_sts_event()
 {
-	 mosquitto_sub -t "glp/0/${SID}/fb/dev/iox/pm820/sts" > ${STS_PATH} 
+	 mosquitto_sub -t "glp/0/${SID}/fb/dev/${IOX_PROTOCOL}/pm820/sts" > ${STS_PATH} 
 }
 
 modbus_test_test1()
@@ -23,10 +23,10 @@ modbus_test_test1()
 	start_time=$(date | awk '{print $4}') 
 	subscribe_logger_event & 
 	pids+=($!)
-	mosquitto_pub -m '{"action":"test"}' -t "glp/0/${SID}/rq/dev/iox/pm820/do"
+	mosquitto_pub -m '{"action":"test"}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/pm820/do"
 	parse_logger "${mod_pm820_dev}"
 	result "logger"
-	pub=("mosquitto_pub -m '{"action":"test"}' -t '"glp/0/${SID}/rq/dev/iox/pm820/do"'")
+	pub=("mosquitto_pub -m '{"action":"test"}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/pm820/do"'")
 	result_logs "modbus_test_test" ${LOG_MODBUS_TEST}  ${start_time} "${pub}"
 }
 
@@ -35,10 +35,10 @@ modbus_test_test2()
 	start_time=$(date | awk '{print $4}') 
 	subscribe_sts_event &
 	pids+=($!)
-	mosquitto_pub -m '{"action":"test"}' -t "glp/0/${SID}/rq/dev/iox/pm820/do"
+	mosquitto_pub -m '{"action":"test"}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/pm820/do"
 	parse_sts "${mod_unprov_state}"
 	result "sts"
-	pub=("mosquitto_pub -m '{"action":"test"}' -t '"glp/0/${SID}/rq/dev/iox/pm820/do"'")
+	pub=("mosquitto_pub -m '{"action":"test"}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/pm820/do"'")
 	result_logs "modbus_test_test" ${LOG_MODBUS_TEST}  ${start_time} "${pub}"
 }
 
@@ -47,10 +47,10 @@ modbus_test_test3()
 	start_time=$(date | awk '{print $4}') 
 	subscribe_sts_event &
 	pids+=($!)
-	mosquitto_pub -m '{"action":"test"}' -t "glp/0/${SID}/rq/dev/iox/pm820/do"
+	mosquitto_pub -m '{"action":"test"}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/pm820/do"
 	parse_sts "${mod_prov_state}"
 	result "sts"
-	pub=("mosquitto_pub -m '{"action":"test"}' -t '"glp/0/${SID}/rq/dev/iox/pm820/do"'")
+	pub=("mosquitto_pub -m '{"action":"test"}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/pm820/do"'")
 	result_logs "modbus_test_test" ${LOG_MODBUS_TEST}  ${start_time} "${pub}"
 }
 
@@ -59,10 +59,10 @@ modbus_test_test4()
 	start_time=$(date | awk '{print $4}') 
 	subscribe_sts_event &
 	pids+=($!)
-	mosquitto_pub -m '{"action":"test"}' -t "glp/0/${SID}/rq/dev/iox/pm820/do"
+	mosquitto_pub -m '{"action":"test"}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/pm820/do"
 	parse_sts "${mod_prov_state}"
 	result "sts"
-	pub=("mosquitto_pub -m '{"action":"test"}' -t '"glp/0/${SID}/rq/dev/iox/pm820/do"'")
+	pub=("mosquitto_pub -m '{"action":"test"}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/pm820/do"'")
 	result_logs "modbus_test_test" ${LOG_MODBUS_TEST}  ${start_time} "${pub}"
 }
 
@@ -71,10 +71,10 @@ modbus_test_test5()
 	start_time=$(date | awk '{print $4}') 
 	subscribe_sts_event &
 	pids+=($!)
-	mosquitto_pub -m '{"action":"test"}' -t "glp/0/${SID}/rq/dev/iox/pm820/do"
+	mosquitto_pub -m '{"action":"test"}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/pm820/do"
 	parse_sts "${mod_unprov_state}"
 	result "sts"
-	pub=("mosquitto_pub -m '{"action":"test"}' -t '"glp/0/${SID}/rq/dev/iox/pm820/do"'")
+	pub=("mosquitto_pub -m '{"action":"test"}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/pm820/do"'")
 	result_logs "modbus_test_test" ${LOG_MODBUS_TEST}  ${start_time} "${pub}"
 }
 
@@ -83,10 +83,10 @@ modbus_test_test6()
 	start_time=$(date | awk '{print $4}') 
 	subscribe_logger_event & 
 	pids+=($!)
-	mosquitto_pub -m '{"action":"test"}' -t "glp/0/${SID}/rq/dev/iox/pm820/do"
+	mosquitto_pub -m '{"action":"test"}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/pm820/do"
 	parse_logger "${mod_pm820_dev}"
 	result "logger"
-	pub=("mosquitto_pub -m '{"action":"test"}' -t '"glp/0/${SID}/rq/dev/iox/pm820/do"'")
+	pub=("mosquitto_pub -m '{"action":"test"}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/pm820/do"'")
 	result_logs "modbus_test_test" ${LOG_MODBUS_TEST}  ${start_time} "${pub}"
 }
 

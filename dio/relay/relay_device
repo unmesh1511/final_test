@@ -15,7 +15,7 @@ relay_device_test1()
 	start_time=$(date | awk '{print $4}')
   	subscribe_logger_event &
 	pids+=($!)
-	mosquitto_pub -m '{"relay-val":{"value":{"level":true}}}' -t "glp/0/17q2d9v/rq/dev/iox/meter/if/relay/1"
+	mosquitto_pub -m '{"relay-val":{"value":{"level":true}}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${METER_DEV_NAME}/if/relay/1"
 	parse_logger
 	result "logger"
 	result_logs "relay_device_test" ${LOG_RELAY_DEVICE}  ${start_time} "${pub}"
@@ -26,8 +26,8 @@ relay_device_test2()
 	start_time=$(date | awk '{print $4}')
   	subscribe_logger_event &
 	pids+=($!)
-#	mosquitto_sub -t "glp/0/17q2d9v/fb/dev/iox/dio/if/relay/1" &
-	mosquitto_pub -m '{"relay-val":{"value":{"level":true}}}' -t "glp/0/17q2d9v/rq/dev/iox/dio/if/relay/1"
+#	mosquitto_sub -t "glp/0/${SID}/fb/dev/${IOX_PROTOCOL}/dio/if/relay/1" &
+	mosquitto_pub -m '{"relay-val":{"value":{"level":true}}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/relay/1"
 	parse_logger
 	result "logger"
 	result_logs "relay_device_test" ${LOG_RELAY_DEVICE}  ${start_time} "${pub}"

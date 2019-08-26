@@ -14,10 +14,10 @@ dio_replace_test1()
 	start_time=$(date | awk '{print $4}')
 	subscribe_logger_event &
 	pids+=($!)
-	mosquitto_pub -m '{"action":"replace"}' -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/do"
+	mosquitto_pub -m '{"action":"replace"}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/do"
 	parse_logger "${err_replace_hndl}" ${LOG_DIO_REPLACE}
 	result "logger"
-	pub=("mosquitto_pub -m '{"action":"replace"}' -t '"glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/do"'")
+	pub=("mosquitto_pub -m '{"action":"replace"}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/do"'")
 	result_logs "dio_replace_test" ${LOG_DIO_REPLACE}  ${start_time} "${pub}"
 }
 

@@ -13,17 +13,17 @@ LOG_RELAY_PORT=${IOX_PATH}"/dio/relay/relay_port_log"
 relay_port_test1()
 {
 	start_time=$(date | awk '{print $4}')
-	mosquitto_sub -t "glp/0/${SID}/fb/dev/iox/${DIO_DEV_NAME}/if/relay/1" &
+	mosquitto_sub -t "glp/0/${SID}/fb/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/relay/1" &
 	pids+=($!)
-	mosquitto_pub -m '{"relay-val":{"value":{"level":true}}}' -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/relay/1"
+	mosquitto_pub -m '{"relay-val":{"value":{"level":true}}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/relay/1"
 }
 
 relay_port_test2()
 {
 	start_time=$(date | awk '{print $4}')
-	mosquitto_sub -t "glp/0/${SID}/fb/dev/iox/${DIO_DEV_NAME}/if/relay/2" &
+	mosquitto_sub -t "glp/0/${SID}/fb/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/relay/2" &
 	pids+=($!)
-	mosquitto_pub -m '{"relay-val":{"value":{"level":true}}}' -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/relay/2" 
+	mosquitto_pub -m '{"relay-val":{"value":{"level":true}}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/relay/2" 
 }
 
 relay_port_test3()
@@ -31,7 +31,7 @@ relay_port_test3()
 	start_time=$(date | awk '{print $4}')
 	subscribe_logger_event &
 	pids+=($!)
-	mosquitto_pub -m '{"relay-val":{"value":{"level":true}}}' -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/relay/3"
+	mosquitto_pub -m '{"relay-val":{"value":{"level":true}}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/relay/3"
 	parse_logger
 	result "logger"
 	result_logs "relay_port_test" ${test_num} ${LOG_RELAY_PORT}  ${start_time} "${pub}"

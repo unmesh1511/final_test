@@ -13,35 +13,35 @@ dcm_del_state="deleted"
 
 dcm_delete_test1()
 {
-	mosquitto_pub -m '{"action":"delete"}' -t "glp/0/17q2d9v/rq/con/test0/do"
+	mosquitto_pub -m '{"action":"delete"}' -t "glp/0/${SID}/rq/con/test0/do"
 }
 
 dcm_delete_test2()
 {	
 
 	start_time=$(date | awk '{print $4}')
-	mosquitto_sub -t "glp/0/17q2d9v/fb/con/test1/sts" > ${STS_PATH} &
+	mosquitto_sub -t "glp/0/${SID}/fb/con/test1/sts" > ${STS_PATH} &
 	pids+=($!)
-	mosquitto_sub -t "glp/0/17q2d9v/fb/con/test1/cfg" &
+	mosquitto_sub -t "glp/0/${SID}/fb/con/test1/cfg" &
 	pids+=($!)
-	mosquitto_pub -m '{"action":"delete"}' -t "glp/0/17q2d9v/rq/con/test1/do"
+	mosquitto_pub -m '{"action":"delete"}' -t "glp/0/${SID}/rq/con/test1/do"
 	parse_sts "${dcm_del_state}"
 	result "sts"
-	pub=("mosquitto_pub -m '{"action":"delete"}' -t '"glp/0/17q2d9v/rq/con/test1/do"'")
+	pub=("mosquitto_pub -m '{"action":"delete"}' -t '"glp/0/${SID}/rq/con/test1/do"'")
 	result_logs "dcm_delete_test" ${LOG_DCM_DELETE}  ${start_time} "${pub}"
 }
 
 dcm_delete_test3()
 {
 	start_time=$(date | awk '{print $4}')
-	mosquitto_sub -t "glp/0/17q2d9v/fb/con/test0/sts" > ${STS_PATH} &
+	mosquitto_sub -t "glp/0/${SID}/fb/con/test0/sts" > ${STS_PATH} &
 	pids+=($!)
-	mosquitto_sub -t "glp/0/17q2d9v/fb/con/test0/cfg" &
+	mosquitto_sub -t "glp/0/${SID}/fb/con/test0/cfg" &
 	pids+=($!)
-	mosquitto_pub -m '{"action":"delete"}' -t "glp/0/17q2d9v/rq/con/test0/do"
+	mosquitto_pub -m '{"action":"delete"}' -t "glp/0/${SID}/rq/con/test0/do"
 	parse_sts "${dcm_del_state}"
 	result "sts"
-	pub=("mosquitto_pub -m '{"action":"delete"}' -t '"glp/0/17q2d9v/rq/con/test0/do"'")
+	pub=("mosquitto_pub -m '{"action":"delete"}' -t '"glp/0/${SID}/rq/con/test0/do"'")
 	result_logs "dcm_delete_test" ${LOG_DCM_DELETE}  ${start_time} "${pub}"
 }
 

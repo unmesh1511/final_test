@@ -8,6 +8,7 @@ source ${IOX_PATH}"/errors.sh"
 LOG_EVENT_LOGGER=${IOX_PATH}"/meter/3phase/logger"
 LOG_STS=${IOX_PATH}"/meter/3phase/sts"
 LOG_3PHASE_CREATE=${IOX_PATH}"/meter/3phase/3phase_create_log"
+METER_UNID="${IOX_INSTALL_ID}.meter"
 
 phase_err_args="Error in parsing args data"
 phase_no_unid="No unid provided"
@@ -17,7 +18,7 @@ phase_unprov_state="unprovisioned"
 
 subscribe_sts_event()
 {
-	mosquitto_sub -t "glp/0/${SID}/fb/dev/iox/dio/sts" > ${LOG_STS}
+	mosquitto_sub -t "glp/0/${SID}/fb/dev/${IOX_PROTOCOL}/dio/sts" > ${LOG_STS}
 }
 
 3phase_create_test1()
@@ -25,10 +26,10 @@ subscribe_sts_event()
 	start_time=$(date | awk '{print $4}')
   	subscribe_logger_event &
 	pids+=($!)
-	mosquitto_pub -m '{"action":"create"}' -t "glp/0/${SID}/rq/dev/iox/${METER_DEV_NAME}/do"
+	mosquitto_pub -m '{"action":"create"}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${METER_DEV_NAME}/do"
 	parse_logger "${phase_err_args}"
 	result "logger"
-	pub=("mosquitto_pub -m '{"action":"create"}' -t '"glp/0/${SID}/rq/dev/iox/${METER_DEV_NAME}/do"'")
+	pub=("mosquitto_pub -m '{"action":"create"}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${METER_DEV_NAME}/do"'")
 	result_logs "3phase_create_test" ${LOG_3PHASE_CREATE}  ${start_time} "${pub}"
 }
 
@@ -37,10 +38,10 @@ subscribe_sts_event()
 	start_time=$(date | awk '{print $4}')
   	subscribe_logger_event &
 	pids+=($!)
-	mosquitto_pub -m '{"action":"create","args":{"type":"ABCDEFG"}}' -t "glp/0/${SID}/rq/dev/iox/${METER_DEV_NAME}/do"
+	mosquitto_pub -m '{"action":"create","args":{"type":"ABCDEFG"}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${METER_DEV_NAME}/do"
 	parse_logger "${phase_no_unid}"
 	result "logger"
-	pub=("mosquitto_pub -m '{"action":"create","args":{"type":"ABCDEFG"}}' -t '"glp/0/${SID}/rq/dev/iox/${METER_DEV_NAME}/do"'")
+	pub=("mosquitto_pub -m '{"action":"create","args":{"type":"ABCDEFG"}}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${METER_DEV_NAME}/do"'")
 	result_logs "3phase_create_test" ${LOG_3PHASE_CREATE}  ${start_time} "${pub}"
 }
 
@@ -49,10 +50,10 @@ subscribe_sts_event()
 	start_time=$(date | awk '{print $4}')
   	subscribe_logger_event &
 	pids+=($!)
-	mosquitto_pub -m '{"action":"create","args":{"type":"meter"}}' -t "glp/0/${SID}/rq/dev/iox/${METER_DEV_NAME}/do"
+	mosquitto_pub -m '{"action":"create","args":{"type":"meter"}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${METER_DEV_NAME}/do"
 	parse_logger "${phase_no_unid}"
 	result "logger"
-	pub=("mosquitto_pub -m '{"action":"create","args":{"type":"meter"}}' -t '"glp/0/${SID}/rq/dev/iox/${METER_DEV_NAME}/do"'")
+	pub=("mosquitto_pub -m '{"action":"create","args":{"type":"meter"}}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${METER_DEV_NAME}/do"'")
 	result_logs "3phase_create_test" ${LOG_3PHASE_CREATE}  ${start_time} "${pub}"
 }
 
@@ -61,10 +62,10 @@ subscribe_sts_event()
 	start_time=$(date | awk '{print $4}')
   	subscribe_logger_event &
 	pids+=($!)
-	mosquitto_pub -m '{"action":"create","args":{"type":"meter"}}' -t "glp/0/${SID}/rq/dev/iox/${METER_DEV_NAME}/do"
+	mosquitto_pub -m '{"action":"create","args":{"type":"meter"}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${METER_DEV_NAME}/do"
 	parse_logger "${phase_no_unid}"
 	result "logger"
-	pub=("mosquitto_pub -m '{"action":"create","args":{"type":"meter"}}' -t '"glp/0/${SID}/rq/dev/iox/${METER_DEV_NAME}/do"'")
+	pub=("mosquitto_pub -m '{"action":"create","args":{"type":"meter"}}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${METER_DEV_NAME}/do"'")
 	result_logs "3phase_create_test" ${LOG_3PHASE_CREATE}  ${start_time} "${pub}"
 }
 
@@ -73,10 +74,10 @@ subscribe_sts_event()
 	start_time=$(date | awk '{print $4}')
   	subscribe_logger_event &
 	pids+=($!)
-	mosquitto_pub -m '{"action":"create","args":{"type":"ABCDEFG"}}' -t "glp/0/${SID}/rq/dev/iox/${METER_DEV_NAME}/do"
+	mosquitto_pub -m '{"action":"create","args":{"type":"ABCDEFG"}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${METER_DEV_NAME}/do"
 	parse_logger "${phase_no_unid}"
 	result "logger"
-	pub=("mosquitto_pub -m '{"action":"create","args":{"type":"ABCDEFG"}}' -t '"glp/0/${SID}/rq/dev/iox/${METER_DEV_NAME}/do"'")
+	pub=("mosquitto_pub -m '{"action":"create","args":{"type":"ABCDEFG"}}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${METER_DEV_NAME}/do"'")
 	result_logs "3phase_create_test" ${LOG_3PHASE_CREATE}  ${start_time} "${pub}"
 }
 
@@ -85,10 +86,10 @@ subscribe_sts_event()
 	start_time=$(date | awk '{print $4}')
   	subscribe_logger_event &
 	pids+=($!)
-	mosquitto_pub -m '{"action":"create","args":{"type":"meter","provision":true}}' -t "glp/0/${SID}/rq/dev/iox/amik_1/do"
+	mosquitto_pub -m '{"action":"create","args":{"type":"meter","provision":true}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/amik_1/do"
 	parse_logger "${phase_no_unid}"
 	result "logger"
-	pub=("mosquitto_pub -m '{"action":"create","args":{"type":"meter","provision":true}}' -t '"glp/0/${SID}/rq/dev/iox/amik_1/do"'")
+	pub=("mosquitto_pub -m '{"action":"create","args":{"type":"meter","provision":true}}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/amik_1/do"'")
 	result_logs "3phase_create_test" ${LOG_3PHASE_CREATE}  ${start_time} "${pub}"
 }
 
@@ -97,10 +98,10 @@ subscribe_sts_event()
 	start_time=$(date | awk '{print $4}')
   	subscribe_logger_event &
 	pids+=($!)
-	mosquitto_pub -m '{"action":"create","args":{"type":"meter","provision":true,"unid":"abcd"}}' -t "glp/0/${SID}/rq/dev/iox/${METER_DEV_NAME}/do"
+	mosquitto_pub -m '{"action":"create","args":{"type":"meter","provision":true,"unid":"abcd"}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${METER_DEV_NAME}/do"
 	parse_logger "${phase_invalid_unid}"
 	result "logger"
-	pub=("mosquitto_pub -m '{"action":"create","args":{"type":"meter","provision":true,"unid":"abcd"}}' -t '"glp/0/${SID}/rq/dev/iox/${METER_DEV_NAME}/do"'")
+	pub=("mosquitto_pub -m '{"action":"create","args":{"type":"meter","provision":true,"unid":"abcd"}}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${METER_DEV_NAME}/do"'")
 	result_logs "3phase_create_test" ${LOG_3PHASE_CREATE}  ${start_time} "${pub}"
 }
 
@@ -109,10 +110,10 @@ subscribe_sts_event()
 	start_time=$(date | awk '{print $4}')
   	subscribe_logger_event &
 	pids+=($!)
-	mosquitto_pub -m '{"action":"create","args":{"type":"meter","provision":"true","unid":"257"}}' -t "glp/0/${SID}/rq/dev/iox/${METER_DEV_NAME}/do"
+	mosquitto_pub -m '{"action":"create","args":{"type":"meter","provision":"true","unid":'"${METER_UNID}"'}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${METER_DEV_NAME}/do"
 	parse_logger "${phase_wrong_provision}"
 	result "logger"
-	pub=("mosquitto_pub -m '{"action":"create","args":{"type":"meter","provision":"true","unid":"257"}}' -t '"glp/0/${SID}/rq/dev/iox/${METER_DEV_NAME}/do"'")
+	pub=("mosquitto_pub -m '{"action":"create","args":{"type":"meter","provision":"true","unid":'"${METER_UNID}"'}}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${METER_DEV_NAME}/do"'")
 	result_logs "3phase_create_test" ${LOG_3PHASE_CREATE}  ${start_time} "${pub}"
 }
 
@@ -121,10 +122,10 @@ subscribe_sts_event()
 	start_time=$(date | awk '{print $4}')
 	subscibe_sts_event &
 	pids+=($!)
-	mosquitto_pub -m '{"action":"create","args":{"unid":"257","type":"meter","provision":false}}' -t "glp/0/${SID}/rq/dev/iox/${METER_DEV_NAME}/do"
+	mosquitto_pub -m '{"action":"create","args":{"unid":'"${METER_UNID}"',"type":"meter","provision":false}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${METER_DEV_NAME}/do"
 	parse_sts "${phase_unprov_state}"
 	result "sts"
-	pub=("mosquitto_pub -m '{"action":"create","args":{"unid":"257","type":"meter","provision":false}}' -t '"glp/0/${SID}/rq/dev/iox/${METER_DEV_NAME}/do"'")
+	pub=("mosquitto_pub -m '{"action":"create","args":{"unid":'"${METER_UNID}"',"type":"meter","provision":false}}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${METER_DEV_NAME}/do"'")
 	result_logs "3phase_create_test" ${LOG_3PHASE_CREATE}  ${start_time} "${pub}"
 }
 
@@ -133,10 +134,10 @@ subscribe_sts_event()
 	start_time=$(date | awk '{print $4}')
 	subscibe_sts_event &
 	pids+=($!)
-	mosquitto_pub -m '{"action":"create","args":{"unid":"257","type":"meter","provision":true}}' -t "glp/0/${SID}/rq/dev/iox/${METER_DEV_NAME}/do"
+	mosquitto_pub -m '{"action":"create","args":{"unid":'"${METER_UNID}"',"type":"meter","provision":true}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${METER_DEV_NAME}/do"
 	parse_sts "${phase_unprov_state}"
 	result "sts"
-	pub=("mosquitto_pub -m '{"action":"create","args":{"unid":"257","type":"meter","provision":true}}' -t '"glp/0/${SID}/rq/dev/iox/${METER_DEV_NAME}/do"'")
+	pub=("mosquitto_pub -m '{"action":"create","args":{"unid":'"${METER_UNID}"',"type":"meter","provision":true}}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${METER_DEV_NAME}/do"'")
 	result_logs "3phase_create_test" ${LOG_3PHASE_CREATE}  ${start_time} "${pub}"
 }
 

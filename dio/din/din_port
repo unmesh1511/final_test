@@ -15,10 +15,10 @@ din_port_test1()
 	start_time=$(date | awk '{print $4}')
 	subscribe_logger_event &	
 	pids+=($!)
-	mosquitto_pub -m '{"di-val":{"value":{"type":"level","di-level":{"report-dur":1000,"detect-level":0,"pullup-cfg":true},"di-pulse":{"report-dur":10,"detect-level":0,"pullup-cfg":true},"di-frequency":{"report-dur":100,"detect-level":0,"pullup-cfg":true}},"monitor":{"rate":1500,"cat":"data","inFeedback":false,"report":"change","throttle":0,"threshold":10}}}' -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/di/1"
+	mosquitto_pub -m '{"di-val":{"value":{"type":"level","di-level":{"report-dur":1000,"detect-level":0,"pullup-cfg":true},"di-pulse":{"report-dur":10,"detect-level":0,"pullup-cfg":true},"di-frequency":{"report-dur":100,"detect-level":0,"pullup-cfg":true}},"monitor":{"rate":1500,"cat":"data","inFeedback":false,"report":"change","throttle":0,"threshold":10}}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/di/1"
 	parse_logger
 	result "logger"
-	pub=("mosquitto_pub -m '{"di-val":{"value":{"type":"level","di-level":{"report-dur":1000,"detect-level":0,"pullup-cfg":true},"di-pulse":{"report-dur":10,"detect-level":0,"pullup-cfg":true},"di-frequency":{"report-dur":100,"detect-level":0,"pullup-cfg":true}},"monitor":{"rate":1500,"cat":"data","inFeedback":false,"report":"change","throttle":0,"threshold":10}}}' -t '"glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/di/1"'")
+	pub=("mosquitto_pub -m '{"di-val":{"value":{"type":"level","di-level":{"report-dur":1000,"detect-level":0,"pullup-cfg":true},"di-pulse":{"report-dur":10,"detect-level":0,"pullup-cfg":true},"di-frequency":{"report-dur":100,"detect-level":0,"pullup-cfg":true}},"monitor":{"rate":1500,"cat":"data","inFeedback":false,"report":"change","throttle":0,"threshold":10}}}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/di/1"'")
 	result_logs "din_port_test" ${LOG_DIN_PORT}  ${start_time} "${pub}"
 }
 
@@ -27,11 +27,11 @@ din_port_test2()
 	start_time=$(date | awk '{print $4}')
 	subscribe_logger_event &	
 	pids+=($!)
-#	mosquitto_sub -t "glp/0/${SID}/fb/dev/iox/${DIO_DEV_NAME}/if/di/2" > ${LOGGER_PATH} &
-	mosquitto_pub -m '{"di-val":{"value":{"type":"level","di-level":{"report-dur":1000,"detect-level":0,"pullup-cfg":true},"di-pulse":{"report-dur":10,"detect-level":0,"pullup-cfg":true},"di-frequency":{"report-dur":100,"detect-level":0,"pullup-cfg":true}},"monitor":{"rate":1500,"cat":"data","inFeedback":false,"report":"change","throttle":0,"threshold":10}}}' -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/di/2"
+#	mosquitto_sub -t "glp/0/${SID}/fb/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/di/2" > ${LOGGER_PATH} &
+	mosquitto_pub -m '{"di-val":{"value":{"type":"level","di-level":{"report-dur":1000,"detect-level":0,"pullup-cfg":true},"di-pulse":{"report-dur":10,"detect-level":0,"pullup-cfg":true},"di-frequency":{"report-dur":100,"detect-level":0,"pullup-cfg":true}},"monitor":{"rate":1500,"cat":"data","inFeedback":false,"report":"change","throttle":0,"threshold":10}}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/di/2"
 	parse_logger
 	result "logger"
-	pub=("mosquitto_pub -m '{"di-val":{"value":{"type":"level","di-level":{"report-dur":1000,"detect-level":0,"pullup-cfg":true},"di-pulse":{"report-dur":10,"detect-level":0,"pullup-cfg":true},"di-frequency":{"report-dur":100,"detect-level":0,"pullup-cfg":true}},"monitor":{"rate":1500,"cat":"data","inFeedback":false,"report":"change","throttle":0,"threshold":10}}}' -t '"glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/di/2"'")
+	pub=("mosquitto_pub -m '{"di-val":{"value":{"type":"level","di-level":{"report-dur":1000,"detect-level":0,"pullup-cfg":true},"di-pulse":{"report-dur":10,"detect-level":0,"pullup-cfg":true},"di-frequency":{"report-dur":100,"detect-level":0,"pullup-cfg":true}},"monitor":{"rate":1500,"cat":"data","inFeedback":false,"report":"change","throttle":0,"threshold":10}}}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/di/2"'")
 	result_logs "din_port_test" ${LOG_DIN_PORT}  ${start_time} "${pub}"
 
 }
@@ -41,11 +41,11 @@ din_port_test3()
 	start_time=$(date | awk '{print $4}')
 	subscribe_logger_event &	
 	pids+=($!)
-#	mosquitto_sub -t "glp/0/${SID}/fb/dev/iox/${DIO_DEV_NAME}/if/di/3" > ${LOGGER_PATH} &
-	mosquitto_pub -m '{"di-val":{"value":{"type":"level","di-level":{"report-dur":1000,"detect-level":0,"pullup-cfg":true},"di-pulse":{"report-dur":10,"detect-level":0,"pullup-cfg":true},"di-frequency":{"report-dur":100,"detect-level":0,"pullup-cfg":true}},"monitor":{"rate":1500,"cat":"data","inFeedback":false,"report":"change","throttle":0,"threshold":10}}}' -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/di/3"
+#	mosquitto_sub -t "glp/0/${SID}/fb/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/di/3" > ${LOGGER_PATH} &
+	mosquitto_pub -m '{"di-val":{"value":{"type":"level","di-level":{"report-dur":1000,"detect-level":0,"pullup-cfg":true},"di-pulse":{"report-dur":10,"detect-level":0,"pullup-cfg":true},"di-frequency":{"report-dur":100,"detect-level":0,"pullup-cfg":true}},"monitor":{"rate":1500,"cat":"data","inFeedback":false,"report":"change","throttle":0,"threshold":10}}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/di/3"
 	parse_logger
 	result "logger"
-	pub=("mosquitto_pub -m '{"di-val":{"value":{"type":"level","di-level":{"report-dur":1000,"detect-level":0,"pullup-cfg":true},"di-pulse":{"report-dur":10,"detect-level":0,"pullup-cfg":true},"di-frequency":{"report-dur":100,"detect-level":0,"pullup-cfg":true}},"monitor":{"rate":1500,"cat":"data","inFeedback":false,"report":"change","throttle":0,"threshold":10}}}' -t '"glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/di/3"'")
+	pub=("mosquitto_pub -m '{"di-val":{"value":{"type":"level","di-level":{"report-dur":1000,"detect-level":0,"pullup-cfg":true},"di-pulse":{"report-dur":10,"detect-level":0,"pullup-cfg":true},"di-frequency":{"report-dur":100,"detect-level":0,"pullup-cfg":true}},"monitor":{"rate":1500,"cat":"data","inFeedback":false,"report":"change","throttle":0,"threshold":10}}}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/di/3"'")
 	result_logs "din_port_test" ${LOG_DIN_PORT}  ${start_time} "${pub}"
 
 }
@@ -55,11 +55,11 @@ din_port_test4()
 	start_time=$(date | awk '{print $4}')
 	subscribe_logger_event &	
 	pids+=($!)
-#	mosquitto_sub -t "glp/0/${SID}/fb/dev/iox/${DIO_DEV_NAME}/if/di/4" > ${LOGGER_PATH} &
-	mosquitto_pub -m '{"di-val":{"value":{"type":"level","di-level":{"report-dur":1000,"detect-level":0,"pullup-cfg":true},"di-pulse":{"report-dur":10,"detect-level":0,"pullup-cfg":true},"di-frequency":{"report-dur":100,"detect-level":0,"pullup-cfg":true}},"monitor":{"rate":1500,"cat":"data","inFeedback":false,"report":"change","throttle":0,"threshold":10}}}' -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/di/4"
+#	mosquitto_sub -t "glp/0/${SID}/fb/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/di/4" > ${LOGGER_PATH} &
+	mosquitto_pub -m '{"di-val":{"value":{"type":"level","di-level":{"report-dur":1000,"detect-level":0,"pullup-cfg":true},"di-pulse":{"report-dur":10,"detect-level":0,"pullup-cfg":true},"di-frequency":{"report-dur":100,"detect-level":0,"pullup-cfg":true}},"monitor":{"rate":1500,"cat":"data","inFeedback":false,"report":"change","throttle":0,"threshold":10}}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/di/4"
 	parse_logger
 	result "logger"
-	pub=("mosquitto_pub -m '{"di-val":{"value":{"type":"level","di-level":{"report-dur":1000,"detect-level":0,"pullup-cfg":true},"di-pulse":{"report-dur":10,"detect-level":0,"pullup-cfg":true},"di-frequency":{"report-dur":100,"detect-level":0,"pullup-cfg":true}},"monitor":{"rate":1500,"cat":"data","inFeedback":false,"report":"change","throttle":0,"threshold":10}}}' -t '"glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/di/4"'")
+	pub=("mosquitto_pub -m '{"di-val":{"value":{"type":"level","di-level":{"report-dur":1000,"detect-level":0,"pullup-cfg":true},"di-pulse":{"report-dur":10,"detect-level":0,"pullup-cfg":true},"di-frequency":{"report-dur":100,"detect-level":0,"pullup-cfg":true}},"monitor":{"rate":1500,"cat":"data","inFeedback":false,"report":"change","throttle":0,"threshold":10}}}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/di/4"'")
 	result_logs "din_port_test" ${LOG_DIN_PORT}  ${start_time} "${pub}"
 
 }
@@ -69,10 +69,10 @@ din_port_test5()
 	start_time=$(date | awk '{print $4}')
 	subscribe_logger_event &	
 	pids+=($!)
-#	mosquitto_sub -t "glp/0/${SID}/fb/dev/iox/${DIO_DEV_NAME}/if/di/5" > ${LOGGER_PATH} &
-	mosquitto_pub -m '{"di-val":{"value":{"type":"level","di-level":{"report-dur":1000,"detect-level":0,"pullup-cfg":true},"di-pulse":{"report-dur":10,"detect-level":0,"pullup-cfg":true},"di-frequency":{"report-dur":100,"detect-level":0,"pullup-cfg":true}},"monitor":{"rate":1500,"cat":"data","inFeedback":false,"report":"change","throttle":0,"threshold":10}}}' -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/di/5"
+#	mosquitto_sub -t "glp/0/${SID}/fb/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/di/5" > ${LOGGER_PATH} &
+	mosquitto_pub -m '{"di-val":{"value":{"type":"level","di-level":{"report-dur":1000,"detect-level":0,"pullup-cfg":true},"di-pulse":{"report-dur":10,"detect-level":0,"pullup-cfg":true},"di-frequency":{"report-dur":100,"detect-level":0,"pullup-cfg":true}},"monitor":{"rate":1500,"cat":"data","inFeedback":false,"report":"change","throttle":0,"threshold":10}}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/di/5"
 	parse_logger
-	pub=("mosquitto_pub -m '{"di-val":{"value":{"type":"level","di-level":{"report-dur":1000,"detect-level":0,"pullup-cfg":true},"di-pulse":{"report-dur":10,"detect-level":0,"pullup-cfg":true},"di-frequency":{"report-dur":100,"detect-level":0,"pullup-cfg":true}},"monitor":{"rate":1500,"cat":"data","inFeedback":false,"report":"change","throttle":0,"threshold":10}}}' -t '"glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/di/5"'")
+	pub=("mosquitto_pub -m '{"di-val":{"value":{"type":"level","di-level":{"report-dur":1000,"detect-level":0,"pullup-cfg":true},"di-pulse":{"report-dur":10,"detect-level":0,"pullup-cfg":true},"di-frequency":{"report-dur":100,"detect-level":0,"pullup-cfg":true}},"monitor":{"rate":1500,"cat":"data","inFeedback":false,"report":"change","throttle":0,"threshold":10}}}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/di/5"'")
 	result_logs "din_port_test" ${LOG_DIN_PORT}  ${start_time} "${pub}"
 
 }
@@ -82,11 +82,11 @@ din_port_test6()
 	start_time=$(date | awk '{print $4}')
 	subscribe_logger_event &	
 	pids+=($!)
-#	mosquitto_sub -t "glp/0/${SID}/fb/dev/iox/${DIO_DEV_NAME}/if/di/6" > ${LOGGER_PATH} &
-	mosquitto_pub -m '{"di-val":{"value":{"type":"level","di-level":{"report-dur":1000,"detect-level":0,"pullup-cfg":true},"di-pulse":{"report-dur":10,"detect-level":0,"pullup-cfg":true},"di-frequency":{"report-dur":100,"detect-level":0,"pullup-cfg":true}},"monitor":{"rate":1500,"cat":"data","inFeedback":false,"report":"change","throttle":0,"threshold":10}}}' -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/di/6"
+#	mosquitto_sub -t "glp/0/${SID}/fb/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/di/6" > ${LOGGER_PATH} &
+	mosquitto_pub -m '{"di-val":{"value":{"type":"level","di-level":{"report-dur":1000,"detect-level":0,"pullup-cfg":true},"di-pulse":{"report-dur":10,"detect-level":0,"pullup-cfg":true},"di-frequency":{"report-dur":100,"detect-level":0,"pullup-cfg":true}},"monitor":{"rate":1500,"cat":"data","inFeedback":false,"report":"change","throttle":0,"threshold":10}}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/di/6"
 	parse_logger
 	result "logger"
-	pub=("mosquitto_pub -m '{"di-val":{"value":{"type":"level","di-level":{"report-dur":1000,"detect-level":0,"pullup-cfg":true},"di-pulse":{"report-dur":10,"detect-level":0,"pullup-cfg":true},"di-frequency":{"report-dur":100,"detect-level":0,"pullup-cfg":true}},"monitor":{"rate":1500,"cat":"data","inFeedback":false,"report":"change","throttle":0,"threshold":10}}}' -t '"glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/di/6"'")
+	pub=("mosquitto_pub -m '{"di-val":{"value":{"type":"level","di-level":{"report-dur":1000,"detect-level":0,"pullup-cfg":true},"di-pulse":{"report-dur":10,"detect-level":0,"pullup-cfg":true},"di-frequency":{"report-dur":100,"detect-level":0,"pullup-cfg":true}},"monitor":{"rate":1500,"cat":"data","inFeedback":false,"report":"change","throttle":0,"threshold":10}}}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/di/6"'")
 	result_logs "din_port_test" ${LOG_DIN_PORT}  ${start_time} "${pub}"
 
 }
@@ -96,11 +96,11 @@ din_port_test7()
 	start_time=$(date | awk '{print $4}')
 	subscribe_logger_event &	
 	pids+=($!)
-#	mosquitto_sub -t "glp/0/${SID}/fb/dev/iox/${DIO_DEV_NAME}/if/di/7" &
-	mosquitto_pub -m '{"di-val":{"value":{"type":"level","di-level":{"report-dur":1000,"detect-level":0,"pullup-cfg":true},"di-pulse":{"report-dur":10,"detect-level":0,"pullup-cfg":true},"di-frequency":{"report-dur":100,"detect-level":0,"pullup-cfg":true}},"monitor":{"rate":1500,"cat":"data","inFeedback":false,"report":"change","throttle":0,"threshold":10}}}' -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/di/7"
+#	mosquitto_sub -t "glp/0/${SID}/fb/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/di/7" &
+	mosquitto_pub -m '{"di-val":{"value":{"type":"level","di-level":{"report-dur":1000,"detect-level":0,"pullup-cfg":true},"di-pulse":{"report-dur":10,"detect-level":0,"pullup-cfg":true},"di-frequency":{"report-dur":100,"detect-level":0,"pullup-cfg":true}},"monitor":{"rate":1500,"cat":"data","inFeedback":false,"report":"change","throttle":0,"threshold":10}}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/di/7"
 	parse_logger
 	result "logger"
-	pub=("mosquitto_pub -m '{"di-val":{"value":{"type":"level","di-level":{"report-dur":1000,"detect-level":0,"pullup-cfg":true},"di-pulse":{"report-dur":10,"detect-level":0,"pullup-cfg":true},"di-frequency":{"report-dur":100,"detect-level":0,"pullup-cfg":true}},"monitor":{"rate":1500,"cat":"data","inFeedback":false,"report":"change","throttle":0,"threshold":10}}}' -t '"glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/di/7"'")
+	pub=("mosquitto_pub -m '{"di-val":{"value":{"type":"level","di-level":{"report-dur":1000,"detect-level":0,"pullup-cfg":true},"di-pulse":{"report-dur":10,"detect-level":0,"pullup-cfg":true},"di-frequency":{"report-dur":100,"detect-level":0,"pullup-cfg":true}},"monitor":{"rate":1500,"cat":"data","inFeedback":false,"report":"change","throttle":0,"threshold":10}}}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/di/7"'")
 	result_logs "din_port_test" ${LOG_DIN_PORT}  ${start_time} "${pub}"
 
 }
@@ -110,11 +110,11 @@ din_port_test8()
 	start_time=$(date | awk '{print $4}')
 	subscribe_logger_event &	
 	pids+=($!)
-#	mosquitto_sub -t "glp/0/${SID}/fb/dev/iox/${DIO_DEV_NAME}/if/di/8" &
-	mosquitto_pub -m '{"di-val":{"value":{"type":"level","di-level":{"report-dur":1000,"detect-level":0,"pullup-cfg":true},"di-pulse":{"report-dur":10,"detect-level":0,"pullup-cfg":true},"di-frequency":{"report-dur":100,"detect-level":0,"pullup-cfg":true}},"monitor":{"rate":1500,"cat":"data","inFeedback":false,"report":"change","throttle":0,"threshold":10}}}' -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/di/8"
+#	mosquitto_sub -t "glp/0/${SID}/fb/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/di/8" &
+	mosquitto_pub -m '{"di-val":{"value":{"type":"level","di-level":{"report-dur":1000,"detect-level":0,"pullup-cfg":true},"di-pulse":{"report-dur":10,"detect-level":0,"pullup-cfg":true},"di-frequency":{"report-dur":100,"detect-level":0,"pullup-cfg":true}},"monitor":{"rate":1500,"cat":"data","inFeedback":false,"report":"change","throttle":0,"threshold":10}}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/di/8"
 	parse_logger
 	result "logger"
-	pub=("mosquitto_pub -m '{"di-val":{"value":{"type":"level","di-level":{"report-dur":1000,"detect-level":0,"pullup-cfg":true},"di-pulse":{"report-dur":10,"detect-level":0,"pullup-cfg":true},"di-frequency":{"report-dur":100,"detect-level":0,"pullup-cfg":true}},"monitor":{"rate":1500,"cat":"data","inFeedback":false,"report":"change","throttle":0,"threshold":10}}}' -t '"glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/di/8"'")
+	pub=("mosquitto_pub -m '{"di-val":{"value":{"type":"level","di-level":{"report-dur":1000,"detect-level":0,"pullup-cfg":true},"di-pulse":{"report-dur":10,"detect-level":0,"pullup-cfg":true},"di-frequency":{"report-dur":100,"detect-level":0,"pullup-cfg":true}},"monitor":{"rate":1500,"cat":"data","inFeedback":false,"report":"change","throttle":0,"threshold":10}}}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/di/8"'")
 	result_logs "din_port_test" ${LOG_DIN_PORT}  ${start_time} "${pub}"
 
 }
@@ -124,11 +124,11 @@ din_port_test9()
 	start_time=$(date | awk '{print $4}')
 	subscribe_logger_event &	
 	pids+=($!)
-#	mosquitto_sub -t "glp/0/${SID}/fb/dev/iox/${DIO_DEV_NAME}/if/di/10" &
-	mosquitto_pub -m '{"di-val":{"value":{"type":"level","di-level":{"report-dur":1000,"detect-level":0,"pullup-cfg":true},"di-pulse":{"report-dur":10,"detect-level":0,"pullup-cfg":true},"di-frequency":{"report-dur":100,"detect-level":0,"pullup-cfg":true}},"monitor":{"rate":1500,"cat":"data","inFeedback":false,"report":"change","throttle":0,"threshold":10}}}' -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/di/10"
+#	mosquitto_sub -t "glp/0/${SID}/fb/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/di/10" &
+	mosquitto_pub -m '{"di-val":{"value":{"type":"level","di-level":{"report-dur":1000,"detect-level":0,"pullup-cfg":true},"di-pulse":{"report-dur":10,"detect-level":0,"pullup-cfg":true},"di-frequency":{"report-dur":100,"detect-level":0,"pullup-cfg":true}},"monitor":{"rate":1500,"cat":"data","inFeedback":false,"report":"change","throttle":0,"threshold":10}}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/di/10"
 	parse_logger "${invalid_port}"
 	result "logger"
-	pub=("mosquitto_pub -m '{"di-val":{"value":{"type":"level","di-level":{"report-dur":1000,"detect-level":0,"pullup-cfg":true},"di-pulse":{"report-dur":10,"detect-level":0,"pullup-cfg":true},"di-frequency":{"report-dur":100,"detect-level":0,"pullup-cfg":true}},"monitor":{"rate":1500,"cat":"data","inFeedback":false,"report":"change","throttle":0,"threshold":10}}}' -t '"glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/di/10"'")
+	pub=("mosquitto_pub -m '{"di-val":{"value":{"type":"level","di-level":{"report-dur":1000,"detect-level":0,"pullup-cfg":true},"di-pulse":{"report-dur":10,"detect-level":0,"pullup-cfg":true},"di-frequency":{"report-dur":100,"detect-level":0,"pullup-cfg":true}},"monitor":{"rate":1500,"cat":"data","inFeedback":false,"report":"change","throttle":0,"threshold":10}}}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/di/10"'")
 	result_logs "din_port_test" ${LOG_DIN_PORT}  ${start_time} "${pub}"
 }
 

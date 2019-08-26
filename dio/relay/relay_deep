@@ -15,7 +15,7 @@ relay_deep_test1()
 	start_time=$(date | awk '{print $4}')
   	subscribe_logger_event &
 	pids+=($!)
-	mosquitto_pub -m 'true' -t "glp/0/${SID}/rq/dev/iox/relay/if/relay/1/relay-val/value/level12"
+	mosquitto_pub -m 'true' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/relay/if/relay/1/relay-val/value/level12"
 	parse_logger
 	result "logger"
 	result_logs "relay_deep_test" ${LOG_RELAY_DEEP}  ${start_time} "${pub}"
@@ -26,8 +26,8 @@ relay_deep_test2()
 	start_time=$(date | awk '{print $4}')
   	subscribe_logger_event &
 	pids+=($!)
-#	mosquitto_sub -t "glp/0/${SID}/fb/dev/iox/relay/if/relay/1" &
-	mosquitto_pub -m 'true' -t "glp/0/${SID}/rq/dev/iox/relay/if/relay/1/relay-val/value/level"
+#	mosquitto_sub -t "glp/0/${SID}/fb/dev/${IOX_PROTOCOL}/relay/if/relay/1" &
+	mosquitto_pub -m 'true' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/relay/if/relay/1/relay-val/value/level"
 	parse_logger
 	result "logger"
 	result_logs "relay_deep_test" ${LOG_RELAY_DEEP}  ${start_time} "${pub}"

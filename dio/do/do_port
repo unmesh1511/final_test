@@ -15,8 +15,8 @@ do_port_test1()
 	start_time=$(date | awk '{print $4}')
   	subscribe_logger_event &
 	pids+=($!)
-#	mosquitto_sub -t "glp/0/${SID}/fb/dev/iox/${DIO_DEV_NAME}/if/do/1" &
-	mosquitto_pub -m '{"do-val":{"value":{"type":"level","level":true,"frequency":0,"pulse":0,"pwm":{"frequency":0,"duty-cycle":0}}}}' -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/do/1"
+#	mosquitto_sub -t "glp/0/${SID}/fb/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/do/1" &
+	mosquitto_pub -m '{"do-val":{"value":{"type":"level","level":true,"frequency":0,"pulse":0,"pwm":{"frequency":0,"duty-cycle":0}}}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/do/1"
 	parse_logger
 	result "logger"
 	result_logs "do_port_test" ${LOG_DO_PORT}  ${start_time} "${pub}"
@@ -27,8 +27,8 @@ do_port_test2()
 	start_time=$(date | awk '{print $4}')
   	subscribe_logger_event &
 	pids+=($!)
-#	mosquitto_sub -t "glp/0/${SID}/fb/dev/iox/${DIO_DEV_NAME}/if/do/2" &
-	mosquitto_pub -m '{"do-val":{"value":{"type":"level","level":true,"frequency":0,"pulse":0,"pwm":{"frequency":0,"duty-cycle":0}}}}' -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/do/2"
+#	mosquitto_sub -t "glp/0/${SID}/fb/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/do/2" &
+	mosquitto_pub -m '{"do-val":{"value":{"type":"level","level":true,"frequency":0,"pulse":0,"pwm":{"frequency":0,"duty-cycle":0}}}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/do/2"
 	parse_logger
 	result "logger"
 	result_logs "do_port_test" ${LOG_DO_PORT}  ${start_time} "${pub}"
@@ -39,8 +39,8 @@ do_port_test3()
 	start_time=$(date | awk '{print $4}')
   	subscribe_logger_event &
 	pids+=($!)
-#	mosquitto_sub -t "glp/0/${SID}/fb/dev/iox/${DIO_DEV_NAME}/if/do/3" &
-	mosquitto_pub -m '{"do-val":{"value":{"type":"level","level":true,"frequency":0,"pulse":0,"pwm":{"frequency":0,"duty-cycle":0}}}}' -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/do/3"
+#	mosquitto_sub -t "glp/0/${SID}/fb/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/do/3" &
+	mosquitto_pub -m '{"do-val":{"value":{"type":"level","level":true,"frequency":0,"pulse":0,"pwm":{"frequency":0,"duty-cycle":0}}}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/do/3"
 	parse_logger
 	result "logger"
 	result_logs "do_port_test" ${LOG_DO_PORT}  ${start_time} "${pub}"
@@ -51,8 +51,8 @@ do_port_test4()
 	start_time=$(date | awk '{print $4}')
   	subscribe_logger_event &
 	pids+=($!)
-#	mosquitto_sub -t "glp/0/${SID}/fb/dev/iox/${DIO_DEV_NAME}/if/do/4" &
-	mosquitto_pub -m '{"do-val":{"value":{"type":"level","level":true,"frequency":0,"pulse":0,"pwm":{"frequency":0,"duty-cycle":0}}}}' -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/do/4"
+#	mosquitto_sub -t "glp/0/${SID}/fb/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/do/4" &
+	mosquitto_pub -m '{"do-val":{"value":{"type":"level","level":true,"frequency":0,"pulse":0,"pwm":{"frequency":0,"duty-cycle":0}}}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/do/4"
 	parse_logger
 	result "logger"
 	result_logs "do_port_test" ${LOG_DO_PORT}  ${start_time} "${pub}"
@@ -63,8 +63,8 @@ do_port_test5()
 	start_time=$(date | awk '{print $4}')
   	subscribe_logger_event &
 	pids+=($!)
-#	mosquitto_sub -t "glp/0/${SID}/fb/dev/iox/${DIO_DEV_NAME}/if/do/5" &
-	mosquitto_pub -m '{"do-val":{"value":{"type":"level","level":true,"frequency":0,"pulse":0,"pwm":{"frequency":0,"duty-cycle":0}}}}' -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/do/5"
+#	mosquitto_sub -t "glp/0/${SID}/fb/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/do/5" &
+	mosquitto_pub -m '{"do-val":{"value":{"type":"level","level":true,"frequency":0,"pulse":0,"pwm":{"frequency":0,"duty-cycle":0}}}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/do/5"
 	parse_logger
 	result "logger"
 	result_logs "do_port_test" ${LOG_DO_PORT}  ${start_time} "${pub}"
@@ -75,8 +75,8 @@ do_port_test6()
 	start_time=$(date | awk '{print $4}')
   	subscribe_logger_event &
 	pids+=($!)
-#	mosquitto_sub -t "glp/0/${SID}/fb/dev/iox/${DIO_DEV_NAME}/if/do/6" &
-	mosquitto_pub -m '{"do-val":{"value":{"type":"level","level":true,"frequency":0,"pulse":0,"pwm":{"frequency":0,"duty-cycle":0}}}}' -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/do/6"
+#	mosquitto_sub -t "glp/0/${SID}/fb/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/do/6" &
+	mosquitto_pub -m '{"do-val":{"value":{"type":"level","level":true,"frequency":0,"pulse":0,"pwm":{"frequency":0,"duty-cycle":0}}}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/do/6"
 	parse_logger
 	result "logger"
 	result_logs "do_port_test" ${LOG_DO_PORT}  ${start_time} "${pub}"
@@ -87,8 +87,8 @@ do_port_test7()
 	start_time=$(date | awk '{print $4}')
   	subscribe_logger_event &
 	pids+=($!)
-#	mosquitto_sub -t "glp/0/${SID}/fb/dev/iox/${DIO_DEV_NAME}/if/do/8" &
-	mosquitto_pub -m '{"do-val":{"value":{"type":"level","level":true,"frequency":0,"pulse":0,"pwm":{"frequency":0,"duty-cycle":0}}}}' -t "glp/0/${SID}/rq/dev/iox/${DIO_DEV_NAME}/if/do/8"
+#	mosquitto_sub -t "glp/0/${SID}/fb/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/do/8" &
+	mosquitto_pub -m '{"do-val":{"value":{"type":"level","level":true,"frequency":0,"pulse":0,"pwm":{"frequency":0,"duty-cycle":0}}}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/do/8"
 	parse_logger
 	result "logger"
 	result_logs "do_port_test" ${LOG_DO_PORT}  ${start_time} "${pub}"

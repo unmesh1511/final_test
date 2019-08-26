@@ -17,7 +17,7 @@ mod_invalid_unid="abcd : invalid unid"
 
 subscribe_sts_event()
 {
-	 mosquitto_sub -t "glp/0/${SID}/fb/dev/iox/pm820/sts" > ${STS_PATH} 
+	 mosquitto_sub -t "glp/0/${SID}/fb/dev/${IOX_PROTOCOL}/pm820/sts" > ${STS_PATH} 
 }
 
 modbus_create_test1()
@@ -25,10 +25,10 @@ modbus_create_test1()
 	start_time=$(date | awk '{print $4}')
   	subscribe_logger_event &
 	pids+=($!)
-	mosquitto_pub -m '{"action":"create"}' -t "glp/0/${SID}/rq/dev/iox/pm820/do"
+	mosquitto_pub -m '{"action":"create"}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/pm820/do"
 	parse_logger "${mod_create_err}"
 	result "logger"
-	pub=("mosquitto_pub -m '{"action":"create"}' -t '"glp/0/${SID}/rq/dev/iox/pm820/do"'")
+	pub=("mosquitto_pub -m '{"action":"create"}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/pm820/do"'")
 	result_logs "modbus_create_test" ${LOG_MODBUS_CREATE}  ${start_time} "${pub}"
 }
 
@@ -38,12 +38,12 @@ modbus_create_test3()
 	start_time=$(date | awk '{print $4}')
 	subscribe_sts_event &
 	pids+=($!)
-	mosquitto_sub -t "glp/0/${SID}/fb/dev/iox/pm820/cfg" &	
+	mosquitto_sub -t "glp/0/${SID}/fb/dev/${IOX_PROTOCOL}/pm820/cfg" &	
 	pids+=($!)
-	mosquitto_pub -m '{"action":"create","args":{"type":"900014150040DB00"}}' -t "glp/0/${SID}/rq/dev/iox/pm820/do"
+	mosquitto_pub -m '{"action":"create","args":{"type":"900014150040DB00"}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/pm820/do"
 	parse_sts "${mod_unprov_state}"
 	result "sts"
-	pub=("mosquitto_pub -m '{"action":"create","args":{"type":"900014150040DB00"}}' -t '"glp/0/${SID}/rq/dev/iox/pm820/do"'")
+	pub=("mosquitto_pub -m '{"action":"create","args":{"type":"900014150040DB00"}}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/pm820/do"'")
 	result_logs "modbus_create_test" ${LOG_MODBUS_CREATE}  ${start_time} "${pub}"
 }
 
@@ -52,10 +52,10 @@ modbus_create_test4()
 	start_time=$(date | awk '{print $4}')
 	subscribe_logger_event &
 	pids+=($!)
-	mosquitto_pub -m '{"action":"create","args":{"type":"900014150040DB00"}}' -t "glp/0/${SID}/rq/dev/iox/pm820/do"
+	mosquitto_pub -m '{"action":"create","args":{"type":"900014150040DB00"}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/pm820/do"
 	parse_logger "${mod_amik_slave}"
 	result "logger"
-	pub=("mosquitto_pub -m '{"action":"create","args":{"type":"900014150040DB00"}}' -t '"glp/0/${SID}/rq/dev/iox/pm820/do"'")
+	pub=("mosquitto_pub -m '{"action":"create","args":{"type":"900014150040DB00"}}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/pm820/do"'")
 	result_logs "modbus_create_test" ${LOG_MODBUS_CREATE}  ${start_time} "${pub}"
 }
 
@@ -64,10 +64,10 @@ modbus_create_test5()
 	start_time=$(date | awk '{print $4}')
 	subscribe_logger_event &
 	pids+=($!)
-	mosquitto_pub -m '{"action":"create","args":{"type":"900000000000DB00"}}' -t "glp/0/${SID}/rq/dev/iox/pm820/do"
+	mosquitto_pub -m '{"action":"create","args":{"type":"900000000000DB00"}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/pm820/do"
 	parse_logger "${mod_pm820_slave}"
 	result "logger"
-	pub=("mosquitto_pub -m '{"action":"create","args":{"type":"900000000000DB00"}}' -t '"glp/0/${SID}/rq/dev/iox/pm820/do"'")
+	pub=("mosquitto_pub -m '{"action":"create","args":{"type":"900000000000DB00"}}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/pm820/do"'")
 	result_logs "modbus_create_test" ${LOG_MODBUS_CREATE}  ${start_time} "${pub}"
 }
 
@@ -76,16 +76,16 @@ modbus_create_test6()
 	start_time=$(date | awk '{print $4}')
 	subscribe_logger_event &
 	pids+=($!)
-	mosquitto_pub -m '{"action":"create","args":{"type":"900014150040DB00"}}' -t "glp/0/${SID}/rq/dev/iox/new_device.0/do"
+	mosquitto_pub -m '{"action":"create","args":{"type":"900014150040DB00"}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/new_device.0/do"
 	parse_logger
 	result "logger"
-	pub=("mosquitto_pub -m '{"action":"create","args":{"type":"900014150040DB00"}}' -t '"glp/0/${SID}/rq/dev/iox/new_device.0/do"'")
+	pub=("mosquitto_pub -m '{"action":"create","args":{"type":"900014150040DB00"}}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/new_device.0/do"'")
 	result_logs "modbus_create_test" ${LOG_MODBUS_CREATE}  ${start_time} "${pub}"
 }
 
 modbus_create_test7()
 {
-	mosquitto_pub -m '{"action":"create","args":{"type":"900014150040DB00","provision":"true"}}' -t "glp/0/${SID}/rq/dev/iox/pm820/do"
+	mosquitto_pub -m '{"action":"create","args":{"type":"900014150040DB00","provision":"true"}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/pm820/do"
 }
 
 modbus_create_test8()
@@ -93,12 +93,12 @@ modbus_create_test8()
 	start_time=$(date | awk '{print $4}')
 	subscribe_sts_event &
 	pids+=($!)
-	mosquitto_sub -t "glp/0/${SID}/fb/dev/iox/pm820/cfg" &
+	mosquitto_sub -t "glp/0/${SID}/fb/dev/${IOX_PROTOCOL}/pm820/cfg" &
 	pids+=($!)
-	mosquitto_pub -m '{"action":"create","args":{"type":"900014150040DB00","provision":"false","unid":"01:43"}}' -t "glp/0/${SID}/rq/dev/iox/pm820/do"
+	mosquitto_pub -m '{"action":"create","args":{"type":"900014150040DB00","provision":"false","unid":"01:43"}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/pm820/do"
 	parse_sts "${mod_unprov_state}"
 	result "sts"
-	pub=("mosquitto_pub -m '{"action":"create","args":{"type":"900014150040DB00","provision":"false","unid":"01:43"}}' -t '"glp/0/${SID}/rq/dev/iox/pm820/do"'")
+	pub=("mosquitto_pub -m '{"action":"create","args":{"type":"900014150040DB00","provision":"false","unid":"01:43"}}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/pm820/do"'")
 	result_logs "modbus_create_test" ${LOG_MODBUS_CREATE}  ${start_time} "${pub}"
 }
 
@@ -107,10 +107,10 @@ modbus_create_test9()
 	start_time=$(date | awk '{print $4}')
 	subscribe_logger_event &
 	pids+=($!)
-	mosquitto_pub -m '{"action":"create","args":{"type":"900014150040DB00","provision":"true","unid":"abcd"}}' -t "glp/0/${SID}/rq/dev/iox/pm820/do"
+	mosquitto_pub -m '{"action":"create","args":{"type":"900014150040DB00","provision":"true","unid":"abcd"}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/pm820/do"
 	parse_logger "${mod_invalid_unid}"
 	result "logger"
-	pub=("mosquitto_pub -m '{"action":"create","args":{"type":"900014150040DB00","provision":"true","unid":"abcd"}}' -t '"glp/0/${SID}/rq/dev/iox/pm820/do"'")
+	pub=("mosquitto_pub -m '{"action":"create","args":{"type":"900014150040DB00","provision":"true","unid":"abcd"}}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/pm820/do"'")
 	result_logs "modbus_create_test" ${LOG_MODBUS_CREATE}  ${start_time} "${pub}"
 }
 
@@ -119,16 +119,16 @@ modbus_create_test10()
 	start_time=$(date | awk '{print $4}')
 	subscribe_sts_event &
 	pids+=($!)
-	mosquitto_sub -t "glp/0/${SID}/fb/dev/iox/pm820/cfg" &
+	mosquitto_sub -t "glp/0/${SID}/fb/dev/${IOX_PROTOCOL}/pm820/cfg" &
 	pids+=($!)
 	mosquitto_sub -t "glp/0/${SID}/fb/res/type/blk.900014150040DB00/0" &
 	pids+=($!)
-	mosquitto_sub -t "glp/0/${SID}/fb/dev/iox/pm820/if/block/0" &
+	mosquitto_sub -t "glp/0/${SID}/fb/dev/${IOX_PROTOCOL}/pm820/if/block/0" &
 	pids+=($!)
-	mosquitto_pub -m '{"action":"create","args":{"type":"900014150040DB00","provision":"true","unid":"01:1"}}' -t "glp/0/${SID}/rq/dev/iox/pm820/do"
+	mosquitto_pub -m '{"action":"create","args":{"type":"900014150040DB00","provision":"true","unid":"01:1"}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/pm820/do"
 	parse_sts "${mod_unprov_state}"
 	result "sts"
-	pub=("mosquitto_pub -m '{"action":"create","args":{"type":"900014150040DB00","provision":"true","unid":"01:1"}}' -t '"glp/0/${SID}/rq/dev/iox/pm820/do"'")
+	pub=("mosquitto_pub -m '{"action":"create","args":{"type":"900014150040DB00","provision":"true","unid":"01:1"}}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/pm820/do"'")
 	result_logs "modbus_create_test" ${LOG_MODBUS_CREATE}  ${start_time} "${pub}"
 }
 

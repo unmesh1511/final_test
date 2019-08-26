@@ -16,10 +16,10 @@ err_iox_test_hndl="ERROR in iox_test handle"
 	start_time=$(date | awk '{print $4}')
   	subscribe_logger_event &
 	pids+=($!)
-	mosquitto_pub -m '{"action":"test"}' -t "glp/0/${SID}/rq/dev/iox/${METER_DEV_NAME}/do"
+	mosquitto_pub -m '{"action":"test"}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${METER_DEV_NAME}/do"
 	parse_logger "${err_iox_test_hndl}"
 	result "logger"
-	pub=("mosquitto_pub -m '{"action":"test"}' -t '"glp/0/${SID}/rq/dev/iox/${METER_DEV_NAME}/do"'")
+	pub=("mosquitto_pub -m '{"action":"test"}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${METER_DEV_NAME}/do"'")
 	result_logs "3phase_test_test" ${LOG_3PHASE_TEST}  ${start_time} "${pub}"
 }
 
@@ -28,10 +28,10 @@ err_iox_test_hndl="ERROR in iox_test handle"
 	start_time=$(date | awk '{print $4}')
   	subscribe_logger_event &
 	pids+=($!)
-	mosquitto_pub -m '{"action":"test"}' -t "glp/0/${SID}/rq/dev/iox/${METER_DEV_NAME}/do"
+	mosquitto_pub -m '{"action":"test"}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${METER_DEV_NAME}/do"
 	parse_logger "${err_iox_test_hndl}"
 	result "logger"
-	pub=("mosquitto_pub -m '{"action":"test"}' -t '"glp/0/${SID}/rq/dev/iox/${METER_DEV_NAME}/do"'")
+	pub=("mosquitto_pub -m '{"action":"test"}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${METER_DEV_NAME}/do"'")
 	result_logs "3phase_test_test" ${LOG_3PHASE_TEST}  ${start_time} "${pub}"
 }
 
@@ -40,10 +40,10 @@ err_iox_test_hndl="ERROR in iox_test handle"
 	start_time=$(date | awk '{print $4}')
   	subscribe_logger_event &
 	pids+=($!)
-	mosquitto_pub -m '{"action":"test"}' -t "glp/0/${SID}/rq/dev/iox/${METER_DEV_NAME}/do"
+	mosquitto_pub -m '{"action":"test"}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${METER_DEV_NAME}/do"
 	parse_logger "${err_iox_test_hndl}"
 	result "logger"
-	pub=("mosquitto_pub -m '{"action":"test"}' -t '"glp/0/${SID}/rq/dev/iox/${METER_DEV_NAME}/do"'")
+	pub=("mosquitto_pub -m '{"action":"test"}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${METER_DEV_NAME}/do"'")
 	result_logs "3phase_test_test" ${LOG_3PHASE_TEST}  ${start_time} "${pub}"
 }
 
@@ -52,10 +52,10 @@ err_iox_test_hndl="ERROR in iox_test handle"
 	start_time=$(date | awk '{print $4}')
   	subscribe_logger_event &
 	pids+=($!)
-	mosquitto_pub -m '{"action":"test"}' -t "glp/0/${SID}/rq/dev/iox/${METER_DEV_NAME}/do"
+	mosquitto_pub -m '{"action":"test"}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${METER_DEV_NAME}/do"
 	parse_logger "${err_iox_test_hndl}"
 	result "logger"
-	pub=("mosquitto_pub -m '{"action":"test"}' -t '"glp/0/${SID}/rq/dev/iox/${METER_DEV_NAME}/do"'")
+	pub=("mosquitto_pub -m '{"action":"test"}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${METER_DEV_NAME}/do"'")
 	result_logs "3phase_test_test" ${LOG_3PHASE_TEST}  ${start_time} "${pub}"
 }
 
@@ -64,10 +64,10 @@ err_iox_test_hndl="ERROR in iox_test handle"
 	start_time=$(date | awk '{print $4}')
   	subscribe_logger_event &
 	pids+=($!)
-	mosquitto_pub -m '{"action":"test"}' -t "glp/0/${SID}/rq/dev/iox/${METER_DEV_NAME}/do"
+	mosquitto_pub -m '{"action":"test"}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${METER_DEV_NAME}/do"
 	parse_logger "${err_iox_test_hndl}"
 	result "logger"
-	pub=("mosquitto_pub -m '{"action":"test"}' -t '"glp/0/${SID}/rq/dev/iox/${METER_DEV_NAME}/do"'")
+	pub=("mosquitto_pub -m '{"action":"test"}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${METER_DEV_NAME}/do"'")
 	result_logs "3phase_test_test" ${LOG_3PHASE_TEST}  ${start_time} "${pub}"
 }
 

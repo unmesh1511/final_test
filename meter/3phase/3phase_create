@@ -18,7 +18,7 @@ phase_unprov_state="unprovisioned"
 
 subscribe_sts_event()
 {
-	mosquitto_sub -t "glp/0/${SID}/fb/dev/${IOX_PROTOCOL}/dio/sts" > ${LOG_STS}
+	mosquitto_sub -t "glp/0/${SID}/fb/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/sts" > ${LOG_STS}
 }
 
 3phase_create_test1()

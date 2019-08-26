@@ -12,7 +12,7 @@ DIO_UNID="${IOX_INSTALL_ID}.dio"
 
 subscribe_sts_event()
 {
-	mosquitto_sub -t "glp/0/${SID}/fb/dev/${IOX_PROTOCOL}/${LOGICAL_ID}dio/sts" > ${LOG_STS} 
+	mosquitto_sub -t "glp/0/${SID}/fb/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/sts" > ${LOG_STS} 
 }
 
 dio_create_test1()
@@ -20,10 +20,10 @@ dio_create_test1()
 	start_time=$(date | awk '{print $4}')
   	subscribe_logger_event &
 	pids+=($!)
-	mosquitto_pub -m '{"action":"create"}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${LOGICAL_ID}dio/do"
+	mosquitto_pub -m '{"action":"create"}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/do"
 	parse_logger "${err_parse_args}" 
 	result "logger"
-	pub=("mosquitto_pub -m '{"action":"create"}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${LOGICAL_ID}dio/do"'")
+	pub=("mosquitto_pub -m '{"action":"create"}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/do"'")
 	result_logs "dio_create_test" ${LOG_DIO_CREATE}  ${start_time} "${pub}"
 }
 
@@ -32,10 +32,10 @@ dio_create_test2()
 	start_time=$(date | awk '{print $4}')
 	subscribe_logger_event &
 	pids+=($!)
-	mosquitto_pub -m '{"action":"create","args":{"type":"900001050304DD00"}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${LOGICAL_ID}dio/do"
+	mosquitto_pub -m '{"action":"create","args":{"type":"900001050304DD00"}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/do"
 	parse_logger "${no_unid}"
 	result "logger"
-	pub=("mosquitto_pub -m '{"action":"create","args":{"type":"900001050304DD00"}}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${LOGICAL_ID}dio/do"'")
+	pub=("mosquitto_pub -m '{"action":"create","args":{"type":"900001050304DD00"}}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/do"'")
 	result_logs "dio_create_test" ${LOG_DIO_CREATE}  ${start_time} "${pub}"
 }
 
@@ -44,10 +44,10 @@ dio_create_test3()
 	start_time=$(date | awk '{print $4}')
  	subscribe_logger_event &
 	pids+=($!)
-	mosquitto_pub -m '{"action":"create","args":{"type":"900001050304DD00"}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${LOGICAL_ID}dio/do"
+	mosquitto_pub -m '{"action":"create","args":{"type":"900001050304DD00"}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/do"
 	parse_logger "${no_unid}"
 	result "logger"
-	pub=("mosquitto_pub -m '{"action":"create","args":{"type":"900001050304DD00"}}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${LOGICAL_ID}dio/do"'")
+	pub=("mosquitto_pub -m '{"action":"create","args":{"type":"900001050304DD00"}}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/do"'")
 	result_logs "dio_create_test" ${LOG_DIO_CREATE}  ${start_time} "${pub}"
 }
 
@@ -56,10 +56,10 @@ dio_create_test4()
 	start_time=$(date | awk '{print $4}')
  	subscribe_logger_event &
 	pids+=($!)
-	mosquitto_pub -m '{"action":"create","args":{"type":"900001050304DD00"}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${LOGICAL_ID}dio/do"
+	mosquitto_pub -m '{"action":"create","args":{"type":"900001050304DD00"}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/do"
 	parse_logger "${no_unid}"
 	result "logger"
-	pub=("mosquitto_pub -m '{"action":"create","args":{"type":"900001050304DD00"}}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${LOGICAL_ID}dio/do"'")
+	pub=("mosquitto_pub -m '{"action":"create","args":{"type":"900001050304DD00"}}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/do"'")
 	result_logs "dio_create_test" ${LOG_DIO_CREATE}  ${start_time} "${pub}"
 }
 
@@ -68,10 +68,10 @@ dio_create_test5()
 	start_time=$(date | awk '{print $4}')
  	subscribe_logger_event &
 	pids+=($!)
-	mosquitto_pub -m '{"action":"create","args":{"type":"900001050304DD00"}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${LOGICAL_ID}dio/do"
+	mosquitto_pub -m '{"action":"create","args":{"type":"900001050304DD00"}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/do"
 	parse_logger "${no_unid}"
 	result "logger"
-	pub=("mosquitto_pub -m '{"action":"create","args":{"type":"900001050304DD00"}}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${LOGICAL_ID}dio/do"'")
+	pub=("mosquitto_pub -m '{"action":"create","args":{"type":"900001050304DD00"}}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/do"'")
 	result_logs "dio_create_test" ${LOG_DIO_CREATE}  ${start_time} "${pub}"
 }
 
@@ -80,10 +80,10 @@ dio_create_test6()
 	start_time=$(date | awk '{print $4}')
  	subscribe_logger_event &
 	pids+=($!)
-	mosquitto_pub -m '{"action":"create","args":{"type":"900001050304DD00","provision":true}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${LOGICAL_ID}dio/do"
+	mosquitto_pub -m '{"action":"create","args":{"type":"900001050304DD00","provision":true}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/do"
 	parse_logger "${no_unid}"
 	result "logger"
-	pub=("mosquitto_pub -m '{"action":"create","args":{"type":"900001050304DD00","provision":true}}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${LOGICAL_ID}dio/do"'")
+	pub=("mosquitto_pub -m '{"action":"create","args":{"type":"900001050304DD00","provision":true}}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/do"'")
 	result_logs "dio_create_test" ${LOG_DIO_CREATE}  ${start_time} "${pub}"
 }
 
@@ -94,11 +94,11 @@ dio_create_test7()
 	pids+=($!)
   	subscribe_logger_event &
 	pids+=($!)
-	mosquitto_pub -m '{"action":"create","args":{"type":"900001050304DD00","provision":false,"unid":'"${DIO_UNID}"'}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${LOGICAL_ID}dio/do"
+	mosquitto_pub -m '{"action":"create","args":{"type":"900001050304DD00","provision":false,"unid":'"${DIO_UNID}"'}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/do"
 	parse_sts "${create_expected_state}"
 	parse_logger "${no_unid}"
 	result "sts"
-	pub=("mosquitto_pub -m '{"action":"create","args":{"type":"900001050304DD00","provision":false,"unid":'"${DIO_UNID}"'}}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${LOGICAL_ID}dio/do"'")
+	pub=("mosquitto_pub -m '{"action":"create","args":{"type":"900001050304DD00","provision":false,"unid":'"${DIO_UNID}"'}}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/do"'")
 	result_logs "dio_create_test" ${LOG_DIO_CREATE}  ${start_time} "${pub}"
 }
 
@@ -107,10 +107,10 @@ dio_create_test8()
 	start_time=$(date | awk '{print $4}')
  	subscribe_logger_event &
 	pids+=($!)
-	mosquitto_pub -m '{"action":"create","args":{"type":"900001050304DD00","provision":true,"unid":"abcd"}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${LOGICAL_ID}dio/do"
+	mosquitto_pub -m '{"action":"create","args":{"type":"900001050304DD00","provision":true,"unid":"abcd"}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/do"
 	parse_logger "${device_created}"
 	result "logger"
-	pub=("mosquitto_pub -m '{"action":"create","args":{"type":"900001050304DD00","provision":true,"unid":"abcd"}}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${LOGICAL_ID}dio/do"'")
+	pub=("mosquitto_pub -m '{"action":"create","args":{"type":"900001050304DD00","provision":true,"unid":"abcd"}}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/do"'")
 	result_logs "dio_create_test" ${LOG_DIO_CREATE}  ${start_time} "${pub}"
 }
 
@@ -119,10 +119,10 @@ dio_create_test9()
 	start_time=$(date | awk '{print $4}')
  	subscribe_logger_event &
 	pids+=($!)
-	mosquitto_pub -m '{"action":"create","args":{"type":"900001050304DD00","provision":"true","unid":'"${DIO_UNID}"'}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${LOGICAL_ID}dio/do"
+	mosquitto_pub -m '{"action":"create","args":{"type":"900001050304DD00","provision":"true","unid":'"${DIO_UNID}"'}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/do"
 	parse_logger "${invalid_provision}"
 	result "logger"
-	pub=("mosquitto_pub -m '{"action":"create","args":{"type":"900001050304DD00","provision":"true","unid":'"${DIO_UNID}"'}}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${LOGICAL_ID}dio/do"'")
+	pub=("mosquitto_pub -m '{"action":"create","args":{"type":"900001050304DD00","provision":"true","unid":'"${DIO_UNID}"'}}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/do"'")
 	result_logs "dio_create_test" ${LOG_DIO_CREATE} ${start_time} "${pub}"
 }
 

@@ -52,6 +52,7 @@ parse_logger()
 	sleep 5
 	if [[ -s ${LOG_EVENT_LOGGER} ]];
 	then 
+		LOGGER_EMPTY="FALSE"
 		out_logger=$(awk -F "," '/utc/{print $4}' ${LOG_EVENT_LOGGER} | grep -oP '[[:digit:]].*(?= [[:space:]]*UTC.*)' | sort -k1,2 -ur | head -n1 | xargs -Iregex grep -m1 "regex" ${LOG_EVENT_LOGGER})
 		logger_latest_time=$(awk -F "," '/utc/{print $4}' ${LOG_EVENT_LOGGER} | grep -oP '[[:digit:]].*(?= [[:space:]]*UTC.*)' | sort -k1,2 -ur | head -n1 | awk '{print $2}')
 		if [[ ${logger_last_time} == ${logger_latest_time} ]];
@@ -59,7 +60,7 @@ parse_logger()
 			TIMESTAMP_LOGGER="FAIL"
 		else
 			parse=$(echo ${out_logger} | python -c 'import sys, json; print json.load(sys.stdin)["message"]')
-			if [[ ${parse} == ${1} ]];
+			if [[ ${parse} == *"${1}"* ]];
 			then
 				LOGGER_RESULT="PASS"
 			else
@@ -68,7 +69,7 @@ parse_logger()
 			logger_last_time=${logger_latest_time}
 		fi
 	else
-		TIMESTAMP_LOGGER="FAIL"
+		LOGGER_EMPTY="TRUE"
 	fi
 	rm ${LOG_EVENT_LOGGER}
 }
@@ -78,6 +79,7 @@ parse_sts()
 	sleep 5
 	if [[ -s ${LOG_STS} ]];
 	then 
+		STS_EMPTY="FALSE"
 		out_sts=$(awk -F "," '/mru/{print $NF}' ${LOG_STS} | grep -oP '[[:digit:]].*(?= [[:space:]]*UTC.*)' | sort -k1,2 -ur | head -n1 | xargs -Iregex grep -m1 "regex" ${LOG_STS})
 		sts_latest_time=$(awk -F "," '/mru/{print $NF}' ${LOG_STS} | grep -oP '[[:digit:]].*(?= [[:space:]]*UTC.*)' | sort -k1,2 -ur | head -n1 | awk '{print $2}')
 		sleep 2
@@ -86,7 +88,7 @@ parse_sts()
 			TIMESTAMP_STS="FAIL"
 		else
 			state=$(echo ${out_sts} | python -c 'import sys, json; print json.load(sys.stdin)["state"]')
-			if [[ ${state} == ${1} ]];
+			if [[ ${state} == *"${1}"* ]];
 			then
 				STS_RESULT="PASS"
 			else
@@ -95,7 +97,7 @@ parse_sts()
 			sts_last_time=${sts_latest_time}
 		fi
 	else
-		TIMESTAMP_STS="FAIL"
+		STS_EMPTY="TRUE"
 	fi
 	rm ${LOG_STS}
 }
@@ -104,7 +106,11 @@ result()
 {
 	if [[ ${1} == "logger" ]];
 	then
-		if [[ ${TIMESTAMP_LOGGER} == "FAIL" ]];
+		if [[ ${LOGGER_EMPTY} == "TRUE" ]];
+		then
+			RESULT="FAIL"
+			DESCRIPTION="LOGGER [ EMPTY ]"
+		elif [[ ${TIMESTAMP_LOGGER} == "FAIL" ]];
 		then
 			RESULT="FAIL"
 			DESCRIPTION="LOGGER [ TIMESTAMP ]"
@@ -121,7 +127,11 @@ result()
 		fi
 	elif [[ ${1} == "sts" ]];
 	then
-		if [[ ${TIMESTAMP_STS} == "FAIL" ]];
+		if [[ ${STS_EMPTY} == "TRUE" ]];
+		then
+			RESULT="FAIL"
+			DESCRIPTION="STS [ EMPTY ]"
+		elif [[ ${TIMESTAMP_STS} == "FAIL" ]];
 		then
 			RESULT="FAIL"
 			DESCRIPTION="STS [ TIMESTAMP ]"
@@ -145,7 +155,9 @@ unset_var()
 	unset TIMESTAMP_LOGGER
 	unset TIMESTAMP_STS
 	unset LOGGER_RESULT
+	unset LOGGER_EMPTY
 	unset STS_RESULT
+	unset STS_EMPTY
 }
 
 subscribe_logger_event()

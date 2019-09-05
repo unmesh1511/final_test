@@ -192,6 +192,15 @@ while getopts "g:i:x:X:hl:" opt;
 				run_test 'g'
 				;;
 			'i')
+				if [[ ${OPTARG} == "ota" ]];
+				then
+					${IOX_PATH}"/ota/ota_version.sh" 2>/dev/null
+					exit	
+				elif [[ ${OPTARG} == "long_run" ]];
+				then
+					${IOX_PATH}"/long_run/iox_test_dio_meter.sh" 2>/dev/null
+					exit	
+				fi
 				run_test 'i' ${OPTARG}
 				;;
 			'l') 																					#you need to specify either full path or path relative to iox_test directory

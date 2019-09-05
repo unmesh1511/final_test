@@ -1,5 +1,7 @@
 #!/bin/bash
 
+source env_var.sh
+
 PASS=1234
 
 upgrade_ver()
@@ -116,10 +118,16 @@ start_svc()
 {
 #	allow given port on apollo
 	sudo ufw allow 8080
-
-#	start python http server 
 	python -m SimpleHTTPServer 8080 &	
+}
 
+cleanup()
+{
+	pid=$(ps -ef | grep "python -m SimpleHTTPServer 8080" | head -n1 | awk '{print $2}')
+	if [[ ! -z "${pid}" ]];
+	then
+		sudo kill -9 ${pid}
+	fi
 }
 
 
@@ -130,30 +138,47 @@ upgrade_version()
 	up_ver=$(upgrade_ver ${curr_ver} "up")
 	echo "upgraded : "${up_ver}
 	sshpass -p ${PASS} ssh unmesh@192.168.0.103 "$(typeset -f setup); setup ${up_ver}"
-	sshpass -p ${PASS} scp unmesh@192.168.0.103:~/iox/ota_image_tool/bin/ota_header_v_${up_ver}.bin .
+	sshpass -p ${PASS} scp unmesh@192.168.0.103:~/iox/ota_image_tool/bin/ota_header_v_${up_ver}.bin ota/
 
 	IOX_INFO=$(get_iox_info)
 	APOLLO_SL_IP=$(echo ${IOX_INFO} | awk '{print $1}')
 	IOX_IP=$(echo ${IOX_INFO} | awk '{print $2}')
-
-	(sleep 2; echo "ota https://${APOLLO_SL_IP}:8080/ota_header_v_${up_ver}.bin /dev/mtdblock7"; sleep 600) | telnet ${IOX_IP}
+	echo "(sleep 2; echo "ota https://${APOLLO_SL_IP}:8080${IOX_PATH}/ota/ota_header_v_${up_ver}.bin /dev/mtdblock7"; sleep 600) | telnet ${IOX_IP}"
+	(sleep 2; echo "ota https://${APOLLO_SL_IP}:8080${IOX_PATH}/ota/ota_header_v_${up_ver}.bin /dev/mtdblock7"; sleep 600) | telnet ${IOX_IP}
 }
 
-#downgrade_version()
-#{
-#	curr_ver=$(get_version)
-#	down_ver=$(upgrade_ver ${curr_ver} "down")
-#	setup ${down_ver}
-#}
-#
-#same_version()
-#{
-#	curr_ver=$(get_version)
-#	setup ${curr_ver}
-#}
+downgrade_version()
+{
+	curr_ver=$(get_version)
+	echo "current : "${curr_ver}
+	down_ver=$(upgrade_ver ${curr_ver} "down")
+	echo "downgraded : "${down_ver}
+	sshpass -p ${PASS} ssh unmesh@192.168.0.103 "$(typeset -f setup); setup ${down_ver}"
+	sshpass -p ${PASS} scp unmesh@192.168.0.103:~/iox/ota_image_tool/bin/ota_header_v_${down_ver}.bin ota/
+
+	IOX_INFO=$(get_iox_info)
+	APOLLO_SL_IP=$(echo ${IOX_INFO} | awk '{print $1}')
+	IOX_IP=$(echo ${IOX_INFO} | awk '{print $2}')
+	echo "(sleep 2; echo "ota https://${APOLLO_SL_IP}:8080${IOX_PATH}/ota/ota_header_v_${down_ver}.bin /dev/mtdblock7"; sleep 600) | telnet ${IOX_IP}"
+	(sleep 2; echo "ota https://${APOLLO_SL_IP}:8080${IOX_PATH}/ota/ota_header_v_${down_ver}.bin /dev/mtdblock7"; sleep 600) | telnet ${IOX_IP}
+}
+
+same_version()
+{
+	curr_ver=$(get_version)
+
+	sshpass -p ${PASS} ssh unmesh@192.168.0.103 "$(typeset -f setup); setup ${curr_ver}"
+	sshpass -p ${PASS} scp unmesh@192.168.0.103:~/iox/ota_image_tool/bin/ota_header_v_${curr_ver}.bin ota/
+
+	IOX_INFO=$(get_iox_info)
+	APOLLO_SL_IP=$(echo ${IOX_INFO} | awk '{print $1}')
+	IOX_IP=$(echo ${IOX_INFO} | awk '{print $2}')
+	echo "(sleep 2; echo "ota https://${APOLLO_SL_IP}:8080${IOX_PATH}/ota/ota_header_v_${curr_ver}.bin /dev/mtdblock7"; sleep 600) | telnet ${IOX_IP}"
+	(sleep 2; echo "ota https://${APOLLO_SL_IP}:8080${IOX_PATH}/ota/ota_header_v_${curr_ver}.bin /dev/mtdblock7"; sleep 600) | telnet ${IOX_IP}
+}
 
 start_svc
 
 upgrade_version
 
-
+cleanup

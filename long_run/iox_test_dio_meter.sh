@@ -1,8 +1,8 @@
 #!/bin/bash
 
 source ../iox.config
-DIO_UNID="${IOX_INSTALL_ID}.256"
-METER_UNID="${IOX_INSTALL_ID}.257"
+DIO_UNID="${IOX_INSTALL_ID}.dio"
+METER_UNID="${IOX_INSTALL_ID}.meter"
 
 # Recommend syntax for setting an infinite while loop
 echo "*********** starting test *************"
@@ -54,7 +54,7 @@ mosquitto_pub -t glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${METER_DEV_NAME}/if/phase/
             },  
  "nvoVoltageRMS": {    
               "monitor":        {
-                      "rate":500,
+                      "rate":50,
                        "cat":"data",
                       "inFeedback":false,
                        "report":"change",
@@ -64,7 +64,7 @@ mosquitto_pub -t glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${METER_DEV_NAME}/if/phase/
                },
  "nvoVoltageAvg": {
                "monitor":        {
-                  "rate":300,
+                  "rate":50,
                    "cat":"data",
                  "inFeedback":false,
                   "report":"change",
@@ -74,7 +74,7 @@ mosquitto_pub -t glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${METER_DEV_NAME}/if/phase/
               },
  "nvoCurrentRMS": {
                 "monitor":        {
-                            "rate":550,
+                            "rate":50,
                             "cat":"data",
                             "inFeedback":false,
                             "report":"change",
@@ -84,7 +84,7 @@ mosquitto_pub -t glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${METER_DEV_NAME}/if/phase/
                   },
  "nvoActiveEnergy": {
                  "monitor":        {
-                          "rate":250,
+                          "rate":50,
                           "cat":"data",
                            "inFeedback":false,
                            "report":"change",
@@ -94,7 +94,7 @@ mosquitto_pub -t glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${METER_DEV_NAME}/if/phase/
                   },
  "nvoReactEnergy": {
                "monitor":        {
-                       "rate":300,
+                       "rate":50,
                        "cat":"data",
                        "inFeedback":false,
                        "report":"change",
@@ -104,7 +104,7 @@ mosquitto_pub -t glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${METER_DEV_NAME}/if/phase/
                  },
  "nvoAppEnergy": {
                "monitor":        {
-                   "rate":350,
+                   "rate":50,
                    "cat":"data",
                    "inFeedback":false,
                    "report":"change",
@@ -114,7 +114,7 @@ mosquitto_pub -t glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${METER_DEV_NAME}/if/phase/
               },
               "nvoPhaseActEnergy": {
               "monitor":        {
-              "rate":400,
+              "rate":50,
               "cat":"data",
               "inFeedback":false,
               "report":"change",
@@ -124,7 +124,7 @@ mosquitto_pub -t glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${METER_DEV_NAME}/if/phase/
       },
       "nvoPhaseRctEnergy": {
       "monitor":        {
-      "rate":450,
+      "rate":50,
       "cat":"data",
       "inFeedback":false,
       "report":"change",
@@ -134,7 +134,7 @@ mosquitto_pub -t glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${METER_DEV_NAME}/if/phase/
                 },
                 "nvoPhaseAppEnergy": {
                 "monitor":        {
-                "rate":500,
+                "rate":50,
                 "cat":"data",
                 "inFeedback":false,
                 "report":"change",
@@ -144,7 +144,7 @@ mosquitto_pub -t glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${METER_DEV_NAME}/if/phase/
         },
         "nvoPower": {
         "monitor":        {
-        "rate":550,
+        "rate":50,
         "cat":"data",
         "inFeedback":false,
         "report":"change",
@@ -154,7 +154,7 @@ mosquitto_pub -t glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${METER_DEV_NAME}/if/phase/
 },
                  "nvoPhaseActPwr": {
                  "monitor":        {
-                 "rate":600,
+                 "rate":50,
                  "cat":"data",
                  "inFeedback":false,
                  "report":"change",
@@ -164,7 +164,7 @@ mosquitto_pub -t glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${METER_DEV_NAME}/if/phase/
          },
          "nvoPhaseReactPwr": {
          "monitor":        {
-         "rate":650,
+         "rate":50,
          "cat":"data",
          "inFeedback":false,
          "report":"change",
@@ -174,7 +174,7 @@ mosquitto_pub -t glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${METER_DEV_NAME}/if/phase/
  },
  "nvoPhaseAppPwr": {
  "monitor":        {
- "rate":700,
+ "rate":50,
  "cat":"data",
  "inFeedback":false,
  "report":"change",
@@ -184,7 +184,7 @@ mosquitto_pub -t glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${METER_DEV_NAME}/if/phase/
                     },
                     "nvoPowerStatus": {
                     "monitor":        {
-                    "rate":500,
+                    "rate":50,
                     "cat":"data",
                     "inFeedback":false,
                     "report":"change",
@@ -194,7 +194,7 @@ mosquitto_pub -t glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${METER_DEV_NAME}/if/phase/
             },
             "nvoPhaseFrequency": {
             "monitor":        {
-            "rate":400,
+            "rate":50,
             "cat":"data",
             "inFeedback":false,
             "report":"change",
@@ -207,7 +207,7 @@ sleep 5
 mosquitto_pub -t glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/di/1 -m '{
 "input": {
 "monitor": {
-"rate": 200,
+"rate":50,
 "cat": "data",
 "inFeedback": true,
 "report": "change",
@@ -237,7 +237,7 @@ mosquitto_pub -t glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/di/1 -m 
 mosquitto_pub -t glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/di/2 -m '{
 "input": {
 "monitor": {
-"rate": 200,
+"rate":50,
 "cat": "data",
 "inFeedback": true,
 "report": "change",
@@ -267,7 +267,7 @@ mosquitto_pub -t glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/di/2 -m 
 mosquitto_pub -t glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/di/3 -m '{
 "input": {
 "monitor": {
-"rate": 200,
+"rate":50,
 "cat": "data",
 "inFeedback": true,
 "report": "change",
@@ -297,7 +297,7 @@ mosquitto_pub -t glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/di/3 -m 
 mosquitto_pub -t glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/di/4 -m '{
 "input": {
 "monitor": {
-"rate": 200,
+"rate":50,
 "cat": "data",
 "inFeedback": true,
 "report": "change",
@@ -327,7 +327,7 @@ mosquitto_pub -t glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/di/4 -m 
 mosquitto_pub -t glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/di/5 -m '{
 "input": {
 "monitor": {
-"rate": 200,
+"rate":50,
 "cat": "data",
 "inFeedback": true,
 "report": "change",
@@ -357,7 +357,7 @@ mosquitto_pub -t glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/di/5 -m 
 mosquitto_pub -t glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/di/6 -m '{
 "input": {
 "monitor": {
-"rate": 200,
+"rate":50,
 "cat": "data",
 "inFeedback": true,
 "report": "change",
@@ -387,7 +387,7 @@ mosquitto_pub -t glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/di/6 -m 
 mosquitto_pub -t glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/di/7 -m '{
 "input": {
 "monitor": {
-"rate": 200,
+"rate":50,
 "cat": "data",
 "inFeedback": true,
 "report": "change",
@@ -417,7 +417,7 @@ mosquitto_pub -t glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/di/7 -m 
 mosquitto_pub -t glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/di/8 -m '{
 "input": {
 "monitor": {
-"rate": 200,
+"rate":50,
 "cat": "data",
 "inFeedback": true,
 "report": "change",

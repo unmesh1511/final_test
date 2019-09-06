@@ -1,6 +1,7 @@
 #!/bin/bash
 
-source ../iox.config
+source iox.config
+
 DIO_UNID="${IOX_INSTALL_ID}.dio"
 METER_UNID="${IOX_INSTALL_ID}.meter"
 

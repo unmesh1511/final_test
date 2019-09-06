@@ -3,9 +3,7 @@
 source env_var.sh
 source iox.config
 
-#xterm -e ${MINICOM_SCRIPT}
-
-cat /dev/ttyUSB${IOX_LOG_PORT} > ${MINICOM_LOGS} &
+#cat /dev/ttyUSB${IOX_LOG_PORT} > ${MINICOM_LOGS} &
 
 get_info()
 {
@@ -194,7 +192,7 @@ while getopts "g:i:x:X:hl:" opt;
 			'i')
 				if [[ ${OPTARG} == "ota" ]];
 				then
-					${IOX_PATH}"/ota/ota_version.sh" 2>/dev/null
+					${IOX_PATH}"/ota/ota_version.sh"
 					exit	
 				elif [[ ${OPTARG} == "long_run" ]];
 				then

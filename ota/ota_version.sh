@@ -4,6 +4,8 @@ source env_var.sh
 
 PASS=1234
 
+trap cleanup SIGINT;
+
 upgrade_ver()
 {
 	first=${1}
@@ -76,7 +78,6 @@ setup()
 
 	VERSION=${1}	
 
-
 #	do git pull
 
 	
@@ -88,7 +89,7 @@ setup()
 
 	echo "make clean...."
 
-    (cd "iox/TizenRT/os" && make clean)
+	(cd "iox/TizenRT/os" && make clean)
 
 	if [ $? -eq 1 ];
 	then
@@ -116,13 +117,20 @@ setup()
 
 start_svc()
 {
+	pwd
 #	allow given port on apollo
-	sudo ufw allow 8080
-	python -m SimpleHTTPServer 8080 &	
+    (cd ../ && sudo ufw allow 8080)
+	(cd ../ && python -m SimpleHTTPServer 8080 &)
+	sleep 5
 }
 
 cleanup()
 {
+	rule=$(sudo ufw status | grep 8080 | awk '{print $2}')
+	if [[ ${rule} == "ALLOW" ]];
+	then
+		sudo ufw delete allow 8080
+	fi
 	pid=$(ps -ef | grep "python -m SimpleHTTPServer 8080" | head -n1 | awk '{print $2}')
 	if [[ ! -z "${pid}" ]];
 	then
@@ -137,14 +145,22 @@ upgrade_version()
 	echo "current : "${curr_ver}
 	up_ver=$(upgrade_ver ${curr_ver} "up")
 	echo "upgraded : "${up_ver}
+	sleep 2
 	sshpass -p ${PASS} ssh unmesh@192.168.0.103 "$(typeset -f setup); setup ${up_ver}"
+	if [ $? -eq 1 ];
+	then
+		echo "ssh failed"
+		exit
+	fi
 	sshpass -p ${PASS} scp unmesh@192.168.0.103:~/iox/ota_image_tool/bin/ota_header_v_${up_ver}.bin ota/
-
+	cp ota/ota_header_v_${up_ver}.bin ~/
 	IOX_INFO=$(get_iox_info)
 	APOLLO_SL_IP=$(echo ${IOX_INFO} | awk '{print $1}')
 	IOX_IP=$(echo ${IOX_INFO} | awk '{print $2}')
-	echo "(sleep 2; echo "ota https://${APOLLO_SL_IP}:8080${IOX_PATH}/ota/ota_header_v_${up_ver}.bin /dev/mtdblock7"; sleep 600) | telnet ${IOX_IP}"
-	(sleep 2; echo "ota https://${APOLLO_SL_IP}:8080${IOX_PATH}/ota/ota_header_v_${up_ver}.bin /dev/mtdblock7"; sleep 600) | telnet ${IOX_IP}
+	start_svc
+	echo "(sleep 2; echo "ota https://${APOLLO_SL_IP}:8080/ota_header_v_${up_ver}.bin /dev/mtdblock7"; sleep 600) | telnet ${IOX_IP}"
+	(sleep 2; echo "ota https://${APOLLO_SL_IP}:8080/ota_header_v_${up_ver}.bin /dev/mtdblock7"; sleep 600) | telnet ${IOX_IP}
+	cleanup
 }
 
 downgrade_version()
@@ -155,12 +171,14 @@ downgrade_version()
 	echo "downgraded : "${down_ver}
 	sshpass -p ${PASS} ssh unmesh@192.168.0.103 "$(typeset -f setup); setup ${down_ver}"
 	sshpass -p ${PASS} scp unmesh@192.168.0.103:~/iox/ota_image_tool/bin/ota_header_v_${down_ver}.bin ota/
-
+	cp ota/ota_header_v_${down_ver}.bin ~/
 	IOX_INFO=$(get_iox_info)
 	APOLLO_SL_IP=$(echo ${IOX_INFO} | awk '{print $1}')
 	IOX_IP=$(echo ${IOX_INFO} | awk '{print $2}')
-	echo "(sleep 2; echo "ota https://${APOLLO_SL_IP}:8080${IOX_PATH}/ota/ota_header_v_${down_ver}.bin /dev/mtdblock7"; sleep 600) | telnet ${IOX_IP}"
-	(sleep 2; echo "ota https://${APOLLO_SL_IP}:8080${IOX_PATH}/ota/ota_header_v_${down_ver}.bin /dev/mtdblock7"; sleep 600) | telnet ${IOX_IP}
+	start_svc
+	echo "(sleep 2; echo "ota https://${APOLLO_SL_IP}:8080/ota_header_v_${down_ver}.bin /dev/mtdblock7"; sleep 600) | telnet ${IOX_IP}"
+	(sleep 2; echo "ota https://${APOLLO_SL_IP}:8080/ota_header_v_${down_ver}.bin /dev/mtdblock7"; sleep 600) | telnet ${IOX_IP}
+	cleanup
 }
 
 same_version()
@@ -169,16 +187,14 @@ same_version()
 
 	sshpass -p ${PASS} ssh unmesh@192.168.0.103 "$(typeset -f setup); setup ${curr_ver}"
 	sshpass -p ${PASS} scp unmesh@192.168.0.103:~/iox/ota_image_tool/bin/ota_header_v_${curr_ver}.bin ota/
-
+	cp ota/ota_header_v_${curr_ver}.bin ~/
 	IOX_INFO=$(get_iox_info)
 	APOLLO_SL_IP=$(echo ${IOX_INFO} | awk '{print $1}')
 	IOX_IP=$(echo ${IOX_INFO} | awk '{print $2}')
-	echo "(sleep 2; echo "ota https://${APOLLO_SL_IP}:8080${IOX_PATH}/ota/ota_header_v_${curr_ver}.bin /dev/mtdblock7"; sleep 600) | telnet ${IOX_IP}"
-	(sleep 2; echo "ota https://${APOLLO_SL_IP}:8080${IOX_PATH}/ota/ota_header_v_${curr_ver}.bin /dev/mtdblock7"; sleep 600) | telnet ${IOX_IP}
+	start_svc
+	echo "(sleep 2; echo "ota https://${APOLLO_SL_IP}:8080/ota_header_v_${curr_ver}.bin /dev/mtdblock7"; sleep 600) | telnet ${IOX_IP}"
+	(sleep 2; echo "ota https://${APOLLO_SL_IP}:8080/ota_header_v_${curr_ver}.bin /dev/mtdblock7"; sleep 600) | telnet ${IOX_IP}
+	cleanup
 }
 
-start_svc
-
 upgrade_version
-
-cleanup

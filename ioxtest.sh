@@ -3,7 +3,8 @@
 source env_var.sh
 source iox.config
 
-#cat /dev/ttyUSB${IOX_LOG_PORT} > ${MINICOM_LOGS} &
+cat /dev/ttyUSB${IOX_LOG_PORT} > ${MINICOM_LOGS} &
+mini_id=$!
 
 get_info()
 {
@@ -87,10 +88,11 @@ exec_RUN_LIST_PATH()
 	tac ${RESULT_PATH} | awk 'NR==1 {line =$0; next} 1; END{print line}' | tac > temp | mv temp ${RESULT_PATH}
 	column ${RESULT_PATH} -t -s '|' > temp
 	mv temp ${RESULT_PATH}
+	sed -i '1i\\' ${RESULT_PATH}
+	sed -i '3i\\' ${RESULT_PATH}
 	sed -i '8,$d' ${IOX_CONFIG_PATH}
 	
-	id=$(ps -ef | grep 'grabserial' | head -n1 | awk '{print $2}')
-	sudo kill -9 ${id}
+	sudo kill -9 ${mini_id}
 }
 
 
@@ -196,7 +198,7 @@ while getopts "g:i:x:X:hl:" opt;
 					exit	
 				elif [[ ${OPTARG} == "long_run" ]];
 				then
-					${IOX_PATH}"/long_run/iox_test_dio_meter.sh" 2>/dev/null
+					${IOX_PATH}"/long_run/iox_test_dio_meter.sh"
 					exit	
 				fi
 				run_test 'i' ${OPTARG}

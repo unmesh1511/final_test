@@ -57,10 +57,16 @@ IOX2_SL_INERFACE=$(echo ${INSTALL_ID[$rand2]} | awk -F ":" '{print $1}')
 
 #both connected then replace abr
 
+parse_lim_log()
+{
+	
+}
+
 get_lim_log()
 {
 	mosquitto_pub -t apollo/0/./rq/=lim/f/config -m '{"list": null}'
 	cat /var/log/supervisor/lim.log > lim.log
+	parse_lim_log
 }
 
 test1()

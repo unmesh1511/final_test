@@ -2,9 +2,12 @@
 
 source env_var.sh
 source iox.config
+source iox_info.sh
 
-cat /dev/ttyUSB${IOX_LOG_PORT} > ${MINICOM_LOGS} &
-mini_id=$!
+#cat /dev/ttyUSB${IOX_LOG_PORT} > ${MINICOM_LOGS} &
+#mini_id=$!
+
+IOX_VERSION=$(get_version)
 
 get_info()
 {
@@ -65,12 +68,9 @@ add_all()
 
 exec_RUN_LIST_PATH()
 {
-	echo "Testsuite Version : 1.0.0"
-	echo "IOX Version : v1.0.0"
-	echo "Apollo Version : v1"
-	echo "Apollo Config :"
-	echo "----------------------------"
-	echo "----------------------------"
+	echo -e "\n\n"
+	echo -e "\t\t\t\t\t\tTestsuite Version : 1.0.0\n\t\t\t\t\t\tIOX Version : ${IOX_VERSION}\n\t\t\t\t\t\tApollo Version : v1\n\t\t\t\t\t\tApollo Config :" | boxes
+	echo -e "\n\n"
 	#remove duplicates first
 	sort -u ${RUN_LIST_PATH} -o ${RUN_LIST_PATH}
 	chmod +x ${RUN_LIST_PATH}

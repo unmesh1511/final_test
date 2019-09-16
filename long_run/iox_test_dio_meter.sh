@@ -26,7 +26,7 @@ echo "*********** starting test *************"
 #                           }  
 #                         }'
 #                         
-#sleep 10
+sleep 10
 mosquitto_pub -m '{"action":"provision","args":{"unid":"'${DIO_UNID}'"}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/do"
 sleep 2
 mosquitto_pub -m '{"action":"provision","args":{"unid":"'${METER_UNID}'"}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${METER_DEV_NAME}/do"
@@ -758,4 +758,5 @@ do
 	}'
 	    sleep 10
 	    echo "Do something; hit [CTRL+C] to stop!"
+	(sleep 1; echo "heapinfo"; sleep 3;  echo "exit") | telnet ${IOX_IP}
 done

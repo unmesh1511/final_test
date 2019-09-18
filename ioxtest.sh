@@ -62,6 +62,8 @@ add_all()
 	read_from_files_list
 	cd ${IOX_PATH}"/dcm"
 	read_from_files_list
+	cd ${IOX_PATH}"/sys"
+	read_from_files_list
 }
 
 # DESCRIPTION : execute the run_list file

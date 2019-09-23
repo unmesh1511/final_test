@@ -29,7 +29,7 @@ The latest image is available at : [iox_test_suite](https://github.com/unmesh151
    **-i**
  
      Used to run individual testcases.
-     for example : -i dio/dio_create or -i modbus/modbus_create **or** meter/3phase/3phase_provision etc
+     for example : -i dio/dio_create or -i modbus/modbus_create or meter/3phase/3phase_provision etc
  
    **-l**
  

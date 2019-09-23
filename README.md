@@ -81,8 +81,21 @@ Inside each device directories there are testcases for different actions such as
 │
 ├── iox.config
 │
+├── iox_info.sh
+│
+├── long_run
+│   ├── iox_test_dio_meter.sh
+│
+├── ota
+│   ├── iox_ota_client.sh
+│   ├── ota_version.sh
+│
 ├── modbus
 │   ├── modbus_*
+│   ├── files.list
+│
+├── sys
+│   ├── iox_replace.sh
 │   ├── files.list
 │   
 ├── result

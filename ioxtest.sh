@@ -16,13 +16,17 @@ get_info()
 #	IOX_IP=$(echo ${info_msg} | python -c 'import sys, json; print json.load(sys.stdin)["iox_ip"]')
 #	LOGICAL_ID=$(echo ${info_msg} | python -c 'import sys, json; print json.load(sys.stdin)["logical_id"]')
 #	INSTALL_ID=$(echo ${info_msg} | python -c 'import sys, json; print json.load(sys.stdin)["install_id"]')
- 
+	info=$(get_iox_mac ${IOX_IP}) 
+	INSTALL_ID=$(echo ${info} | awk '{print $19}')
+	LOGICAL_ID=$(echo ${info} | awk '{print $24}')
+	echo "IOX_INSTALL_ID="${INSTALL_ID} >> ${IOX_CONFIG_PATH}
+	echo "IOX_LOGICAL_ID="${LOGICAL_ID} >> ${IOX_CONFIG_PATH}	
 	echo "SID="${SID} >> ${IOX_CONFIG_PATH}
-	if [[ ! -z ${IOX_LOGICAL_ID} ]];
+	if [[ ! -z ${LOGICAL_ID} ]];
 	then
-		echo "DIO_DEV_NAME="${IOX_LOGICAL_ID}.dio >> ${IOX_CONFIG_PATH}
-		echo "SYS_DEV_NAME="${IOX_LOGICAL_ID}.sys >> ${IOX_CONFIG_PATH}
-		echo "METER_DEV_NAME="${IOX_LOGICAL_ID}.meter >> ${IOX_CONFIG_PATH}
+		echo "DIO_DEV_NAME="${LOGICAL_ID}.dio >> ${IOX_CONFIG_PATH}
+		echo "SYS_DEV_NAME="${LOGICAL_ID}.sys >> ${IOX_CONFIG_PATH}
+		echo "METER_DEV_NAME="${LOGICAL_ID}.meter >> ${IOX_CONFIG_PATH}
 	else
 		echo "DIO_DEV_NAME=dio" >> ${IOX_CONFIG_PATH}
 		echo "SYS_DEV_NAME=sys" >> ${IOX_CONFIG_PATH}
@@ -84,15 +88,17 @@ exec_RUN_LIST_PATH()
 
 	echo -n "Sr.No" >> ${RESULT_PATH}
 	echo -n " |  TEST_NAME" >> ${RESULT_PATH}
-	echo -n " | RESULT" >> ${RESULT_PATH}
+	echo -n " | ACTION_RESULT" >> ${RESULT_PATH}
+	echo -n " | TEST_RESULT" >> ${RESULT_PATH}
 	echo -n " | DESCRIPTION" >> ${RESULT_PATH}
 	echo -n " | EXECUTION_TIME" >> ${RESULT_PATH}
 	tac ${RESULT_PATH} | awk 'NR==1 {line =$0; next} 1; END{print line}' | tac > temp | mv temp ${RESULT_PATH}
 	column ${RESULT_PATH} -t -s '|' > temp
 	mv temp ${RESULT_PATH}
 	sed -i '1i\\' ${RESULT_PATH}
+	sleep 1
 	sed -i '3i\\' ${RESULT_PATH}
-	sed -i '8,$d' ${IOX_CONFIG_PATH}
+	sed -i '6,$d' ${IOX_CONFIG_PATH}
 	
 	sudo kill -9 ${mini_id}
 }

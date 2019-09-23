@@ -31,3 +31,17 @@ get_version()
 	info=$(get_iox_version ${IOX_IP})
 	echo $info | awk '{print $16}'
 }
+
+get_iox_mac()
+{
+	(sleep 2; echo "iox_mac | head -n2"; sleep 5; echo "exit") | telnet ${1} 2>/dev/null
+}
+
+get_details()
+{
+	IOX_SL_INTERFACE=${1}
+	IOX_INFO=$(get_iox_info ${IOX_SL_INTERFACE})
+	IOX_IP=$(echo ${IOX_INFO} | awk '{print $2}')
+	info=$(get_iox_mac ${IOX_IP})
+	echo ${info}
+}

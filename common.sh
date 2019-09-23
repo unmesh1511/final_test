@@ -1,7 +1,6 @@
 #!/bin/bash
 
 source env_var.sh
-RESULT_LOG=${IOX_PATH}"/result/result_logs"
 
 
 kill_process()
@@ -18,15 +17,16 @@ execution_time()
 	t=$(date -d "${1}" +%s)
 	t1=$(date -d "${2}" +%s)
 	diff=$(expr $t1 - $t)
-	echo -n " | ${diff}s" | tee -a ${RESULT_LOG}
+	echo -n " | ${diff}s" | tee -a ${RESULT_PATH}
 }
 
 result_logs()
 {
 	((++test_num)) 
-	echo -n "${1}${test_num}" | tee -a ${RESULT_LOG} ${2}
-	echo -n " | ${RESULT}" | tee -a ${RESULT_LOG}
-	echo -n " | ${DESCRIPTION}" | tee -a ${RESULT_LOG}
+	echo -n "${1}${test_num}" | tee -a ${RESULT_PATH} ${2}
+	echo -n " | ${ACTION_RESULT}" | tee -a ${RESULT_PATH}
+	echo -n " | ${RESULT}" | tee -a ${RESULT_PATH}
+	echo -n " | ${DESCRIPTION}" | tee -a ${RESULT_PATH}
 	echo "" >> ${2}
 	echo "START_TIME : "${3} >> ${2}
 	echo ${4} >> ${2} 
@@ -43,7 +43,7 @@ result_logs()
 	end_time=$(date | awk '{print $4}')
 	echo "END_TIME : "${end_time} >> ${2}
 	execution_time ${3} ${end_time}
-	echo "" | tee -a ${RESULT_LOG} ${2}
+	echo "" | tee -a ${RESULT_PATH} ${2}
 	echo "==============================================================================" | tee -a ${2}
 }
 
@@ -138,11 +138,13 @@ result()
 		else
 			if [[ ${STS_RESULT} == "PASS" ]];
 			then
-				RESULT="PASS"
+				ACTION_RESULT="ACTION : PASS"
+				RESULT="RESULT : PASS"
 				DESCRIPTION="-"
 			elif [[ ${STS_RESULT} == "FAIL" ]];
 			then
-				RESULT="FAIL"
+				ACTION_RESULT="FAIL"
+				RESULT="RESULT : PASS"
 				DESCRIPTION="STS [ ${parse} ]"
 			fi
 		fi

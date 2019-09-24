@@ -88,7 +88,7 @@ exec_RUN_LIST_PATH()
 
 	echo -n "Sr.No" >> ${RESULT_PATH}
 	echo -n " |  TEST_NAME" >> ${RESULT_PATH}
-	echo -n " | ACTION_RESULT" >> ${RESULT_PATH}
+#	echo -n " | ACTION_RESULT" >> ${RESULT_PATH}
 	echo -n " | TEST_RESULT" >> ${RESULT_PATH}
 	echo -n " | DESCRIPTION" >> ${RESULT_PATH}
 	echo -n " | EXECUTION_TIME" >> ${RESULT_PATH}

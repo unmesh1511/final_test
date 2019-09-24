@@ -24,7 +24,7 @@ result_logs()
 {
 	((++test_num)) 
 	echo -n "${1}${test_num}" | tee -a ${RESULT_PATH} ${2}
-	echo -n " | ${ACTION_RESULT}" | tee -a ${RESULT_PATH}
+#	echo -n " | ${ACTION_RESULT}" | tee -a ${RESULT_PATH}
 	echo -n " | ${RESULT}" | tee -a ${RESULT_PATH}
 	echo -n " | ${DESCRIPTION}" | tee -a ${RESULT_PATH}
 	echo "" >> ${2}
@@ -44,7 +44,7 @@ result_logs()
 	echo "END_TIME : "${end_time} >> ${2}
 	execution_time ${3} ${end_time}
 	echo "" | tee -a ${RESULT_PATH} ${2}
-	echo "==============================================================================" | tee -a ${2}
+	echo "==========================================================================================" | tee -a ${2}
 }
 
 parse_logger()
@@ -108,20 +108,20 @@ result()
 	then
 		if [[ ${LOGGER_EMPTY} == "TRUE" ]];
 		then
-			RESULT="FAIL"
+			RESULT="RESULT : FAIL"
 			DESCRIPTION="LOGGER [ EMPTY ]"
 		elif [[ ${TIMESTAMP_LOGGER} == "FAIL" ]];
 		then
-			RESULT="FAIL"
+			RESULT="RESULT : FAIL"
 			DESCRIPTION="LOGGER [ TIMESTAMP ]"
 		else
 			if [[ ${LOGGER_RESULT} == "PASS" ]];
 			then
-				RESULT="PASS"
+				RESULT="RESULT : PASS"
 				DESCRIPTION="-"
 			elif [[ ${LOGGER_RESULT} == "FAIL" ]];
 			then
-				RESULT="FAIL"
+				RESULT="RESULT : FAIL"
 				DESCRIPTION="LOGGER [ ${parse} ]"
 			fi
 		fi
@@ -129,23 +129,23 @@ result()
 	then
 		if [[ ${STS_EMPTY} == "TRUE" ]];
 		then
-			RESULT="FAIL"
+			RESULT="RESULT : FAIL"
 			DESCRIPTION="STS [ EMPTY ]"
 		elif [[ ${TIMESTAMP_STS} == "FAIL" ]];
 		then
-			RESULT="FAIL"
+			RESULT="RESULT : FAIL"
 			DESCRIPTION="STS [ TIMESTAMP ]"
 		else
 			if [[ ${STS_RESULT} == "PASS" ]];
 			then
-				ACTION_RESULT="ACTION : PASS"
+		#		ACTION_RESULT="ACTION : PASS"
 				RESULT="RESULT : PASS"
 				DESCRIPTION="-"
 			elif [[ ${STS_RESULT} == "FAIL" ]];
 			then
-				ACTION_RESULT="FAIL"
-				RESULT="RESULT : PASS"
-				DESCRIPTION="STS [ ${parse} ]"
+		#		ACTION_RESULT="FAIL"
+				RESULT="RESULT : FAIL"
+				DESCRIPTION="STS [ ${state} ]"
 			fi
 		fi
 	fi

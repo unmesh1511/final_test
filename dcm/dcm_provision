@@ -25,6 +25,7 @@ dcm_provision_test2()
 {
 	start_time=$(date | awk '{print $4}')
 	subscribe_sts_event &
+	pids+=($!)
 	mosquitto_pub -m '' -t "glp/0/${SID}/rq/con/test2/do"
 	parse_sts "${PROVISIONING_STATE}"
 	result "sts"
@@ -36,7 +37,9 @@ dcm_provision_test3()
 {
 	start_time=$(date | awk '{print $4}')
 	subscribe_sts_event &
+	pids+=($!)
 	mosquitto_sub -t "glp/0/${SID}/fb/con/test2/cfg" &
+	pids+=($!)
 	mosquitto_pub -m '{"action":"provision"}' -t "glp/0/${SID}/rq/con/test2/do"
 	parse_sts "${PROVISIONING_STATE}"
 	result "sts"

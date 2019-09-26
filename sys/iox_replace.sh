@@ -10,7 +10,7 @@ echo -e "\nCollecting INSTALL ID's...\n"
 for interface in ${SL_INTERFACES[@]};
 do
 	info=$(get_details ${interface})
-	ID=$(echo ${info} | awk '{print $19}')
+	ID=$(echo ${info} | awk '{print $20}')
 	INSTALL_ID+=(${interface}:${ID})
 done
 
@@ -35,9 +35,9 @@ IOX2_SL_INTERFACE=$(echo ${INSTALL_ID[$rand2]} | awk -F ":" '{print $1}')
 get_logical_id()
 {
 	temp1=$(get_details ${IOX1_SL_INTERFACE})
-	LOGICAL_ID1=$(echo ${temp1} | awk '{print $24}')
+	LOGICAL_ID1=$(echo ${temp1} | awk '{print $25}')
 	temp2=$(get_details ${IOX2_SL_INTERFACE})
-	LOGICAL_ID2=$(echo ${temp2} | awk '{print $24}')
+	LOGICAL_ID2=$(echo ${temp2} | awk '{print $25}')
 
 	echo -e "\n\t\tINSTALL_ID=${IOX1_INSTALL_ID} LOGICAL_ID=${LOGICAL_ID1}\n\t\tINSTALL_ID=${IOX2_INSTALL_ID} LOGICAL_ID=${LOGICAL_ID2}"
 }

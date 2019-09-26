@@ -88,7 +88,7 @@ parse_sts()
 			TIMESTAMP_STS="FAIL"
 		else
 			state=$(echo ${out_sts} | python -c 'import sys, json; print json.load(sys.stdin)["state"]')
-			if [[ ${state} == *"${1}"* ]];
+			if [[ ${state} == ${1} ]];
 			then
 				STS_RESULT="PASS"
 			else

@@ -5,18 +5,23 @@ source ${IOX_PATH}"/common.sh"
 source ${IOX_PATH}"/iox.config"
 source ${IOX_PATH}"/errors.sh"
 
-LOG_EVENT_LOGGER=${IOX_PATH}"/dio/logger"
+LOG_STS=${IOX_PATH}"/dio/sts"
 LOG_DIO_TEST=${IOX_PATH}"/dio/dio_test_log"
 
+
+subscribe_sts_event()
+{
+	mosquitto_sub -t "glp/0/${SID}/fb/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/sts" > ${LOG_STS}
+}
 
 dio_test_test1()
 {
 	start_time=$(date | awk '{print $4}')
-	subscribe_logger_event &
+	subscribe_sts_event &
 	pids+=($!)
 	mosquitto_pub -m '{"action":"test"}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/do"
-	parse_logger "${ERR_TEST_HNDL}"
-	result "logger"
+	parse_sts *${PROVISION_STATE}*
+	result "sts"
 	pub=("mosquitto_pub -m '{"action":"test"}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/do"'")
 	result_logs "dio_test_test" ${LOG_DIO_TEST}  ${start_time} "${pub}"
 }
@@ -24,11 +29,11 @@ dio_test_test1()
 dio_test_test2()
 {
 	start_time=$(date | awk '{print $4}')
-	subscribe_logger_event &
+	subscribe_sts_event &
 	pids+=($!)
 	mosquitto_pub -m '{"action":"test"}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/do"
-	parse_logger "${ERR_TEST_HNDL}"
-	result "logger"
+	parse_sts *${PROVISION_STATE}*
+	result "sts"
 	pub=("mosquitto_pub -m '{"action":"test"}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/do"'")
 	result_logs "dio_test_test" ${LOG_DIO_TEST}  ${start_time} "${pub}"
 }
@@ -36,11 +41,11 @@ dio_test_test2()
 dio_test_test3()
 {
 	start_time=$(date | awk '{print $4}')
-	subscribe_logger_event &
+	subscribe_sts_event &
 	pids+=($!)
 	mosquitto_pub -m '{"action":"test"}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/do"
-	parse_logger "${ERR_TEST_HNDL}"
-	result "logger"
+	parse_sts *${PROVISION_STATE}*
+	result "sts"
 	pub=("mosquitto_pub -m '{"action":"test"}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/do"'")
 	result_logs "dio_test_test" ${LOG_DIO_TEST}  ${start_time} "${pub}"
 }
@@ -48,11 +53,11 @@ dio_test_test3()
 dio_test_test4()
 {
 	start_time=$(date | awk '{print $4}')
-	subscribe_logger_event &
+	subscribe_sts_event &
 	pids+=($!)
 	mosquitto_pub -m '{"action":"test"}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/do"
-	parse_logger "${ERR_TEST_HNDL}"
-	result "logger"
+	parse_sts *${PROVISION_STATE}*
+	result "sts"
 	pub=("mosquitto_pub -m '{"action":"test"}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/do"'")
 	result_logs "dio_test_test" ${LOG_DIO_TEST}  ${start_time} "${pub}"
 }

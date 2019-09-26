@@ -17,8 +17,8 @@ get_info()
 #	LOGICAL_ID=$(echo ${info_msg} | python -c 'import sys, json; print json.load(sys.stdin)["logical_id"]')
 #	INSTALL_ID=$(echo ${info_msg} | python -c 'import sys, json; print json.load(sys.stdin)["install_id"]')
 	info=$(get_iox_mac ${IOX_IP}) 
-	INSTALL_ID=$(echo ${info} | awk '{print $19}')
-	LOGICAL_ID=$(echo ${info} | awk '{print $24}')
+	INSTALL_ID=$(echo ${info} | awk '{print $20}')
+	LOGICAL_ID=$(echo ${info} | awk '{print $25}')
 	echo "IOX_INSTALL_ID="${INSTALL_ID} >> ${IOX_CONFIG_PATH}
 	echo "IOX_LOGICAL_ID="${LOGICAL_ID} >> ${IOX_CONFIG_PATH}	
 	echo "SID="${SID} >> ${IOX_CONFIG_PATH}
@@ -100,7 +100,7 @@ exec_RUN_LIST_PATH()
 	sed -i '3i\\' ${RESULT_PATH}
 	sed -i '6,$d' ${IOX_CONFIG_PATH}
 	
-	sudo kill -9 ${mini_id}
+#	sudo kill -9 ${mini_id}
 }
 
 

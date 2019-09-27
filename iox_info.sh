@@ -12,7 +12,8 @@ upgrade_ip()
 
 get_iox_info()
 {
-	APOLLO_SL_IP=$(ifconfig sl0 | grep 'inet addr' | cut -d: -f2 | awk '{print $1}')
+	sl=${1}
+	APOLLO_SL_IP=$(ifconfig ${sl} | grep 'inet addr' | cut -d: -f2 | awk '{print $1}')
 	echo ${APOLLO_SL_IP}
 	IOX_IP=$(upgrade_ip ${APOLLO_SL_IP})
 	echo ${IOX_IP}
@@ -26,7 +27,7 @@ get_iox_version()
 
 get_version()
 {
-	IOX_INFO=$(get_iox_info)
+	IOX_INFO=$(get_iox_info ${SL_INTERFACE})
 	IOX_IP=$(echo ${IOX_INFO} | awk '{print $2}')
 	info=$(get_iox_version ${IOX_IP})
 	echo $info | awk '{print $16}'

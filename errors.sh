@@ -1,6 +1,7 @@
 #!/bin/bash
 
 CREATED_STATE="created"
+CANNOT_DEL="Built-in DIO Device can not be deleted"
 DELETED_STATE="deleted"
 DELETE_UNSUCCESSFUL="delete : action unsuccessful"
 DEL_WO_MRU="Deleted item without MRU timestamp"

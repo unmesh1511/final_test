@@ -12,13 +12,12 @@ IOX_VERSION=$(get_version)
 get_info()
 {
 	SID=$(mosquitto_sub -C 1 -t glp/0/././sid)
-#	info_msg=$(mosquitto_sub -C 1 -t iox/info)
-#	IOX_IP=$(echo ${info_msg} | python -c 'import sys, json; print json.load(sys.stdin)["iox_ip"]')
-#	LOGICAL_ID=$(echo ${info_msg} | python -c 'import sys, json; print json.load(sys.stdin)["logical_id"]')
-#	INSTALL_ID=$(echo ${info_msg} | python -c 'import sys, json; print json.load(sys.stdin)["install_id"]')
+	IOX_INFO=$(get_iox_info ${SL_INTERFACE})
+	IOX_IP=$(echo ${IOX_INFO} | awk '{print $2}')
 	info=$(get_iox_mac ${IOX_IP}) 
 	INSTALL_ID=$(echo ${info} | awk '{print $20}')
 	LOGICAL_ID=$(echo ${info} | awk '{print $25}')
+	echo "IOX_IP="${IOX_IP} >> ${IOX_CONFIG_PATH}
 	echo "IOX_INSTALL_ID="${INSTALL_ID} >> ${IOX_CONFIG_PATH}
 	echo "IOX_LOGICAL_ID="${LOGICAL_ID} >> ${IOX_CONFIG_PATH}	
 	echo "SID="${SID} >> ${IOX_CONFIG_PATH}

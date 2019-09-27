@@ -49,29 +49,34 @@ result_logs()
 
 parse_logger()
 {
-	sleep 5
-	if [[ -s ${LOG_EVENT_LOGGER} ]];
-	then 
-		LOGGER_EMPTY="FALSE"
-		out_logger=$(awk -F "," '/utc/{print $4}' ${LOG_EVENT_LOGGER} | grep -oP '[[:digit:]].*(?= [[:space:]]*UTC.*)' | sort -k1,2 -ur | head -n1 | xargs -Iregex grep -m1 "regex" ${LOG_EVENT_LOGGER})
-		logger_latest_time=$(awk -F "," '/utc/{print $4}' ${LOG_EVENT_LOGGER} | grep -oP '[[:digit:]].*(?= [[:space:]]*UTC.*)' | sort -k1,2 -ur | head -n1 | awk '{print $2}')
-		if [[ ${logger_last_time} == ${logger_latest_time} ]];
-		then
-			TIMESTAMP_LOGGER="FAIL"
-		else
-			parse=$(echo ${out_logger} | python -c 'import sys, json; print json.load(sys.stdin)["message"]')
-			if [[ ${parse} == *"${1}"* ]];
+	if [[ $# -eq 0 ]];
+	then
+		LOGGER_RESULT="PASS"		
+	else	
+		sleep 5
+		if [[ -s ${LOG_EVENT_LOGGER} ]];
+		then 
+			LOGGER_EMPTY="FALSE"
+			out_logger=$(awk -F "," '/utc/{print $4}' ${LOG_EVENT_LOGGER} | grep -oP '[[:digit:]].*(?= [[:space:]]*UTC.*)' | sort -k1,2 -ur | head -n1 | xargs -Iregex grep -m1 "regex" ${LOG_EVENT_LOGGER})
+			logger_latest_time=$(awk -F "," '/utc/{print $4}' ${LOG_EVENT_LOGGER} | grep -oP '[[:digit:]].*(?= [[:space:]]*UTC.*)' | sort -k1,2 -ur | head -n1 | awk '{print $2}')
+			if [[ ${logger_last_time} == ${logger_latest_time} ]];
 			then
-				LOGGER_RESULT="PASS"
+				TIMESTAMP_LOGGER="FAIL"
 			else
-				LOGGER_RESULT="FAIL"
+				parse=$(echo ${out_logger} | python -c 'import sys, json; print json.load(sys.stdin)["message"]')
+				if [[ ${parse} == *"${1}"* ]];
+				then
+					LOGGER_RESULT="PASS"
+				else
+					LOGGER_RESULT="FAIL"
+				fi
+				logger_last_time=${logger_latest_time}
 			fi
-			logger_last_time=${logger_latest_time}
+		else
+			LOGGER_EMPTY="TRUE"
 		fi
-	else
-		LOGGER_EMPTY="TRUE"
+		rm ${LOG_EVENT_LOGGER}
 	fi
-	rm ${LOG_EVENT_LOGGER}
 }
 
 parse_sts()

@@ -194,3 +194,13 @@ setup_time()
 	fi
 
 }
+
+dio_provision()
+{
+	mosquitto_pub -m '{"action":"provision"}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/do"
+}
+
+dio_deprovision()
+{
+	mosquitto_pub -m '{"action":"deprovision"}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/do"
+}

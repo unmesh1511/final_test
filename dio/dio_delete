@@ -15,61 +15,71 @@ subscribe_sts_event()
 	mosquitto_sub -t "glp/0/${SID}/fb/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/sts" > ${LOG_STS}
 }
 
+#Delete before provision
+
 dio_delete_test1()
 {
 	start_time=$(date | awk '{print $4}')
 	subscribe_logger_event &
 	pids+=($!)
+	subscribe_sts_event &
+	pids+=($!)
 	mosquitto_pub -m '{"action":"delete"}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/do"
-	parse_logger "${CANNOT_DEL}" 
+	parse_logger "${CANNOT_DEL}"
+	parse_sts "${UNPROVISION_STATE}"
 	result "logger"
 	pub=("mosquitto_pub -m '{"action":"delete"}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/do"'")
 	result_logs "dio_delete_test" ${LOG_DIO_DELETE} ${start_time} "${pub}"
 }
+
+#Delete after provision
 
 dio_delete_test2()
 {
 	start_time=$(date | awk '{print $4}')
+	dio_provision
 	subscribe_logger_event &
 	pids+=($!)
-	mosquitto_pub -m '{"action":"delete"}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/do"
+	subscribe_sts_event &
+	pids+=($!)
+	mosquitto_pub -m '{"action":"delete"}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/do" 
 	parse_logger "${CANNOT_DEL}"
+	parse_sts "${PROVISION_STATE}"
 	result "logger"
 	pub=("mosquitto_pub -m '{"action":"delete"}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/do"'")
 	result_logs "dio_delete_test" ${LOG_DIO_DELETE} ${start_time} "${pub}"
 }
 
+#Delete after deprovision
+
 dio_delete_test3()
 {
 	start_time=$(date | awk '{print $4}')
+	dio_deprovision
 	subscribe_logger_event &
 	pids+=($!)
-	mosquitto_pub -m '{"action":"delete"}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/do" 
+	subscribe_sts_event &
+	pids+=($!)
+	mosquitto_pub -m '{"action":"delete"}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/do"
 	parse_logger "${CANNOT_DEL}"
+	parse_sts "${UNPROVISION_STATE}"
 	result "logger"
 	pub=("mosquitto_pub -m '{"action":"delete"}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/do"'")
 	result_logs "dio_delete_test" ${LOG_DIO_DELETE} ${start_time} "${pub}"
 }
+
+#Delete again
 
 dio_delete_test4()
 {
 	start_time=$(date | awk '{print $4}')
 	subscribe_logger_event &
 	pids+=($!)
-	mosquitto_pub -m '{"action":"delete"}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/do"
-	parse_logger "${CANNOT_DEL}"
-	result "logger"
-	pub=("mosquitto_pub -m '{"action":"delete"}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/do"'")
-	result_logs "dio_delete_test" ${LOG_DIO_DELETE} ${start_time} "${pub}"
-}
-
-dio_delete_test5()
-{
-	start_time=$(date | awk '{print $4}')
-	subscribe_logger_event &
+	subscribe_sts_event &
 	pids+=($!)
 	mosquitto_pub -m '{"action":"delete"}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/do"
 	parse_logger "${CANNOT_DEL}"
+	parse_sts "${UNPROVISION_STATE}"
 	result "logger"
 	pub=("mosquitto_pub -m '{"action":"delete"}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/do"'")
 	result_logs "dio_delete_test" ${LOG_DIO_DELETE} ${start_time} "${pub}"
@@ -81,7 +91,6 @@ dio_delete_test1
 dio_delete_test2
 dio_delete_test3
 dio_delete_test4
-dio_delete_test5
 
 kill_process
 

@@ -15,6 +15,8 @@ subscribe_sts_event()
 	mosquitto_sub -t "glp/0/${SID}/fb/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/sts" > ${LOG_STS} 
 }
 
+#Create without type
+
 dio_create_test1()
 {
 	start_time=$(date | awk '{print $4}')
@@ -27,17 +29,21 @@ dio_create_test1()
 	result_logs "dio_create_test" ${LOG_DIO_CREATE}  ${start_time} "${pub}"
 }
 
+#Create with incorrect type
+
 dio_create_test2()
 {
 	start_time=$(date | awk '{print $4}')
 	subscribe_logger_event &
 	pids+=($!)
-	mosquitto_pub -m '{"action":"create","args":{"type":"900001050304DD00"}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/do"
+	mosquitto_pub -m '{"action":"create","args":{"type":"ABCDEFG"}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/do"
 	parse_logger
 	result "logger"
-	pub=("mosquitto_pub -m '{"action":"create","args":{"type":"900001050304DD00"}}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/do"'")
+	pub=("mosquitto_pub -m '{"action":"create","args":{"type":"ABCDEFG"}}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/do"'")
 	result_logs "dio_create_test" ${LOG_DIO_CREATE}  ${start_time} "${pub}"
 }
+
+#Create with correct type
 
 dio_create_test3()
 {
@@ -47,9 +53,11 @@ dio_create_test3()
 	mosquitto_pub -m '{"action":"create","args":{"type":"900001050304DD00"}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/do"
 	parse_logger
 	result "logger"
-	pub=("mosquitto_pub -m '{"action":"create","args":{"type":"900001050304DD00"}}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/do"'")
+	pub=("mosquitto_pub -m '{"action":"create","args":{"type":"dio"}}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/do"'")
 	result_logs "dio_create_test" ${LOG_DIO_CREATE}  ${start_time} "${pub}"
 }
+
+#Create on same handle with same type
 
 dio_create_test4()
 {
@@ -59,21 +67,25 @@ dio_create_test4()
 	mosquitto_pub -m '{"action":"create","args":{"type":"900001050304DD00"}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/do"
 	parse_logger
 	result "logger"
-	pub=("mosquitto_pub -m '{"action":"create","args":{"type":"900001050304DD00"}}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/do"'")
+	pub=("mosquitto_pub -m '{"action":"create","args":{"type":"dio"}}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/do"'")
 	result_logs "dio_create_test" ${LOG_DIO_CREATE}  ${start_time} "${pub}"
 }
+
+#Create on same handle with diff type
 
 dio_create_test5()
 {
 	start_time=$(date | awk '{print $4}')
  	subscribe_logger_event &
 	pids+=($!)
-	mosquitto_pub -m '{"action":"create","args":{"type":"900001050304DD00"}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/do"
+	mosquitto_pub -m '{"action":"create","args":{"type":"ABCDEFG"}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/do"
 	parse_logger
 	result "logger"
 	pub=("mosquitto_pub -m '{"action":"create","args":{"type":"900001050304DD00"}}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/do"'")
 	result_logs "dio_create_test" ${LOG_DIO_CREATE}  ${start_time} "${pub}"
 }
+
+#Create with provision flag true but no unid
 
 dio_create_test6()
 {
@@ -86,6 +98,8 @@ dio_create_test6()
 	pub=("mosquitto_pub -m '{"action":"create","args":{"type":"900001050304DD00","provision":true}}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/do"'")
 	result_logs "dio_create_test" ${LOG_DIO_CREATE}  ${start_time} "${pub}"
 }
+
+#Create with provision flag false but with unid
 
 dio_create_test7()
 {
@@ -101,6 +115,8 @@ dio_create_test7()
 	result_logs "dio_create_test" ${LOG_DIO_CREATE}  ${start_time} "${pub}"
 }
 
+#Create with provision true but incorrect unid
+
 dio_create_test8()
 {
 	start_time=$(date | awk '{print $4}')
@@ -112,6 +128,8 @@ dio_create_test8()
 	pub=("mosquitto_pub -m '{"action":"create","args":{"type":"900001050304DD00","provision":true,"unid":"abcd"}}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/do"'")
 	result_logs "dio_create_test" ${LOG_DIO_CREATE}  ${start_time} "${pub}"
 }
+
+#Create with provision true and correct unid
 
 dio_create_test9()
 {
@@ -126,6 +144,7 @@ dio_create_test9()
 }
 
 setup_time
+
 dio_create_test1
 dio_create_test2
 dio_create_test3

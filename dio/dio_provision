@@ -15,31 +15,11 @@ subscribe_sts_event()
 	mosquitto_sub -t "glp/0/${SID}/fb/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/sts" > ${LOG_STS}
 }
 
-cleanup_dio_testcase_1()
-{
-	mosquitto_pub -m '{"action":"deprovision"}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/do"
-}
-
-# Provision before creating DIO device
-# Expected result : FAIL
-dio_provision_test1()
-{
-	start_time=$(date | awk '{print $4}')	
-	subscribe_logger_event &
-	pids+=($!)
-	mosquitto_pub -m '{"action":"provision","args":{"unid":"'${DIO_UNID}'"}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/do"
-	parse_logger "${DEV_NOT_UNPROV}"
-	result "logger"
-	pub=("mosquitto_pub -m '{"action":"provision","args":{"unid":'"${DIO_UNID}"'}}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/do"'")
-	result_logs "dio_provision_test" ${LOG_DIO_PROV}  ${start_time} "${pub}"
-	
-	cleanup_dio_testcase_1
-}
-
 # Provision with no UNID after creating dio device
 # Expected result: PASS
 # Not useful
-dio_provision_test2()
+
+dio_provision_test1()
 {
 	start_time=$(date | awk '{print $4}')	
 	subscribe_sts_event &
@@ -56,13 +36,14 @@ dio_provision_test2()
 	# TODO: Cleanup device state
 	# unprovision dio device.
 	
-	cleanup_dio_testcase_1
+	dio_deprovision
 }
 
 # Provision with wrong UNID after creating dio device
 # Expected result: PASS
 # Not useful
-dio_provision_test3()
+
+dio_provision_test2()
 {
 	start_time=$(date | awk '{print $4}')	
 	subscribe_sts_event &
@@ -73,12 +54,13 @@ dio_provision_test3()
 	pub=("mosquitto_pub -m '{"action":"provision","args":{"unid":"abcd"}}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/do"'")
 	result_logs "dio_provision_test" ${LOG_DIO_PROV}  ${start_time} "${pub}"
 
-	cleanup_dio_testcase_1
+	dio_deprovision
 }	
 
 # Provision with correct UNID after creating dio device
 # Expected result: PASS
-dio_provision_test4()
+
+dio_provision_test3()
 {
 	start_time=$(date | awk '{print $4}')	
 	subscribe_sts_event &
@@ -89,11 +71,12 @@ dio_provision_test4()
 	pub=("mosquitto_pub -m '{"action":"provision","args":{"unid":'"${DIO_UNID}"'}}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/do"'")
 	result_logs "dio_provision_test" ${LOG_DIO_PROV}  ${start_time} "${pub}"
 
-	cleanup_dio_testcase_1
+	dio_deprovision
 }
 
 # Provision over provision [with same/different UNID] after creating dio device
-dio_provision_test5()
+
+dio_provision_test4()
 {
 	start_time=$(date | awk '{print $4}')	
 	subscribe_logger_event &
@@ -106,11 +89,12 @@ dio_provision_test5()
 	pub=("mosquitto_pub -m '{"action":"provision","args":{"unid":'"${DIO_UNID}"'}}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/do"'")
 	result_logs "dio_provision_test" ${LOG_DIO_PROV}  ${start_time} "${pub}"
 
-	cleanup_dio_testcase_1
+	dio_deprovision
 }
 
 # Provision after deprovision
-dio_provision_test6()
+
+dio_provision_test5()
 {
 	start_time=$(date | awk '{print $4}')
 	subscribe_sts_event &
@@ -121,7 +105,7 @@ dio_provision_test6()
 	pub=("mosquitto_pub -m '{"action":"provision"}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/do"'")
 	result_logs "dio_provision_test" ${LOG_DIO_PROV}  ${start_time} "${pub}"
 
-	cleanup_dio_testcase_1
+	dio_deprovision
 }
 
 setup_time
@@ -131,6 +115,5 @@ dio_provision_test2
 dio_provision_test3
 dio_provision_test4
 dio_provision_test5
-dio_provision_test6
 
 kill_process

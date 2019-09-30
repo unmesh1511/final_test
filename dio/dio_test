@@ -14,49 +14,45 @@ subscribe_sts_event()
 	mosquitto_sub -t "glp/0/${SID}/fb/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/sts" > ${LOG_STS}
 }
 
+#Test before provision
+
 dio_test_test1()
 {
 	start_time=$(date | awk '{print $4}')
 	subscribe_sts_event &
 	pids+=($!)
 	mosquitto_pub -m '{"action":"test"}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/do"
-	parse_sts *${PROVISION_STATE}*
+	parse_sts ${UNPROVISION_STATE}
 	result "sts"
 	pub=("mosquitto_pub -m '{"action":"test"}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/do"'")
 	result_logs "dio_test_test" ${LOG_DIO_TEST}  ${start_time} "${pub}"
 }
+
+#Test after provision
 
 dio_test_test2()
 {
 	start_time=$(date | awk '{print $4}')
+	dio_provision
 	subscribe_sts_event &
 	pids+=($!)
 	mosquitto_pub -m '{"action":"test"}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/do"
-	parse_sts *${PROVISION_STATE}*
+	parse_sts ${PROVISION_STATE}
 	result "sts"
 	pub=("mosquitto_pub -m '{"action":"test"}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/do"'")
 	result_logs "dio_test_test" ${LOG_DIO_TEST}  ${start_time} "${pub}"
 }
+
+#Test after deprovision
 
 dio_test_test3()
 {
 	start_time=$(date | awk '{print $4}')
+	dio_deprovision
 	subscribe_sts_event &
 	pids+=($!)
 	mosquitto_pub -m '{"action":"test"}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/do"
-	parse_sts *${PROVISION_STATE}*
-	result "sts"
-	pub=("mosquitto_pub -m '{"action":"test"}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/do"'")
-	result_logs "dio_test_test" ${LOG_DIO_TEST}  ${start_time} "${pub}"
-}
-
-dio_test_test4()
-{
-	start_time=$(date | awk '{print $4}')
-	subscribe_sts_event &
-	pids+=($!)
-	mosquitto_pub -m '{"action":"test"}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/do"
-	parse_sts *${PROVISION_STATE}*
+	parse_sts ${UNPROVISION_STATE}
 	result "sts"
 	pub=("mosquitto_pub -m '{"action":"test"}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/do"'")
 	result_logs "dio_test_test" ${LOG_DIO_TEST}  ${start_time} "${pub}"
@@ -67,6 +63,5 @@ setup_time
 dio_test_test1
 dio_test_test2
 dio_test_test3
-dio_test_test4
 
 kill_process

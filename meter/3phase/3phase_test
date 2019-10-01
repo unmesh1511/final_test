@@ -9,6 +9,11 @@ LOG_EVENT_LOGGER=${IOX_PATH}"/meter/3phase/logger"
 LOG_STS=${IOX_PATH}"/meter/3phase/sts"
 LOG_3PHASE_TEST=${IOX_PATH}"/meter/3phase/3phase_test_log"
 
+subscribe_sts_event()
+{
+	mosquitto_sub -t "glp/0/${SID}/fb/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/sts" > ${LOG_STS}
+}
+
 3phase_test_test1()
 {
 	start_time=$(date | awk '{print $4}')
@@ -67,7 +72,6 @@ setup_time
 3phase_test_test2
 3phase_test_test3
 3phase_test_test4
-3phase_test_test5
 
 kill_process
 

@@ -33,7 +33,7 @@ dio_test_test1()
 dio_test_test2()
 {
 	start_time=$(date | awk '{print $4}')
-	dio_provision
+	dev_provision "${DIO_DEV_NAME}"
 	subscribe_sts_event &
 	pids+=($!)
 	mosquitto_pub -m '{"action":"test"}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/do"
@@ -41,6 +41,7 @@ dio_test_test2()
 	result "sts"
 	pub=("mosquitto_pub -m '{"action":"test"}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/do"'")
 	result_logs "dio_test_test" ${LOG_DIO_TEST}  ${start_time} "${pub}"
+	dev_deprovision "${DIO_DEV_NAME}"
 }
 
 #Test after deprovision
@@ -48,7 +49,6 @@ dio_test_test2()
 dio_test_test3()
 {
 	start_time=$(date | awk '{print $4}')
-	dio_deprovision
 	subscribe_sts_event &
 	pids+=($!)
 	mosquitto_pub -m '{"action":"test"}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/do"

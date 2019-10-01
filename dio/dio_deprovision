@@ -36,7 +36,7 @@ dio_deprovision_test1()
 dio_deprovision_test2()
 {
 	start_time=$(date | awk '{print $4}')
-	dio_provision 
+	dev_provision "${DIO_DEV_NAME}" 
 	subscribe_sts_event &
 	pids+=($!)
 	mosquitto_pub -m '{"action":"deprovision"}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/do"

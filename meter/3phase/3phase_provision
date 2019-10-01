@@ -7,30 +7,21 @@ source ${IOX_PATH}"/errors.sh"
 
 LOG_EVENT_LOGGER=${IOX_PATH}"/meter/3phase/logger"
 LOG_STS=${IOX_PATH}"/meter/3phase/sts"
-LOG_3PHASE_PROVISION=${IOX_PATH}"/meter/3phase/3phase_prov_log"
+LOG_3PHASE_PROVISION=${IOX_PATH}"/meter/3phase/3phase_provision_log"
 DIO_UNID="${IOX_INSTALL_ID}.dio"
 METER_UNID="${IOX_INSTALL_ID}.meter"
 
 subscribe_sts_event()
 {
-	 mosquitto_sub -t "glp/0/${SID}/fb/dev/${IOX_PROTOCOL}/${METER_DEV_NAME}/sts" > ${STS_PATH} 
+	 mosquitto_sub -t "glp/0/${SID}/fb/dev/${IOX_PROTOCOL}/${METER_DEV_NAME}/sts" > ${LOG_STS} 
 }
+
+#Provision with no unid
 
 3phase_provision_test1()
 {
 	start_time=$(date | awk '{print $4}')
-  	subscribe_logger_event &
-	pids+=($!)
-	mosquitto_pub -m '{"action":"provision","args":{"unid":'"${DIO_UNID}"'}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${METER_DEV_NAME}/do"
-	parse_logger "${DEV_ALREADY_PROV}"
-	result "logger"
-	pub=("mosquitto_pub -m '{"action":"provision","args":{"unid":'"${DIO_UNID}"'}}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${METER_DEV_NAME}/do"'")
-	result_logs "3phase_provision_test" ${LOG_3PHASE_PROVISION}  ${start_time} "${pub}"
-}
-
-3phase_provision_test2()
-{
-	start_time=$(date | awk '{print $4}')
+	dev_deprovision "${METER_DEV_NAME}"
 	subscribe_sts_event &
 	pids+=($!)
 	mosquitto_pub -m '{"action":"provision","args":{}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${METER_DEV_NAME}/do"
@@ -38,9 +29,12 @@ subscribe_sts_event()
 	result "sts"
 	pub=("mosquitto_pub -m '{"action":"provision","args":{}}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${METER_DEV_NAME}/do"'")
 	result_logs "3phase_provision_test" ${LOG_3PHASE_PROVISION}  ${start_time} "${pub}"
+	dev_deprovision "${METER_DEV_NAME}"
 }
 
-3phase_provision_test3()
+#Provision with incorrect unid
+
+3phase_provision_test2()
 {
 	start_time=$(date | awk '{print $4}')
 	subscribe_sts_event &
@@ -50,9 +44,12 @@ subscribe_sts_event()
 	result "sts"
 	pub=("mosquitto_pub -m '{"action":"provision","args":{"unid":"abcd"}}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${METER_DEV_NAME}/do"'")
 	result_logs "3phase_provision_test" ${LOG_3PHASE_PROVISION}  ${start_time} "${pub}"
+	dev_deprovision "${METER_DEV_NAME}"
 }
 
-3phase_provision_test4()
+#Provision with correct unid
+
+3phase_provision_test3()
 {
 	start_time=$(date | awk '{print $4}')
 	subscribe_sts_event &
@@ -62,9 +59,12 @@ subscribe_sts_event()
 	result "sts"
 	pub=("mosquitto_pub -m '{"action":"provision"}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${METER_DEV_NAME}/do"'")
 	result_logs "3phase_provision_test" ${LOG_3PHASE_PROVISION}  ${start_time} "${pub}"
+	dev_deprovision "${METER_DEV_NAME}"
 }
 
-3phase_provision_test5()
+#Provision again with same/different unid
+
+3phase_provision_test4()
 {
 	start_time=$(date | awk '{print $4}')
 	subscribe_sts_event &
@@ -72,14 +72,17 @@ subscribe_sts_event()
   	subscribe_logger_event &
 	pids+=($!)
 	mosquitto_pub -m '{"action":"provision","args":{"unid":'"${METER_UNID}"'}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${METER_DEV_NAME}/do"
-	parse_sts "${PROVISION_STATE}"
+	parse_sts "${UNPROVISION_STATE}"
 	parse_logger "${DEV_ALREADY_PROV}"
 	result "sts"
 	pub=("mosquitto_pub -m '{"action":"provision","args":{"unid":'"${METER_UNID}"'}}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${METER_DEV_NAME}/do"'")
 	result_logs "3phase_provision_test" ${LOG_3PHASE_PROVISION}  ${start_time} "${pub}"
+	dev_deprovision "${METER_DEV_NAME}"
 }
 
-3phase_provision_test6()
+#Provision after deprovision
+
+3phase_provision_test5()
 {
 	start_time=$(date | awk '{print $4}')
 	subscribe_sts_event &
@@ -89,15 +92,19 @@ subscribe_sts_event()
 	result "sts"
 	pub=("mosquitto_pub -m '{"action":"provision"}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${METER_DEV_NAME}/do"'")
 	result_logs "3phase_provision_test" ${LOG_3PHASE_PROVISION}  ${start_time} "${pub}"
+	dev_deprovision "${METER_DEV_NAME}"
 }
 
-3phase_provision_test7()
+#Provision after delete
+
+3phase_provision_test6()
 {
 	start_time=$(date | awk '{print $4}')
-  	subscribe_logger_event &
+	dev_delete "${METER_DEV_NAME}" 
+ 	subscribe_logger_event &
 	pids+=($!)
 	mosquitto_pub -m '{"action":"provision"}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${METER_DEV_NAME}/do"
-	parse_logger "${DEV_ALREADY_PROV}"
+	parse_logger "Built-in Meter Device can not be deleted"
 	result "logger"
 	pub=("mosquitto_pub -m '{"action":"provision"}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${METER_DEV_NAME}/do"'")
 	result_logs "3phase_provision_test" ${LOG_3PHASE_PROVISION}  ${start_time} "${pub}"
@@ -111,7 +118,6 @@ setup_time
 3phase_provision_test4
 3phase_provision_test5
 3phase_provision_test6
-3phase_provision_test7
 
 kill_process
 

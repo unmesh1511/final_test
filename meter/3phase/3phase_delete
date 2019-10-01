@@ -14,6 +14,7 @@ subscribe_sts_event()
 	 mosquitto_sub -t "glp/0/${SID}/fb/dev/${IOX_PROTOCOL}/${METER_DEV_NAME}/sts" > ${STS_PATH} 
 }
 
+
 3phase_delete_test1()
 {
 	start_time=$(date | awk '{print $4}')
@@ -74,28 +75,12 @@ subscribe_sts_event()
 	result_logs "3phase_delete_test" ${LOG_3PHASE_DEL}  ${start_time} "${pub}"
 }
 
-3phase_delete_test5()
-{
-	start_time=$(date | awk '{print $4}')
-	subscribe_sts_event &
-	pids+=($!)
-	subscribe_logger_event &
-	pids+=($!)
-	mosquitto_pub -m '{"action":"delete"}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${METER_DEV_NAME}/do"
-	parse_sts "${DEL_WO_MRU}"
-	parse_logger "${DELETED_STATE}"
-	result "sts"
-	pub=("mosquitto_pub -m '{"action":"delete"}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${METER_DEV_NAME}/do"'")
-	result_logs "3phase_delete_test" ${LOG_3PHASE_DEL}  ${start_time} "${pub}"
-}
-
 setup_time
 
 3phase_delete_test1
 3phase_delete_test2
 3phase_delete_test3
 3phase_delete_test4
-3phase_delete_test5
 
 kill_process
 

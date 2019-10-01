@@ -37,7 +37,7 @@ dio_delete_test1()
 dio_delete_test2()
 {
 	start_time=$(date | awk '{print $4}')
-	dio_provision
+	dev_provision "${DIO_DEV_NAME}"
 	subscribe_logger_event &
 	pids+=($!)
 	subscribe_sts_event &
@@ -55,7 +55,7 @@ dio_delete_test2()
 dio_delete_test3()
 {
 	start_time=$(date | awk '{print $4}')
-	dio_deprovision
+	dev_deprovision "${DIO_DEV_NAME}"
 	subscribe_logger_event &
 	pids+=($!)
 	subscribe_sts_event &

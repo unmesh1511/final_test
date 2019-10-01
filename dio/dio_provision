@@ -36,7 +36,7 @@ dio_provision_test1()
 	# TODO: Cleanup device state
 	# unprovision dio device.
 	
-	dio_deprovision
+	dev_deprovision "${DIO_DEV_NAME}"
 }
 
 # Provision with wrong UNID after creating dio device
@@ -54,7 +54,7 @@ dio_provision_test2()
 	pub=("mosquitto_pub -m '{"action":"provision","args":{"unid":"abcd"}}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/do"'")
 	result_logs "dio_provision_test" ${LOG_DIO_PROV}  ${start_time} "${pub}"
 
-	dio_deprovision
+	dev_deprovision "${DIO_DEV_NAME}"
 }	
 
 # Provision with correct UNID after creating dio device
@@ -71,7 +71,7 @@ dio_provision_test3()
 	pub=("mosquitto_pub -m '{"action":"provision","args":{"unid":'"${DIO_UNID}"'}}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/do"'")
 	result_logs "dio_provision_test" ${LOG_DIO_PROV}  ${start_time} "${pub}"
 
-	dio_deprovision
+	dev_deprovision "${DIO_DEV_NAME}"
 }
 
 # Provision over provision [with same/different UNID] after creating dio device
@@ -89,7 +89,7 @@ dio_provision_test4()
 	pub=("mosquitto_pub -m '{"action":"provision","args":{"unid":'"${DIO_UNID}"'}}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/do"'")
 	result_logs "dio_provision_test" ${LOG_DIO_PROV}  ${start_time} "${pub}"
 
-	dio_deprovision
+	dev_deprovision "${DIO_DEV_NAME}"
 }
 
 # Provision after deprovision
@@ -105,7 +105,7 @@ dio_provision_test5()
 	pub=("mosquitto_pub -m '{"action":"provision"}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/do"'")
 	result_logs "dio_provision_test" ${LOG_DIO_PROV}  ${start_time} "${pub}"
 
-	dio_deprovision
+	dev_deprovision "${DIO_DEV_NAME}"
 }
 
 setup_time

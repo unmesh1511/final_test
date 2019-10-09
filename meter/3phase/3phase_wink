@@ -21,6 +21,8 @@ LOG_3PHASE_WINK=${IOX_PATH}"/meter/3phase/3phase_wink_log"
 	result_logs "3phase_wink_test" ${LOG_3PHASE_WINK}  ${start_time} "${pub}"
 }
 
+setup_time
+
 3phase_wink_test1
 
 kill_process

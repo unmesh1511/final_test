@@ -20,7 +20,7 @@ parse_out()
 	L1_Phase=$(cat ${LOG_OUT} | python -c 'import sys, json;b=json.load(sys.stdin)["cpPhaseEnable"]; c=b["value"];print c["L1_Phase"]')
 	L2_Phase=$(cat ${LOG_OUT} | python -c 'import sys, json;b=json.load(sys.stdin)["cpPhaseEnable"]; c=b["value"];print c["L2_Phase"]')
 	L3_Phase=$(cat ${LOG_OUT} | python -c 'import sys, json;b=json.load(sys.stdin)["cpPhaseEnable"]; c=b["value"];print c["L3_Phase"]')
-	echo "L1 : ${L1_Phase} L2 : ${L2_Phase} L3 : ${L3_Phase}"
+#	echo "L1 : ${L1_Phase} L2 : ${L2_Phase} L3 : ${L3_Phase}"
 	if [ ${L1_Phase} -eq ${1} ] &&  [ ${L2_Phase} -eq ${2} ] && [ ${L3_Phase} -eq ${3} ];
 	then
     	RESULT="PASS"

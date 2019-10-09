@@ -1,0 +1,69 @@
+modbus_create_test1
+START_TIME : 12:13:43
+mosquitto_pub -m '{action:create}' -t 'glp/0/17q3kc1/rq/dev/modbus/pm820/do'
+LOGGER_OUTPUT : {"cat":"error","source":"modbus","topic":"glp/0/17q3kc1/rq/dev/modbus/pm820/do","utc":"2019-10-07 06:43:39.000 UTC","message":"create : error in object"}
+END_TIME : 12:13:49
+
+==========================================================================================
+modbus_create_test2
+START_TIME : 12:13:49
+mosquitto_pub -m '{action:create,args:{type:ABCDEFG}}' -t 'glp/0/17q3kc1/rq/dev/modbus/pm820/do'
+END_TIME : 12:13:49
+
+==========================================================================================
+modbus_create_test3
+START_TIME : 12:13:49
+mosquitto_pub -m '{action:create,args:{type:9FF4A2150040DB00}}' -t 'glp/0/17q3kc1/rq/dev/modbus/pm820/do'
+STATUS_OUTPUT : {"state":"unprovisioned","unid":"","health":"normal","cat":"i/o","type":"9FF4A2150040DB00","interfaceType":"static","usage":"controller","version":"AMIK 201 Series Digital Power M","product":"AMIK201RTU","manufacturer":"Simpson Electric","mru":"2019-10-07 06:40:35.000 UTC"}
+END_TIME : 12:14:06
+
+==========================================================================================
+modbus_create_test4
+START_TIME : 12:14:06
+mosquitto_pub -m '{action:create,args:{type:9FF4A2150040DB00}}' -t 'glp/0/17q3kc1/rq/dev/modbus/pm820/do'
+STATUS_OUTPUT : {"state":"unprovisioned","unid":"","health":"normal","cat":"i/o","type":"9FF4A2150040DB00","interfaceType":"static","usage":"controller","version":"AMIK 201 Series Digital Power M","product":"AMIK201RTU","manufacturer":"Simpson Electric","mru":"2019-10-07 06:40:35.000 UTC"}
+END_TIME : 12:14:23
+
+==========================================================================================
+modbus_create_test5
+START_TIME : 12:14:24
+mosquitto_pub -m '{action:create,args:{type:900000000000DB00}}' -t 'glp/0/17q3kc1/rq/dev/modbus/pm820/do'
+LOGGER_OUTPUT : {"cat":"error","source":"modbus","topic":"glp/0/17q3kc1/rq/dev/modbus/pm820/do","utc":"2019-10-07 06:43:39.000 UTC","message":"create : error in object"}
+END_TIME : 12:14:29
+
+==========================================================================================
+modbus_create_test6
+START_TIME : 12:14:29
+mosquitto_pub -m '{action:create,args:{type:9FF4A2150040DB00}}' -t 'glp/0/17q3kc1/rq/dev/modbus/new_device.0/do'
+STATUS_OUTPUT : {"state":"unprovisioned","unid":"","health":"normal","cat":"i/o","type":"9FF4A2150040DB00","interfaceType":"static","usage":"controller","version":"AMIK 201 Series Digital Power M","product":"AMIK201RTU","manufacturer":"Simpson Electric","mru":"2019-10-07 06:40:35.000 UTC"}
+END_TIME : 12:14:46
+
+==========================================================================================
+modbus_create_test7
+START_TIME : 12:14:46
+mosquitto_pub -m '{action:create,args:{type:9FF4A2150040DB00,provision:true}}' -t 'glp/0/17q3kc1/rq/dev/modbus/pm820/do'
+LOGGER_OUTPUT : {"cat":"error","source":"modbus","topic":"glp/0/17q3kc1/rq/dev/modbus/pm820/do","utc":"2019-10-07 06:44:42.000 UTC","message":"provision : unid missing"}
+END_TIME : 12:14:51
+
+==========================================================================================
+modbus_create_test8
+START_TIME : 12:14:51
+mosquitto_pub -m '{action:create,args:{type:9FF4A2150040DB00,provision:false,unid:01:43}}' -t 'glp/0/17q3kc1/rq/dev/modbus/pm820/do'
+LOGGER_OUTPUT : {"cat":"error","source":"modbus","topic":"glp/0/17q3kc1/rq/dev/modbus/pm820/do","utc":"2019-10-07 06:44:47.000 UTC","message":"01:43 : invalid unid"}
+END_TIME : 12:14:57
+
+==========================================================================================
+modbus_create_test9
+START_TIME : 12:14:57
+mosquitto_pub -m '{action:create,args:{type:9FF4A2150040DB00,provision:true,unid:abcd}}' -t 'glp/0/17q3kc1/rq/dev/modbus/pm820/do'
+LOGGER_OUTPUT : {"cat":"error","source":"modbus","topic":"glp/0/17q3kc1/rq/dev/modbus/pm820/do","utc":"2019-10-07 06:44:53.000 UTC","message":"provision : unid missing"}
+END_TIME : 12:15:02
+
+==========================================================================================
+modbus_create_test10
+START_TIME : 12:15:02
+mosquitto_pub -m '{action:create,args:{type:9FF4A2150040DB00,provision:true,unid:01:1}}' -t 'glp/0/17q3kc1/rq/dev/modbus/pm820/do'
+LOGGER_OUTPUT : {"cat":"error","source":"modbus","topic":"glp/0/17q3kc1/rq/dev/modbus/pm820/do","utc":"2019-10-07 06:44:58.000 UTC","message":"provision : unid missing"}
+END_TIME : 12:15:07
+
+==========================================================================================

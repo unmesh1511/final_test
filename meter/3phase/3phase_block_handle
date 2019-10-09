@@ -29,13 +29,14 @@ parse()
 	sleep 5
 	if [[ -s ${LOG_OUT} ]];
     then   
-		echo "3phase_block_test1" >> ${LOG_3PHASE_BLOCK}
+		echo "3phase_block_test2" >> ${LOG_3PHASE_BLOCK}
 		cat ${LOG_OUT} >> ${LOG_3PHASE_BLOCK}
 		out_time=$(awk -F "," '/mru/{print $NF}' ${LOG_OUT} | grep -oP '[[:digit:]].*(?= [[:space:]]*UTC.*)' | sort -k1,2 -ur | head -n1 | awk '{print $1" "$2}')
-		echo "3phase_block_test1 | PASS | ${out_time}"
+		echo "3phase_block_test2 | RESULT : PASS | ${out_time}"
     else
-		echo "3phase_block_test1 | FAIL | NO OUTPUT"
+		echo "3phase_block_test2 | RESULT : FAIL | NO OUTPUT"
 	fi
+	echo "=========================================================================================="
 
 	rm ${LOG_OUT}
 }

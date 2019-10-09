@@ -1,13 +1,8 @@
 modbus_create
-modbus_deep
 modbus_delete
 modbus_Deprovision
-modbus_dvc_incomplete
-modbus_dynamic_configure
-modbus_get
 modbus_load
 modbus_message
-modbus_monitoring_incomplete
 modbus_provision
 modbus_repair
 modbus_replace

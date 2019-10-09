@@ -8,30 +8,60 @@ source ${IOX_PATH}"/errors.sh"
 LOG_EVENT_LOGGER=${IOX_PATH}"/dio/do/logger"
 LOG_STS=${IOX_PATH}"/dio/do/sts"
 LOG_DO_MODE=${IOX_PATH}"/dio/do/do_mode_log"
+OUT=${IOX_PATH}"/dio/do/out"
+
+subscribe()
+{
+    mosquitto_sub -t "glp/0/${SID}/fb/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/do/1" > ${OUT}
+}
+
+parse_out()
+{
+    sleep 5
+    if [[ -s ${OUT} ]];
+    then
+#       get the last object and check the time and compare with last ;if equal then fail else pass
+        latest_time=$(awk -F "," '/mru/{print $NF}' ${OUT} | grep -oP '[[:digit:]].*(?= [[:space:]]*UTC.*)' | sort -k1,2 -ur | head -n1 | awk '{print $2}')
+        if [[ ${last_time} == ${latest_time} ]];
+        then
+            RESULT="FAIL"
+        else
+            RESULT="PASS"
+            last_time=${latest_time}
+        fi
+        rm ${OUT}
+    else
+		RESULT="EMPTY"
+    fi
+}
+
 
 do_mode_test1()
 {
 	start_time=$(date | awk '{print $4}')
-  	subscribe_logger_event &
+	subscribe &
 	pids+=($!)
-	mosquitto_pub -m '{"do-val":{"value":{"type":"level","level":true,"frequency":0,"pulse":0,"pwm":{"frequency":0,"duty-cycle":0}}}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/do/1"
-	parse_logger
-	result "logger"
-	result_logs "do_mode_test" ${LOG_DO_MODE}  ${start_time} "${pub}"
+	mosquitto_pub -m '{"output":{"value":{"level":true,"frequency":0,"pulse_counter":{"Pulse_pwm":{"pulse":0,"pwm":{"frequency":0,"duty_cycle":0}}}}},"mode":{"value":{"type":"level"}}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/do/1"
 
+	parse_out
+    end_time=$(date | awk '{print $4}')
+    exec_time=$(execution_time ${start_time} ${end_time})
+    echo "do_mode_test1 | RESULT : ${RESULT} ${exec_time}"
+	unset RESULT
 }
 
 do_mode_test2()
 {
 	start_time=$(date | awk '{print $4}')
-  	subscribe_logger_event &
+	subscribe &
 	pids+=($!)
-#	mosquitto_sub -t "glp/0/${SID}/fb/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/relay/2" &
-	mosquitto_pub -m '{"do-val":{"value":{"type":"level","level":false,"frequency":0,"pulse":0,"pwm":{"frequency":0,"duty-cycle":0}}}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/do/1"
-	parse_logger
-	result "logger"
-	result_logs "do_mode_test" ${LOG_DO_MODE}  ${start_time} "${pub}"
+	mosquitto_pub -m '{"output":{"value":{"level":false,"frequency":0,"pulse_counter":{"Pulse_pwm":{"pulse":0,"pwm":{"frequency":0,"duty_cycle":0}}}}},"mode":{"value":{"type":"level"}}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/do/1"
 
+	parse_out
+    end_time=$(date | awk '{print $4}')
+    exec_time=$(execution_time ${start_time} ${end_time})
+    echo "do_mode_test2 | RESULT : ${RESULT} ${exec_time}"
+	unset RESULT
 }
 
 do_mode_test3()
@@ -39,37 +69,40 @@ do_mode_test3()
 	start_time=$(date | awk '{print $4}')
   	subscribe_logger_event &
 	pids+=($!)
-	mosquitto_pub -m '{"do-val":{"value":{"type":"level","level":"true","frequency":0,"pulse":0,"pwm":{"frequency":20000,"duty-cycle":90}}}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/do/1"
-	parse_logger
-	result "logger"
-	result_logs "do_mode_test" ${LOG_DO_MODE}  ${start_time} "${pub}"
-
+	mosquitto_pub -m '{"output":{"value":{"level":12,"frequency":0,"pulse_counter":{"Pulse_pwm":{"pulse":0,"pwm":{"frequency":0,"duty_cycle":0}}}}},"mode":{"value":{"type":"level"}}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/do/1"
+	parse_logger " Wrong configuration for level "
+    end_time=$(date | awk '{print $4}')
+    exec_time=$(execution_time ${start_time} ${end_time})
+    echo "do_mode_test3 | RESULT : $LOGGER_RESULT ${exec_time}"
+	unset RESULT
 }
 
 do_mode_test4()
 {
 	start_time=$(date | awk '{print $4}')
-  	subscribe_logger_event &
+	subscribe &
 	pids+=($!)
-#	mosquitto_sub -t "glp/0/${SID}/fb/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/do/1" &
-	mosquitto_pub -m '{"do-val":{"value":{"type":"pulse","level":false,"frequency":0,"pulse":1000,"pwm":{"frequency":0,"duty-cycle":0}}}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/do/1"
-	parse_logger
-	result "logger"
-	result_logs "do_mode_test" ${LOG_DO_MODE}  ${start_time} "${pub}"
+	mosquitto_pub -m '{"output":{"value":{"level":false,"frequency":0,"pulse_counter":{"Pulse_pwm":{"pulse":1000,"pwm":{"frequency":0,"duty_cycle":0}}}}},"mode":{"value":{"type":"pulse"}}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/do/1"
 
+	parse_out
+    end_time=$(date | awk '{print $4}')
+    exec_time=$(execution_time ${start_time} ${end_time})
+    echo "do_mode_test4 | RESULT : ${RESULT} ${exec_time}"
+	unset RESULT
 }
 
 do_mode_test5()
 {
 	start_time=$(date | awk '{print $4}')
-  	subscribe_logger_event &
+	subscribe &
 	pids+=($!)
-#	mosquitto_sub -t "glp/0/${SID}/fb/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/do/1" &
-	mosquitto_pub -m '{"do-val":{"value":{"type":"pulse","level":false,"frequency":0,"pulse":60000,"pwm":{"frequency":0,"duty-cycle":0}}}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/do/1"
-	parse_logger
-	result "logger"
-	result_logs "do_mode_test" ${LOG_DO_MODE}  ${start_time} "${pub}"
+	mosquitto_pub -m '{"output":{"value":{"level":false,"frequency":0,"pulse_counter":{"Pulse_pwm":{"pulse":60000,"pwm":{"frequency":0,"duty_cycle":0}}}}},"mode":{"value":{"type":"pulse"}}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/do/1"
 
+	parse_out
+    end_time=$(date | awk '{print $4}')
+    exec_time=$(execution_time ${start_time} ${end_time})
+    echo "do_mode_test5 | RESULT : ${RESULT} ${exec_time}"
+	unset RESULT
 }
 
 do_mode_test6()
@@ -77,37 +110,40 @@ do_mode_test6()
 	start_time=$(date | awk '{print $4}')
   	subscribe_logger_event &
 	pids+=($!)
-	mosquitto_pub -m '{"do-val":{"value":{"type":"pulse","level":true,"frequency":0,"pulse":"test","pwm":{"frequency":20000,"duty-cycle":90}}}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/do/1"
-	parse_logger
-	result "logger"
-	result_logs "do_mode_test" ${LOG_DO_MODE}  ${start_time} "${pub}"
-
+	mosquitto_pub -m '{"output":{"value":{"level":false,"frequency":0,"pulse_counter":{"Pulse_pwm":{"pulse":"test","pwm":{"frequency":0,"duty_cycle":0}}}}},"mode":{"value":{"type":"pulse"}}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/do/1"
+	parse_logger " Wrong configuration for Pulse "
+    end_time=$(date | awk '{print $4}')
+    exec_time=$(execution_time ${start_time} ${end_time})
+    echo "do_mode_test6 | RESULT : ${LOGGER_RESULT} ${exec_time}"
+	unset RESULT
 }
 
 do_mode_test7()
 {
 	start_time=$(date | awk '{print $4}')
-  	subscribe_logger_event &
+	subscribe &
 	pids+=($!)
-#	mosquitto_sub -t "glp/0/${SID}/fb/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/do/1" &
-	mosquitto_pub -m '{"do-val":{"value":{"type":"frequency","level":false,"frequency":1,"pulse":0,"pwm":{"frequency":0,"duty-cycle":0}}}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/do/1"
-	parse_logger
-	result "logger"
-	result_logs "do_mode_test" ${LOG_DO_MODE}  ${start_time} "${pub}"
+	mosquitto_pub -m '{"output":{"value":{"level":false,"frequency":1,"pulse_counter":{"Pulse_pwm":{"pulse":0,"pwm":{"frequency":0,"duty_cycle":0}}}}},"mode":{"value":{"type":"frequency"}}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/do/1"
 
+	parse_out
+    end_time=$(date | awk '{print $4}')
+    exec_time=$(execution_time ${start_time} ${end_time})
+    echo "do_mode_test7 | RESULT : ${RESULT} ${exec_time}"
+	unset RESULT
 }
 
 do_mode_test8()
 {
 	start_time=$(date | awk '{print $4}')
-  	subscribe_logger_event &
+	subscribe &
 	pids+=($!)
-#	mosquitto_sub -t "glp/0/${SID}/fb/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/do/1" &
-	mosquitto_pub -m '{"do-val":{"value":{"type":"frequency","level":false,"frequency":20000,"pulse":0,"pwm":{"frequency":0,"duty-cycle":0}}}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/do/1"
-	parse_logger
-	result "logger"
-	result_logs "do_mode_test" ${LOG_DO_MODE}  ${start_time} "${pub}"
+	mosquitto_pub -m '{"output":{"value":{"level":false,"frequency":20000,"pulse_counter":{"Pulse_pwm":{"pulse":0,"pwm":{"frequency":0,"duty_cycle":0}}}}},"mode":{"value":{"type":"frequency"}}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/do/1"
 
+	parse_out
+    end_time=$(date | awk '{print $4}')
+    exec_time=$(execution_time ${start_time} ${end_time})
+    echo "do_mode_test8 | RESULT : ${RESULT} ${exec_time}"
+	unset RESULT
 }
 
 do_mode_test9()
@@ -115,37 +151,41 @@ do_mode_test9()
 	start_time=$(date | awk '{print $4}')
   	subscribe_logger_event &
 	pids+=($!)
-	mosquitto_pub -m '{"do-val":{"value":{"type":"frequency","level":true,"frequency":"test","pulse":0,"pwm":{"frequency":20000,"duty-cycle":90}}}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/do/1"
-	parse_logger
-	result "logger"
-	result_logs "do_mode_test" ${LOG_DO_MODE}  ${start_time} "${pub}"
+	mosquitto_pub -m '{"output":{"value":{"level":false,"frequency":"1","pulse_counter":{"Pulse_pwm":{"pulse":0,"pwm":{"frequency":0,"duty_cycle":0}}}}},"mode":{"value":{"type":"frequency"}}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/do/1"
 
+	parse_logger " Wrong configuration for Freque"
+    end_time=$(date | awk '{print $4}')
+    exec_time=$(execution_time ${start_time} ${end_time})
+    echo "do_mode_test9 | RESULT : ${LOGGER_RESULT} ${exec_time}"
+	unset RESULT
 }
 
 do_mode_test10()
 {
 	start_time=$(date | awk '{print $4}')
-  	subscribe_logger_event &
+	subscribe &
 	pids+=($!)
-#	mosquitto_sub -t "glp/0/${SID}/fb/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/do/1" &
-	mosquitto_pub -m '{"do-val":{"value":{"type":"pwm","level":false,"frequency":0,"pulse":0,"pwm":{"frequency":1,"duty-cycle":10}}}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/do/1"
-	parse_logger
-	result "logger"
-	result_logs "do_mode_test" ${LOG_DO_MODE}  ${start_time} "${pub}"
+	mosquitto_pub -m '{"output":{"value":{"level":false,"frequency":1,"pulse_counter":{"Pulse_pwm":{"pulse":0,"pwm":{"frequency":1,"duty_cycle":10}}}}},"mode":{"value":{"type":"pwm"}}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/do/1"
 
+	parse_out
+    end_time=$(date | awk '{print $4}')
+    exec_time=$(execution_time ${start_time} ${end_time})
+    echo "do_mode_test10 | RESULT : ${RESULT} ${exec_time}"
+	unset RESULT
 }
 
 do_mode_test11()
 {
 	start_time=$(date | awk '{print $4}')
-  	subscribe_logger_event &
+	subscribe &
 	pids+=($!)
-#	mosquitto_sub -t "glp/0/${SID}/fb/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/do/1" &
-	mosquitto_pub -m '{"do-val":{"value":{"type":"pwm","level":false,"frequency":0,"pulse":0,"pwm":{"frequency":20000,"duty-cycle":90}}}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/do/1"
-	parse_logger
-	result "logger"
-	result_logs "do_mode_test" ${LOG_DO_MODE}  ${start_time} "${pub}"
+	mosquitto_pub -m '{"output":{"value":{"level":false,"frequency":1,"pulse_counter":{"Pulse_pwm":{"pulse":0,"pwm":{"frequency":20000,"duty_cycle":90}}}}},"mode":{"value":{"type":"pwm"}}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/do/1"
 
+	parse_out
+    end_time=$(date | awk '{print $4}')
+    exec_time=$(execution_time ${start_time} ${end_time})
+    echo "do_mode_test11 | RESULT : ${RESULT} ${exec_time}"
+	unset RESULT
 }
 
 do_mode_test12()
@@ -153,10 +193,12 @@ do_mode_test12()
 	start_time=$(date | awk '{print $4}')
   	subscribe_logger_event &
 	pids+=($!)
-	mosquitto_pub -m '{"do-val":{"value":{"type":"pwm","level":true,"frequency":0,"pulse":0,"pwm":{"frequency":"test","duty-cycle":90}}}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/do/1"
-	parse_logger
-	result "logger"
-	result_logs "do_mode_test" ${LOG_DO_MODE}  ${start_time} "${pub}"
+	mosquitto_pub -m '{"output":{"value":{"level":false,"frequency":1,"pulse_counter":{"Pulse_pwm":{"pulse":0,"pwm":{"frequency":"1","duty_cycle":10}}}}},"mode":{"value":{"type":"pwm"}}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/do/1"
+	parse_logger "Wrong configuration for PWM Fr"
+    end_time=$(date | awk '{print $4}')
+    exec_time=$(execution_time ${start_time} ${end_time})
+    echo "do_mode_test12 | RESULT : ${LOGGER_RESULT} ${exec_time}"
+	unset RESULT
 }
 
 do_mode_test13()
@@ -164,10 +206,12 @@ do_mode_test13()
 	start_time=$(date | awk '{print $4}')
   	subscribe_logger_event &
 	pids+=($!)
-	mosquitto_pub -m '{"do-val":{"value":{"type":"pwm","level":true,"frequency":0,"pulse":0,"pwm":{"frequency":"test","duty-cycle":90}}}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/do/1"
-	parse_logger
-	result "logger"
-	result_logs "do_mode_test" ${LOG_DO_MODE}  ${start_time} "${pub}"
+	mosquitto_pub -m '{"output":{"value":{"level":false,"frequency":1,"pulse_counter":{"Pulse_pwm":{"pulse":0,"pwm":{"frequency":1,"duty_cycle":"10"}}}}},"mode":{"value":{"type":"pwm"}}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/do/1"
+	parse_logger "Wrong configuration for PWM Du"
+    end_time=$(date | awk '{print $4}')
+    exec_time=$(execution_time ${start_time} ${end_time})
+    echo "do_mode_test13 | RESULT : ${LOGGER_RESULT} ${exec_time}"
+	unset RESULT
 }
 
 setup_time

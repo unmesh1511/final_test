@@ -1,0 +1,43 @@
+3phase_provision_test1
+START_TIME : 12:50:30
+mosquitto_pub -m '{action:provision,args:{}}' -t 'glp/0/17q3kc1/rq/dev/iap/4.meter/do'
+STATUS_OUTPUT : {"state":"provisioned","unid":"ym141krig.meter","health":"normal","cat":"metering","type":"900001150004DD00","interfaceType":"static","usage":"mixed","version":"1.0.0","product":"IOX_METER","manufacturer":"IOX METER DEVICE","mru":"2019-10-03 07:20:30.760 UTC"}
+END_TIME : 12:50:38
+
+==========================================================================================
+3phase_provision_test2
+START_TIME : 12:50:38
+mosquitto_pub -m '{action:provision,args:{unid:abcd}}' -t 'glp/0/17q3kc1/rq/dev/iap/4.meter/do'
+STATUS_OUTPUT : {"state":"unprovisioned","unid":"ym141krig.meter","health":"normal","cat":"metering","type":"900001150004DD00","interfaceType":"static","usage":"mixed","version":"1.0.0","product":"IOX_METER","manufacturer":"IOX METER DEVICE","mru":"2019-10-03 07:20:38.70 UTC"}
+END_TIME : 12:50:45
+
+==========================================================================================
+3phase_provision_test3
+START_TIME : 12:50:45
+mosquitto_pub -m '{action:provision}' -t 'glp/0/17q3kc1/rq/dev/iap/4.meter/do'
+STATUS_OUTPUT : {"state":"provisioned","unid":"ym141krig.meter","health":"normal","cat":"metering","type":"900001150004DD00","interfaceType":"static","usage":"mixed","version":"1.0.0","product":"IOX_METER","manufacturer":"IOX METER DEVICE","mru":"2019-10-03 07:20:45.800 UTC"}
+END_TIME : 12:50:53
+
+==========================================================================================
+3phase_provision_test4
+START_TIME : 12:50:53
+mosquitto_pub -m '{action:provision,args:{unid:'ym141krig.meter'}}' -t 'glp/0/17q3kc1/rq/dev/iap/4.meter/do'
+STATUS_OUTPUT : {"state":"unprovisioned","unid":"ym141krig.meter","health":"normal","cat":"metering","type":"900001150004DD00","interfaceType":"static","usage":"mixed","version":"1.0.0","product":"IOX_METER","manufacturer":"IOX METER DEVICE","mru":"2019-10-03 07:20:52.890 UTC"}
+LOGGER_OUTPUT : {"cat":"error","topic":"glp/0/17q3kc1/rq/dev/iap/4.meter/do","message":"IOX_METER Device is NOT IN PROVISION STATE","utc":"2019-10-03 07:20:30.550 UTC"}
+END_TIME : 12:51:05
+
+==========================================================================================
+3phase_provision_test5
+START_TIME : 12:51:05
+mosquitto_pub -m '{action:provision}' -t 'glp/0/17q3kc1/rq/dev/iap/4.meter/do'
+STATUS_OUTPUT : {"state":"provisioned","unid":"ym141krig.meter","health":"normal","cat":"metering","type":"900001150004DD00","interfaceType":"static","usage":"mixed","version":"1.0.0","product":"IOX_METER","manufacturer":"IOX METER DEVICE","mru":"2019-10-03 07:21:05.670 UTC"}
+END_TIME : 12:51:13
+
+==========================================================================================
+3phase_provision_test6
+START_TIME : 12:51:13
+mosquitto_pub -m '{action:provision}' -t 'glp/0/17q3kc1/rq/dev/iap/4.meter/do'
+LOGGER_OUTPUT : {"cat":"error","source":"modbus","topic":"glp/0/17q3kc1/rq/dev/modbus/pm820/do","utc":"2019-10-03 07:21:17.000 UTC","message":"create : error in object"}
+END_TIME : 12:51:18
+
+==========================================================================================

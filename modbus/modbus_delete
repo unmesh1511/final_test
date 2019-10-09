@@ -12,7 +12,7 @@ LOG_MODBUS_DEL=${IOX_PATH}"/modbus/modbus_del_log"
 
 subscribe_sts_event()
 {
-	 mosquitto_sub -t "glp/0/${SID}/fb/dev/${IOX_PROTOCOL}/pm820/sts" > ${STS_PATH} 
+	 mosquitto_sub -t "glp/0/${SID}/fb/dev/${MODBUS_PROTOCOL}/pm820/sts" > ${STS_PATH} 
 }
 
 modbus_delete_test1()
@@ -20,10 +20,10 @@ modbus_delete_test1()
 	start_time=$(date | awk '{print $4}') 
 	subscribe_logger_event & 
 	pids+=($!)
-	mosquitto_pub -m '{"action":"delete"}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/pm820/do"
+	mosquitto_pub -m '{"action":"delete"}' -t "glp/0/${SID}/rq/dev/${MODBUS_PROTOCOL}/pm820/do"
 	parse_logger "${DEV_NOT_FOUND}"
 	result "logger"
-	pub=("mosquitto_pub -m '{"action":"delete"}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/pm820/do"'")
+	pub=("mosquitto_pub -m '{"action":"delete"}' -t '"glp/0/${SID}/rq/dev/${MODBUS_PROTOCOL}/pm820/do"'")
 	result_logs "modbus_delete_test" ${LOG_MODBUS_DEL}  ${start_time} "${pub}"
 }
 
@@ -32,10 +32,10 @@ modbus_delete_test2()
 	start_time=$(date | awk '{print $4}') 
 	subscribe_sts_event &
 	pids+=($!)
-	mosquitto_pub -m '{"action":"delete"}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/pm820/do"
+	mosquitto_pub -m '{"action":"delete"}' -t "glp/0/${SID}/rq/dev/${MODBUS_PROTOCOL}/pm820/do"
 	parse_sts "${DELETED_STATE}"
 	result "sts"
-	pub=("mosquitto_pub -m '{"action":"delete"}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/pm820/do"'")
+	pub=("mosquitto_pub -m '{"action":"delete"}' -t '"glp/0/${SID}/rq/dev/${MODBUS_PROTOCOL}/pm820/do"'")
 	result_logs "modbus_delete_test" ${LOG_MODBUS_DEL}  ${start_time} "${pub}"
 }
 
@@ -44,10 +44,10 @@ modbus_delete_test3()
 	start_time=$(date | awk '{print $4}') 
 	subscribe_logger_event & 
 	pids+=($!)
-	mosquitto_pub -m '{"action":"delete"}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/pm820/do"
+	mosquitto_pub -m '{"action":"delete"}' -t "glp/0/${SID}/rq/dev/${MODBUS_PROTOCOL}/pm820/do"
 	parse_logger "${DELETE_UNSUCCESSFUL}"
 	result "logger"
-	pub=("mosquitto_pub -m '{"action":"delete"}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/pm820/do"'")
+	pub=("mosquitto_pub -m '{"action":"delete"}' -t '"glp/0/${SID}/rq/dev/${MODBUS_PROTOCOL}/pm820/do"'")
 	result_logs "modbus_delete_test" ${LOG_MODBUS_DEL}  ${start_time} "${pub}"
 }
 
@@ -57,10 +57,10 @@ modbus_delete_test4()
 	start_time=$(date | awk '{print $4}') 
 	subscribe_sts_event &
 	pids+=($!)
-	mosquitto_pub -m '{"action":"delete"}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/pm820/do"
+	mosquitto_pub -m '{"action":"delete"}' -t "glp/0/${SID}/rq/dev/${MODBUS_PROTOCOL}/pm820/do"
 	parse_sts "${DELETED_STATE}"
 	result "sts"
-	pub=("mosquitto_pub -m '{"action":"delete"}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/pm820/do"'")
+	pub=("mosquitto_pub -m '{"action":"delete"}' -t '"glp/0/${SID}/rq/dev/${MODBUS_PROTOCOL}/pm820/do"'")
 	result_logs "modbus_delete_test" ${LOG_MODBUS_DEL}  ${start_time} "${pub}"
 }
 
@@ -69,10 +69,10 @@ modbus_delete_test5()
 	start_time=$(date | awk '{print $4}') 
 	subscribe_logger_event & 
 	pids+=($!)
-	mosquitto_pub -m '{"action":"delete"}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/pm820/do"
+	mosquitto_pub -m '{"action":"delete"}' -t "glp/0/${SID}/rq/dev/${MODBUS_PROTOCOL}/pm820/do"
 	parse_logger "${DEV_NOT_FOUND}"
 	result "logger"
-	pub=("mosquitto_pub -m '{"action":"delete"}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/pm820/do"'")
+	pub=("mosquitto_pub -m '{"action":"delete"}' -t '"glp/0/${SID}/rq/dev/${MODBUS_PROTOCOL}/pm820/do"'")
 	result_logs "modbus_delete_test" ${LOG_MODBUS_DEL}  ${start_time} "${pub}"
 }
 

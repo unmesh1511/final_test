@@ -8,22 +8,62 @@ source ${IOX_PATH}"/errors.sh"
 LOG_EVENT_LOGGER=${IOX_PATH}"/dio/relay/logger"
 LOG_STS=${IOX_PATH}"/dio/relay/sts"
 LOG_RELAY_PORT=${IOX_PATH}"/dio/relay/relay_port_log"
+OUT=${IOX_PATH}"/dio/relay/out"
+
+subscribe()
+{
+	mosquitto_sub -t glp/0/${SID}/fb/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/relay/${1} > ${OUT}
+}
+
+parse_out()
+{
+	sleep 5
+	if [[ -s ${OUT} ]];
+	then
+#		get the last object and check the time and compare with last ;if equal then fail else pass
+		latest_time=$(awk -F "," '/mru/{print $NF}' ${OUT} | grep -oP '[[:digit:]].*(?= [[:space:]]*UTC.*)' | sort -k1,2 -ur | head -n1 | awk '{print $2}')
+		if [[ ${last_time} == ${latest_time} ]];
+		then
+			RESULT="FAIL"
+		else
+			RESULT="PASS"
+			last_time=${latest_time}
+		fi
+		rm ${OUT}
+	else
+		RESULT="EMPTY"
+	fi
+}
 
 
 relay_port_test1()
 {
 	start_time=$(date | awk '{print $4}')
-	mosquitto_sub -t "glp/0/${SID}/fb/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/relay/1" &
+	get_time 1
+	sleep 5
+	subscribe 1 &
 	pids+=($!)
 	mosquitto_pub -m '{"relay-val":{"value":{"level":true}}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/relay/1"
+	parse_out
+	end_time=$(date | awk '{print $4}')
+    exec_time=$(execution_time ${start_time} ${end_time})
+    echo "relay_port_test1 | RESULT : ${RESULT} ${exec_time}"
+	unset RESULT
 }
 
 relay_port_test2()
 {
 	start_time=$(date | awk '{print $4}')
-	mosquitto_sub -t "glp/0/${SID}/fb/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/relay/2" &
+	get_time 2
+	sleep 5
+	subscribe 2 &
 	pids+=($!)
 	mosquitto_pub -m '{"relay-val":{"value":{"level":true}}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/relay/2" 
+	parse_out
+	end_time=$(date | awk '{print $4}')
+    exec_time=$(execution_time ${start_time} ${end_time})
+    echo "relay_port_test2 | RESULT : ${RESULT} ${exec_time}"
+	unset RESULT
 }
 
 relay_port_test3()
@@ -32,9 +72,11 @@ relay_port_test3()
 	subscribe_logger_event &
 	pids+=($!)
 	mosquitto_pub -m '{"relay-val":{"value":{"level":true}}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/relay/3"
-	parse_logger
-	result "logger"
-	result_logs "relay_port_test" ${test_num} ${LOG_RELAY_PORT}  ${start_time} "${pub}"
+	parse_logger "port asked for is not valid"
+	end_time=$(date | awk '{print $4}')
+    exec_time=$(execution_time ${start_time} ${end_time})
+    echo "relay_port_test2 | RESULT : ${LOGGER_RESULT} ${exec_time}"
+	unset RESULT
 }
 
 

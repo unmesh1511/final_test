@@ -8,13 +8,59 @@ source ${IOX_PATH}"/errors.sh"
 LOG_EVENT_LOGGER=${IOX_PATH}"/dio/relay/logger"
 LOG_STS=${IOX_PATH}"/dio/relay/sts"
 LOG_RELAY_VALUEOBJ=${IOX_PATH}"/dio/relay/relay_valueobj_log"
+OUT=${IOX_PATH}"/dio/relay/out"
+
+subscribe()
+{
+	mosquitto_sub -t "glp/0/${SID}/fb/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/relay/1" > ${OUT}
+}
+
+parse_out()
+{
+	sleep 5
+	if [[ -s ${OUT} ]];
+	then
+#		get the last object and check the time and compare with last ;if equal then fail else pass
+		latest_time=$(awk -F "," '/mru/{print $NF}' ${OUT} | grep -oP '[[:digit:]].*(?= [[:space:]]*UTC.*)' | sort -k1,2 -ur | head -n1 | awk '{print $2}')
+		if [[ ${last_time} == ${latest_time} ]];
+		then
+			RESULT="FAIL"
+		else
+			RESULT="PASS"
+			last_time=${latest_time}
+		fi
+		rm ${OUT}
+	else
+		RESULT="EMPTY"
+	fi
+}
 
 relay_valueObj_test1()
 {
-	mosquitto_sub -t "glp/0/${SID}/fb/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/relay/2" &
+	start_time=$(date | awk '{print $4}')
+  	subscribe &
+	pids+=($!)
 	mosquitto_pub -m '{"relay-val":{"value":{"level":false}}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/relay/1"
+	parse_out
+	end_time=$(date | awk '{print $4}')
+	exec_time=$(execution_time ${start_time} ${end_time})
+	echo "relay_valueObj_test1 | RESULT : ${RESULT} ${exec_time}"
+	unset RESULT
 }
 
+get_time()
+{
+	subscribe &
+	pids+=($!)
+	#get mru and store it in last_time 
+	if [[ -s ${OUT} ]];
+	then
+		last_time=$(awk -F "," '/mru/{print $NF}' ${OUT} | grep -oP '[[:digit:]].*(?= [[:space:]]*UTC.*)' | sort -k1,2 -ur | head -n1 | awk '{print $2}')
+		rm ${OUT}
+	fi
+}
+
+get_time 
 
 relay_valueObj_test1
 

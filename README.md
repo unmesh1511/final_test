@@ -19,7 +19,9 @@ IOX Test Project is executed on Apollo to test IOX functionality. Get the latest
  7. boxes command
  
 ## Command to install above packages 
+```bash
   sudo apt-get install bsdmainutils sshpass boxes minicom 
+   ```
  
 ## How to run
 ```bash

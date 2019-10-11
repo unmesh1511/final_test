@@ -15,8 +15,8 @@ The latest image is available at : [iox_test_suite](https://github.com/unmesh151
  3. python
  4. sshpass
  5. minicom for IOX TASH logs
- 6. column cmd
- 7. boxes cmd
+ 6. column command
+ 7. boxes command
  
 ## Command to install above packages 
   sudo apt-get install bsdmainutils sshpass boxes minicom 

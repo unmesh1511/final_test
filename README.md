@@ -20,8 +20,8 @@ IOX Test Project is executed on Apollo to test IOX functionality. Get the latest
  
 ## Command to install above packages 
 ```bash
-  sudo apt-get install bsdmainutils sshpass boxes minicom 
-   ```
+ sudo apt-get install bsdmainutils sshpass boxes minicom 
+```
  
 ## How to run
 ```bash
@@ -73,9 +73,9 @@ Inside each device directory there are testcases for different actions such as *
 │   
 ├── dio
 │   ├── dio_*
-|   ├── do
-|   ├── din
-|   ├── relay
+│   ├── do
+│   ├── din
+│   ├── relay
 │   ├── files.list
 │
 ├── common.sh

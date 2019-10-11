@@ -13,6 +13,13 @@ The latest image is available at : [iox_test_suite](https://github.com/unmesh151
  1. mosquitto broker
  2. mosquitto clients
  3. python
+ 4. sshpass
+ 5. minicom for IOX TASH logs
+ 6. column cmd
+ 7. boxes cmd
+ 
+## Command to install above packages 
+  sudo apt-get install bsdmainutils sshpass boxes minicom 
   
 ## How to run
 ```bash

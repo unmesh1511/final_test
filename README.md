@@ -1,14 +1,14 @@
 # IOX Test Project
 
 IOX Test Project is used for testing different IOX Devices such as DIO, MODBUS, METER.
-This testsuite provides you the collection of options to execute all the test cases or only the selected testcases. We can also provide the list of testcases that we want to exclude during the run.
+This test-suite provides you the collection of options to execute all the test cases or only the selected testcases. We can also provide the list of testcases that we want to exclude during the run.
 
 
-## How to install the testsuite
+## How to install the test-suite
 
 IOX Test Project is executed on Apollo to test IOX functionality. Get the latest test-suite "iox_test" directory from bitbucket IOX "develop" repository. Copy the mention directory on Apollo and update the required configurations in iox.config before executing test-suite.
   
-## Prerequisites for using testsuite
+## Prerequisites for using test-suite
   
  1. mosquitto broker
  2. mosquitto clients
@@ -27,7 +27,7 @@ IOX Test Project is executed on Apollo to test IOX functionality. Get the latest
 ./ioxtest
   ```
   
- IOX testsuite also provides you with the following options :
+ IOX test-suite also provides you with the following options :
  
    **-g**
  
@@ -60,10 +60,10 @@ IOX Test Project is executed on Apollo to test IOX functionality. Get the latest
       Used to exclude testcases mentioned in a file.
       for example : -X <FILE_NAME>
       
-## Testsuite Design 
+## Test-suite Design 
 The IOX testsuite has a main directory as **iox_test**.
 The iox_test directory has different directories corresponding to different devices such as **dio, modbus, meter** as well as **result** directory having respective testcase log.
-Inside each device directory there are testcases for different actions such as **create, provision, delete** etc. as well as for configurations such as **dvc, deep_topic, mode, port, get service, monitor service**.
+Inside each device directory there are testcases for different actions such as **create, provision, delete** etc. as well as for services such as **dvc, get service, monitor service, mode, port, deep_topic**.
     
 ```bash
 ├── dcm

@@ -15,37 +15,18 @@ subscribe()
 	mosquitto_sub -t "glp/0/${SID}/fb/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/relay/1" > ${OUT}
 }
 
-parse_out()
-{
-    sleep 5
-    if [[ -s ${OUT} ]];
-    then
-#       get the last object and check the time and compare with last ;if equal then fail else pass
-        latest_time=$(awk -F "," '/mru/{print $NF}' ${OUT} | grep -oP '[[:digit:]].*(?= [[:space:]]*UTC.*)' | sort -k1,2 -ur | head -n1 | awk '{print $2}')
-	    if [[ ${last_time} == ${latest_time} ]];
-        then
-            RESULT="FAIL"
-        else
-            RESULT="PASS"
-            last_time=${latest_time}
-        fi
-        rm ${OUT}
-    else
-        RESULT="EMPTY"
-    fi
-}
-
 relay_deep_test1()
 {
 	start_time=$(date | awk '{print $4}')
+	setup_time
+	sleep 5
   	subscribe_logger_event &
 	pids+=($!)
 	mosquitto_pub -m 'true' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/relay/1/relay-val/value/level12"
 	parse_logger "No level Item present"
-    end_time=$(date | awk '{print $4}')
-    exec_time=$(execution_time ${start_time} ${end_time})
-    echo "relay_deep_test1 | RESULT : ${LOGGER_RESULT} ${exec_time}"
-    unset RESULT
+	result "logger"
+    pub=("mosquitto_pub -m 'true' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/relay/1/relay-val/value/level12"'")
+    result_logs "relay_deep_test" ${LOG_RELAY_DEEP}  ${start_time} "${pub}"
 }
 
 relay_deep_test2()
@@ -55,10 +36,10 @@ relay_deep_test2()
 	pids+=($!)
 	mosquitto_pub -m 'true' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/relay/1/relay-val/value/level"
 	parse_out
-    end_time=$(date | awk '{print $4}')
-    exec_time=$(execution_time ${start_time} ${end_time})
-    echo "relay_deep_test2 | RESULT : ${RESULT} ${exec_time}"
-    unset RESULT
+	result
+    pub=("mosquitto_pub -m 'true' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/relay/1/relay-val/value/level"'
+")
+    result_logs "relay_deep_test" ${LOG_RELAY_DEEP}  ${start_time} "${pub}"
 }
 
 get_time()
@@ -68,13 +49,12 @@ get_time()
     #get mru and store it in last_time 
     if [[ -s ${OUT} ]];
     then
-        last_time=$(awk -F "," '/mru/{print $NF}' ${OUT} | grep -oP '[[:digit:]].*(?= [[:space:]]*UTC.*)' | sort -k1,2 -ur | head -n1 | awk '{print $2}')
+        out_last_time=$(awk -F "," '/mru/{print $NF}' ${OUT} | grep -oP '[[:digit:]].*(?= [[:space:]]*UTC.*)' | sort -k1,2 -ur | head -n1 | awk '{print $2}')
 	    rm ${OUT}
     fi
 }
 
 get_time
-
 
 relay_deep_test1
 relay_deep_test2

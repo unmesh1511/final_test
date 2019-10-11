@@ -15,37 +15,18 @@ subscribe()
 	mosquitto_sub -t "glp/0/${SID}/fb/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/di/1" > ${OUT}
 }
 
-parse_out()
-{
-    sleep 5
-    if [[ -s ${OUT} ]];
-    then
-#       get the last object and check the time and compare with last ;if equal then fail else pass
-        latest_time=$(awk -F "," '/mru/{print $NF}' ${OUT} | grep -oP '[[:digit:]].*(?= [[:space:]]*UTC.*)' | sort -k1,2 -ur | head -n1 | awk '{print $2}')
-        if [[ ${last_time} == ${latest_time} ]];
-        then
-            RESULT="FAIL"
-        else
-            RESULT="PASS"
-            last_time=${latest_time}
-        fi
-        rm ${OUT}
-    else
-        RESULT="EMPTY"
-    fi
-}
-
-
 din_deep_test1()
 {
 	start_time=$(date | awk '{print $4}')
+	setup_time
+	sleep 5
 	subscribe_logger_event &
 	pids+=($!)
 	mosquitto_pub -m '30' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/dia/1/input/monitor/rate" 
 	parse_logger "Error in parsing json object"
-    end_time=$(date | awk '{print $4}')
-    exec_time=$(execution_time ${start_time} ${end_time})
-    echo "din_device_test1 | RESULT : ${LOGGER_RESULT} ${exec_time}"
+	result "logger"
+    pub=("mosquitto_pub -m '30' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/dia/1/input/monitor/rate"'")
+    result_logs "din_deep_test" ${LOG_DIN_DEEP}  ${start_time} "${pub}"
 }
 
 din_deep_test2()
@@ -60,11 +41,11 @@ din_deep_test3()
 	subscribe &
 	pids+=($!)
 	mosquitto_pub -m '{"input":{"monitor":{"rate":50,"cat":"data","inFeedback":true,"report":"change","throttle":0,"threshold":10}},"mode":{"value":{"type":"level","level":{"detect-level":0,"pullup-cfg":true},"pulse":{"detect-level":0,"pullup-cfg":true},"frequency":{"detect-level":0,"pullup-cfg":true}}}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/di/1"
+	sleep 5
 	parse_out
-    end_time=$(date | awk '{print $4}')
-    exec_time=$(execution_time ${start_time} ${end_time})
-    echo "din_device_test3 | RESULT : ${RESULT} ${exec_time}"
-    unset RESULT
+	result
+    pub=("mosquitto_pub -m '{"input":{"monitor":{"rate":50,"cat":"data","inFeedback":true,"report":"change","throttle":0,"threshold":10}},"mode":{"value":{"type":"level","level":{"detect-level":0,"pullup-cfg":true},"pulse":{"detect-level":0,"pullup-cfg":true},"frequency":{"detect-level":0,"pullup-cfg":true}}}}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/di/1"'")
+    result_logs "din_deep_test" ${LOG_DIN_DEEP}  ${start_time} "${pub}"
 }
 
 din_deep_test4()
@@ -73,11 +54,12 @@ din_deep_test4()
 	subscribe &
 	pids+=($!)
 	mosquitto_pub -m '{"monitor":{"rate":40,"cat":"data","inFeedback":true,"report":"change","throttle":0,"threshold":10}}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/di/1/input"
+	sleep 5
 	parse_out
-    end_time=$(date | awk '{print $4}')
-    exec_time=$(execution_time ${start_time} ${end_time})
-    echo "din_device_test4 | RESULT : ${RESULT} ${exec_time}"
-    unset RESULT
+	result
+    pub=("mosquitto_pub -m '{"monitor":{"rate":40,"cat":"data","inFeedback":true,"report":"change","throttle":0,"threshold":10}}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/di/1/input"
+'")
+    result_logs "din_deep_test" ${LOG_DIN_DEEP}  ${start_time} "${pub}"
 }
 
 din_deep_test5()
@@ -86,11 +68,11 @@ din_deep_test5()
 	subscribe &
 	pids+=($!)
 	mosquitto_pub -m '{"rate":50}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/di/1/input/monitor"
+	sleep 5
 	parse_out
-    end_time=$(date | awk '{print $4}')
-    exec_time=$(execution_time ${start_time} ${end_time})
-    echo "din_device_test5 | RESULT : ${RESULT} ${exec_time}"
-    unset RESULT
+	result
+    pub=("mosquitto_pub -m '{"rate":50}' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/di/1/input/monitor"'")
+    result_logs "din_deep_test" ${LOG_DIN_DEEP}  ${start_time} "${pub}"
 }
 
 din_deep_test6()
@@ -98,12 +80,12 @@ din_deep_test6()
 	start_time=$(date | awk '{print $4}')
 	subscribe &
 	pids+=($!)
-	mosquitto_pub -m '40' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/di/1/input/monitor/rate "
+	mosquitto_pub -m '40' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/di/1/input/monitor/rate"
+	sleep 5
 	parse_out
-    end_time=$(date | awk '{print $4}')
-    exec_time=$(execution_time ${start_time} ${end_time})
-    echo "din_device_test6 | RESULT : ${RESULT} ${exec_time}"
-    unset RESULT
+	result
+    pub=("mosquitto_pub -m '40' -t '"glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/di/1/input/monitor/rate"'")
+    result_logs "din_deep_test" ${LOG_DIN_DEEP}  ${start_time} "${pub}"
 }
 
 get_time()
@@ -113,7 +95,7 @@ get_time()
     #get mru and store it in last_time 
     if [[ -s ${OUT} ]];
     then
-        last_time=$(awk -F "," '/mru/{print $NF}' ${OUT} | grep -oP '[[:digit:]].*(?= [[:space:]]*UTC.*)' | sort -k1,2 -ur | head -n1 | awk '{print $2}')
+        out_last_time=$(awk -F "," '/mru/{print $NF}' ${OUT} | grep -oP '[[:digit:]].*(?= [[:space:]]*UTC.*)' | sort -k1,2 -ur | head -n1 | awk '{print $2}')
         rm ${OUT}
     fi
 }
@@ -121,7 +103,7 @@ get_time()
 get_time
 
 din_deep_test1
-din_deep_test2
+#din_deep_test2
 din_deep_test3
 din_deep_test4
 din_deep_test5

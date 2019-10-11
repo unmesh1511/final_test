@@ -42,7 +42,7 @@ din_monitoring()
   	parse_out 1 40
 	end_time=$(date | awk '{print $4}')
     exec_time=$(execution_time ${start_time} ${end_time})
-#    echo "din_device_test1 | RESULT : ${RESULT} ${exec_time}"
+#   echo "din_device_test1 | RESULT : ${RESULT} ${exec_time}"
     unset RESULT
 	
 }

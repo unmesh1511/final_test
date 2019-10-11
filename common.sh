@@ -40,6 +40,16 @@ result_logs()
 		echo "LOGGER_OUTPUT : "${out_logger} >> ${2}
 		unset out_logger
 	fi
+	if [[ ! -z ${out_msg} ]];
+	then
+		echo "OUTPUT : "${out_msg} >> ${2}
+		unset out_msg
+	fi	
+	if [[ ! -z ${get_msg} ]];
+	then
+		echo "OUTPUT : "${get_msg} >> ${2}
+		unset get_msg
+	fi	
 	end_time=$(date | awk '{print $4}')
 	echo "END_TIME : "${end_time} >> ${2}
 	execution_time ${3} ${end_time}
@@ -107,6 +117,57 @@ parse_sts()
 	rm ${LOG_STS}
 }
 
+parse_out()
+{
+    sleep 5
+    if [[ -s ${OUT} ]];
+    then
+		out_msg=$(awk -F "," '/mru/{print $NF}' ${OUT} | grep -oP '[[:digit:]].*(?= [[:space:]]*UTC.*)' | sort -k1,2 -ur | head -n1 | xargs -Iregex grep -m1 "regex" ${OUT})
+	    out_latest_time=$(awk -F "," '/mru/{print $NF}' ${OUT} | grep -oP '[[:digit:]].*(?= [[:space:]]*UTC.*)' | sort -k1,2 -ur | head -n1 | awk '{print $2}')
+        if [[ ${out_last_time} == ${out_latest_time} ]];
+        then
+            TIMESTAMP_OUT="FAIL"
+        else
+            OUT_RESULT="PASS"
+            out_last_time=${out_latest_time}
+        fi
+        rm ${OUT}
+    else
+        OUT_EMPTY="TRUE"
+    fi
+}
+
+parse_get()
+{
+    sleep 5
+    if [[ -s ${OUT} ]];
+    then
+		get_msg=$(tail -1 ${OUT})
+        if [[ ${1} != "corr" ]];
+        then
+            get_parse=$(cat ${OUT} | python -c 'import sys, json; a=json.load(sys.stdin)["result"];print a[0]["error"]')
+            if [[ ${get_parse} == ${1} ]];
+            then
+                GET_RESULT="PASS"
+            else
+                GET_RESULT="FAIL"
+            fi
+        else
+		    get_parse=$(cat ${OUT} | python -c 'import sys, json; print json.load(sys.stdin)["corr"]')
+            if [[ ${get_parse} == "abcd" ]];
+            then
+                GET_RESULT="PASS"
+            else
+                GET_RESULT="FAIL"
+            fi
+        fi
+        rm ${OUT}
+    else
+        GET_EMPTY="TRUE"
+    fi
+}
+
+
 result()
 {
 	if [[ ${1} == "logger" ]];
@@ -143,16 +204,52 @@ result()
 		else
 			if [[ ${STS_RESULT} == "PASS" ]];
 			then
-		#		ACTION_RESULT="ACTION : PASS"
 				RESULT="RESULT : PASS"
 				DESCRIPTION="-"
 			elif [[ ${STS_RESULT} == "FAIL" ]];
 			then
-		#		ACTION_RESULT="FAIL"
 				RESULT="RESULT : FAIL"
 				DESCRIPTION="STS [ ${state} ]"
 			fi
 		fi
+	elif [[ ${1} == "get" ]];
+	then
+		if [[ ${GET_EMPTY} == "TRUE" ]];
+		then
+			RESULT="RESULT : FAIL"
+			DESCRIPTION="GET [ EMPTY ]"
+		else
+			if [[ ${GET_RESULT} == "PASS" ]];
+			then
+				RESULT="RESULT : PASS"
+				DESCRIPTION="-"
+			elif [[ ${GET_RESULT} == "FAIL" ]];
+			then
+				RESULT="RESULT : FAIL"
+				DESCRIPTION="GET [ - ]"
+			fi
+		fi
+	else
+		if [[ ${OUT_EMPTY} == "TRUE" ]];
+		then
+			RESULT="RESULT : FAIL"
+			DESCRIPTION="OUT [ EMPTY ]"
+		elif [[ ${TIMESTAMP_OUT} == "FAIL" ]];
+		then
+			RESULT="RESULT : FAIL"
+			DESCRIPTION="OUT [ TIMESTAMP ]"
+		else
+			if [[ ${OUT_RESULT} == "PASS" ]];
+			then
+				RESULT="RESULT : PASS"
+				DESCRIPTION="-"
+			elif [[ ${OUT_RESULT} == "FAIL" ]];
+			then
+				RESULT="RESULT : FAIL"
+				DESCRIPTION="OUT [ - ]"
+			fi
+		fi
+
 	fi
 	unset_var
 }
@@ -161,10 +258,13 @@ unset_var()
 {
 	unset TIMESTAMP_LOGGER
 	unset TIMESTAMP_STS
+	unset TIMESTAMP_OUT
 	unset LOGGER_RESULT
 	unset LOGGER_EMPTY
 	unset STS_RESULT
 	unset STS_EMPTY
+	unset OUT_RESULT
+	unset OUT_EMPTY
 }
 
 subscribe_logger_event()
@@ -192,7 +292,6 @@ setup_time()
 		sts_last_time=$(awk -F "," '/mru/{print $NF}' ${LOG_STS} | grep -oP '[[:digit:]].*(?= [[:space:]]*UTC.*)' | sort -k1,2 -ur | head -n1 | awk '{print $2}')
 		rm ${LOG_STS}
 	fi
-
 }
 
 dev_provision()

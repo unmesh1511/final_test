@@ -5,40 +5,12 @@ source ${IOX_PATH}"/common.sh"
 source ${IOX_PATH}"/iox.config"
 source ${IOX_PATH}"/errors.sh"
 
-OUT=${IOX_PATH}"/dio/do/out"
+LOG_RELAY_GET=${IOX_PATH}"/dio/relay/relay_get_log"
+OUT=${IOX_PATH}"/dio/relay/out"
 
 subscribe()
 {
 	mosquitto_sub -t "my/responses/relay/1/input" > ${OUT}	
-}
-
-parse_out()
-{
-    sleep 5
-    if [[ -s ${OUT} ]];
-    then
-		if [[ ${1} != "corr" ]];
-		then
-     		parse=$(cat ${OUT} | python -c 'import sys, json; a=json.load(sys.stdin)["result"];print a[0]["error"]')   
-	 		if [[ ${parse} == ${1} ]];
-        	then
-            	RESULT="PASS"
-        	else
-            	RESULT="FAIL"
-        	fi 
-   		else
-			parse=$(cat ${OUT} | python -c 'import sys, json; print json.load(sys.stdin)["corr"]')
-			if [[ ${parse} == "abcd" ]];
-			then
-				RESULT="PASS"
-			else
-				RESULT="FAIL"
-			fi
-	 	fi
-        rm ${OUT}
-	else
-        RESULT="EMPTY"
-    fi
 }
 
 relay_get_test1()
@@ -47,11 +19,10 @@ relay_get_test1()
 	subscribe &
  	pids+=($!)
 	mosquitto_pub -m '{"corr":"abcd","response":"my/responses/relay/1/input","item":["dev/'${IOX_PROTOCOL}'/'${DIO_DEV_NAME}'/if/relay/1/input"],"maxAge":1,"timeout":10}' -t "glp/0/./=get/dp/request"
-	parse_out "corr"
-	end_time=$(date | awk '{print $4}')
-    exec_time=$(execution_time ${start_time} ${end_time})
-    echo "relay_get_test1 | RESULT : ${RESULT} ${exec_time}"
-    unset RESULT
+	parse_get "corr"
+	result "get"
+    pub=("mosquitto_pub -m '{"corr":"abcd","response":"my/responses/relay/1/input","item":["dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/relay/1/input"],"maxAge":1,"timeout":10}' -t '"glp/0/./=get/dp/request"'")
+    result_logs "relay_get_test" ${LOG_RELAY_GET}  ${start_time} "${pub}"
 }
 
 relay_get_test2()
@@ -61,11 +32,10 @@ relay_get_test2()
  	pids+=($!)
 	mosquitto_pub -m '{"corr":"abcd","response":"my/responses/relay/1/input","item":["dev/'${IOX_PROTOCOL}'12/'${DIO_DEV_NAME}'/if/relay/1/input"],"maxAge":1,"timeout":10}' -t "glp/0/./=get/dp/request"
 	sleep 10
-	parse_out "No get response received for the datapoint dev/${IOX_PROTOCOL}12/${DIO_DEV_NAME}/if/relay/1/input"
-	end_time=$(date | awk '{print $4}')
-    exec_time=$(execution_time ${start_time} ${end_time})
-    echo "relay_get_test2 | RESULT : ${RESULT} ${exec_time}"
-    unset RESULT
+	parse_get "No get response received for the datapoint dev/${IOX_PROTOCOL}12/${DIO_DEV_NAME}/if/relay/1/input"
+	result "get"
+    pub=("mosquitto_pub -m '{"corr":"abcd","response":"my/responses/relay/1/input","item":["dev/${IOX_PROTOCOL}12/${DIO_DEV_NAME}/if/relay/1/input"],"maxAge":1,"timeout":10}' -t '"glp/0/./=get/dp/request"'")
+    result_logs "relay_get_test" ${LOG_RELAY_GET}  ${start_time} "${pub}"
 }
 
 relay_get_test3()
@@ -74,11 +44,10 @@ relay_get_test3()
 	subscribe &
  	pids+=($!)
 	mosquitto_pub -m '{"corr":"abcd","response":"my/responses/relay/1/input","item":["dev/'${IOX_PROTOCOL}'/'${DIO_DEV_NAME}'12/if/relay/1/input"],"maxAge":1,"timeout":10}' -t "glp/0/./=get/dp/request"
-	parse_out "datapoint not found"
-	end_time=$(date | awk '{print $4}')
-    exec_time=$(execution_time ${start_time} ${end_time})
-    echo "relay_get_test3 | RESULT : ${RESULT} ${exec_time}"
-    unset RESULT
+	parse_get "datapoint not found"
+	result "get"
+    pub=("mosquitto_pub -m '{"corr":"abcd","response":"my/responses/relay/1/input","item":["dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}12/if/relay/1/input"],"maxAge":1,"timeout":10}' -t '"glp/0/./=get/dp/request"'")
+    result_logs "relay_get_test" ${LOG_RELAY_GET}  ${start_time} "${pub}"
 }
 
 relay_get_test4()
@@ -87,11 +56,10 @@ relay_get_test4()
 	subscribe &
  	pids+=($!)
 	mosquitto_pub -m '{"corr":"abcd","response":"my/responses/relay/1/input","item":["dev/'${IOX_PROTOCOL}'/'${DIO_DEV_NAME}'/if/relay/5/input"],"maxAge":1,"timeout":10}' -t "glp/0/./=get/dp/request"
-	parse_out "datapoint not found"
-	end_time=$(date | awk '{print $4}')
-    exec_time=$(execution_time ${start_time} ${end_time})
-    echo "relay_get_test4 | RESULT : ${RESULT} ${exec_time}"
-    unset RESULT
+	parse_get "datapoint not found"
+	result "get"
+    pub=("mosquitto_pub -m '{"corr":"abcd","response":"my/responses/relay/1/input","item":["dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/relay/5/input"],"maxAge":1,"timeout":10}' -t '"glp/0/./=get/dp/request"'")
+    result_logs "relay_get_test" ${LOG_RELAY_GET}  ${start_time} "${pub}"
 }
 
 relay_get_test5()
@@ -100,11 +68,10 @@ relay_get_test5()
 	subscribe &
  	pids+=($!)
 	mosquitto_pub -m '{"corr":"abcd","response":"my/responses/relay/1/input","item":["dev/'${IOX_PROTOCOL}'/'${DIO_DEV_NAME}'/if/relay/1/input12"],"maxAge":1,"timeout":10}' -t "glp/0/./=get/dp/request"
-	parse_out "datapoint not found"
-	end_time=$(date | awk '{print $4}')
-    exec_time=$(execution_time ${start_time} ${end_time})
-    echo "relay_get_test5 | RESULT : ${RESULT} ${exec_time}"
-    unset RESULT
+	parse_get "datapoint not found"
+	result "get"
+    pub=("mosquitto_pub -m '{"corr":"abcd","response":"my/responses/relay/1/input","item":["dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/relay/1/input12"],"maxAge":1,"timeout":10}' -t '"glp/0/./=get/dp/request"'")
+    result_logs "relay_get_test" ${LOG_RELAY_GET}  ${start_time} "${pub}"
 }
 
 relay_get_test6()
@@ -113,11 +80,10 @@ relay_get_test6()
 	subscribe &
  	pids+=($!)
 	mosquitto_pub -m '{"corr":"abcd","response":"my/responses/relay/1/input","item":["dev/'${IOX_PROTOCOL}'/'${DIO_DEV_NAME}'/if/relay/1/input","dev/'${IOX_PROTOCOL}'/'${DIO_DEV_NAME}'/if/relay/2/input"],"maxAge":1,"timeout":10}' -t "glp/0/./=get/dp/request"
-	parse_out "corr"
-	end_time=$(date | awk '{print $4}')
-    exec_time=$(execution_time ${start_time} ${end_time})
-    echo "relay_get_test6 | RESULT : ${RESULT} ${exec_time}"
-    unset RESULT
+	parse_get "corr"
+	result "get"
+    pub=("mosquitto_pub -m '{"corr":"abcd","response":"my/responses/relay/1/input","item":["dev/${IOX_PROTOCOL}/${DIO_DEV_NAME}/if/relay/1/input","dev/'${IOX_PROTOCOL}'/'${DIO_DEV_NAME}'/if/relay/2/input"],"maxAge":1,"timeout":10}' -t '"glp/0/./=get/dp/request"'")
+    result_logs "relay_get_test" ${LOG_RELAY_GET}  ${start_time} "${pub}"
 }
 
 relay_get_test1

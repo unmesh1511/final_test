@@ -1,14 +1,14 @@
 # IOX Test Project
-IOX Test Project is used for testing different IOX Devices such as DIO, MODBUS, METER, DCM.
-This testsuite contains a collection of options such as executing individual testcases, executing testcases using a file, executing all testcases of a device, excluding a specific test, exclude using     a file containing testcases to be excluded or all the testcases.
 
-The latest image is available at : [iox_test_suite](https://github.com/unmesh1511/final_test.git)
+IOX Test Project is used for testing different IOX Devices such as DIO, MODBUS, METER.
+This testsuite provides you the collection of options to execute all the test cases or only the selected testcases. We can also provide the list of testcases that we want to exclude during the run.
+
 
 ## How to install the testsuite
 
+IOX Test Project is executed on Apollo to test IOX functionality. Get the latest test-suite "iox_test" directory from bitbucket IOX "develop" repository. Copy the mention directory on Apollo and update the required configurations in iox.config before executing test-suite.
   
 ## Prerequisites for using testsuite
-
   
  1. mosquitto broker
  2. mosquitto clients
@@ -20,7 +20,7 @@ The latest image is available at : [iox_test_suite](https://github.com/unmesh151
  
 ## Command to install above packages 
   sudo apt-get install bsdmainutils sshpass boxes minicom 
-  
+ 
 ## How to run
 ```bash
 ./ioxtest
@@ -30,13 +30,13 @@ The latest image is available at : [iox_test_suite](https://github.com/unmesh151
  
    **-g**
  
-     Used to run the testcases as groups.
+     Used to run the testcases as groups. Groups are the directories present inside the test-suite.
      for example : -g dio or -g dio,dio/do or -g dio,modbus etc
  
    **-i**
  
      Used to run individual testcases.
-     for example : -i dio/dio_create or -i modbus/modbus_create or meter/3phase/3phase_provision etc
+     for example : -i dio/dio_create.sh or -i modbus/modbus_create.sh or meter/3phase/3phase_provision.sh etc
  
    **-l**
  
@@ -44,15 +44,15 @@ The latest image is available at : [iox_test_suite](https://github.com/unmesh151
      for example : -l <FILE_NAME>
  
      example of a FILE :
-                         modbus/modbus_create
-                         dio/din/din_deep
-                         dio/relay/relay_get
-                         meter/3phase/3phase_delete
+                         modbus/modbus_create.sh
+                         dio/din/din_deep.sh
+                         dio/relay/relay_get.sh
+                         meter/3phase/3phase_delete.sh
  
    **-x**
       
      Used to exclude a testcase.
-     for example : -x dio/dio_create or modbus/modbus_create 
+     for example : -x dio/dio_create.sh or modbus/modbus_create.sh 
   
    **-X**
    
@@ -61,8 +61,8 @@ The latest image is available at : [iox_test_suite](https://github.com/unmesh151
       
 ## Testsuite Design 
 The IOX testsuite has a main directory as **iox_test**.
-The iox_test directory has different directories corresponding to different devices such as **dio, modbus, meter** as well as **src, result** directories having source code and logs respectively.
-Inside each device directories there are testcases for different actions such as **create, provision, delete** etc.
+The iox_test directory has different directories corresponding to different devices such as **dio, modbus, meter** as well as **result** directory having respective testcase log.
+Inside each device directory there are testcases for different actions such as **create, provision, delete** etc. as well as for configurations such as **dvc, deep_topic, mode, port, get service, monitor service**.
     
 ```bash
 ├── dcm
@@ -71,6 +71,9 @@ Inside each device directories there are testcases for different actions such as
 │   
 ├── dio
 │   ├── dio_*
+|   ├── do
+|   ├── din
+|   ├── relay
 │   ├── files.list
 │
 ├── common.sh
@@ -78,8 +81,6 @@ Inside each device directories there are testcases for different actions such as
 ├── env_var.sh
 │
 ├── errors.sh
-│
-├── generic
 │
 ├── meter
 │   ├── 3phase
@@ -104,7 +105,9 @@ Inside each device directories there are testcases for different actions such as
 ├── sys
 │   ├── iox_replace.sh
 │   ├── files.list
-│   
+│
+├── apollo_reboot_iox_test.sh
+|
 ├── result
 │
 ├── README.md
@@ -113,17 +116,3 @@ Inside each device directories there are testcases for different actions such as
 │
 ├── ioxtest.sh
 ```
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    

@@ -72,7 +72,7 @@ Inside each device directory there are testcases for different actions such as *
 │   
 ├── dio
 │   ├── dio_*
-│   ├── do
+│   ├── do 
 │   ├── din
 │   ├── relay
 │   ├── files.list

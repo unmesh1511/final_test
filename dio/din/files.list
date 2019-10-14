@@ -1,5 +1,5 @@
-din_deep
-din_device
-din_get
-din_mode
-din_port
+din_deep.sh
+din_device.sh
+din_get.sh
+din_mode.sh
+din_port.sh

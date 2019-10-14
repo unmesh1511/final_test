@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -x
 
 source env_var.sh
 source ${IOX_PATH}"/common.sh"
@@ -88,7 +88,7 @@ modbus_create_test5()
 modbus_create_test6()
 {
 	start_time=$(date | awk '{print $4}')
-	subscribe_sts_event &
+	mosquitto_sub -t "glp/0/${SID}/fb/dev/${MODBUS_PROTOCOL}/new_device.0/sts" > ${LOG_STS} &
 	pids+=($!)
 	mosquitto_pub -m '{"action":"create","args":{"type":"'${MODB_TYPE}'"}}' -t "glp/0/${SID}/rq/dev/${MODBUS_PROTOCOL}/new_device.0/do"
 	sleep 10
@@ -113,13 +113,11 @@ modbus_create_test7()
 modbus_create_test8()
 {
 	start_time=$(date | awk '{print $4}')
-	subscribe_logger_event &
-	pids+=($!)
-#	mosquitto_sub -t "glp/0/${SID}/fb/dev/${MODBUS_PROTOCOL}/pm820/cfg" &
+	subscribe_sts_event &
 	pids+=($!)
 	mosquitto_pub -m '{"action":"create","args":{"type":"'${MODB_TYPE}'","provision":"false","unid":"01:43"}}' -t "glp/0/${SID}/rq/dev/${MODBUS_PROTOCOL}/pm820/do"
-	parse_logger "01:43 : invalid unid"
-	result "logger"
+	parse_sts "${UNPROVISION_STATE}"
+	result "sts"
 	pub=("mosquitto_pub -m '{"action":"create","args":{"type":"${MODB_TYPE}","provision":"false","unid":"01:43"}}' -t '"glp/0/${SID}/rq/dev/${MODBUS_PROTOCOL}/pm820/do"'")
 	result_logs "modbus_create_test" ${LOG_MODBUS_CREATE}  ${start_time} "${pub}"
 }

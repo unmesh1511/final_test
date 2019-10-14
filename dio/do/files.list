@@ -1,5 +1,5 @@
-do_deep
-do_device
-do_get
-do_mode
-do_port
+do_deep.sh
+do_device.sh
+do_get.sh
+do_mode.sh
+do_port.sh

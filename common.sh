@@ -294,6 +294,11 @@ setup_time()
 	fi
 }
 
+dev_create()
+{
+	mosquitto_pub -m '{"action":"create"}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${1}/do"
+}
+
 dev_provision()
 {
 	mosquitto_pub -m '{"action":"provision"}' -t "glp/0/${SID}/rq/dev/${IOX_PROTOCOL}/${1}/do"

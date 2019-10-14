@@ -1,6 +1,6 @@
-relay_deep
-relay_device
-relay_get
-relay_port
-relay_value
-relay_valueObj
+relay_deep.sh
+relay_device.sh
+relay_get.sh
+relay_port.sh
+relay_value.sh
+relay_valueObj.sh

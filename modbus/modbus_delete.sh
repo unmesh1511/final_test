@@ -19,6 +19,8 @@ subscribe_sts_event()
 modbus_delete_test1()
 {
 	start_time=$(date | awk '{print $4}') 
+	mosquitto_pub -m '{"action":"delete"}' -t "glp/0/${SID}/rq/dev/${MODBUS_PROTOCOL}/pm820/do"
+	sleep 2
 	subscribe_logger_event & 
 	pids+=($!)
 	mosquitto_pub -m '{"action":"delete"}' -t "glp/0/${SID}/rq/dev/${MODBUS_PROTOCOL}/pm820/do"
@@ -54,6 +56,7 @@ modbus_delete_test3()
 	subscribe_sts_event & 
 	pids+=($!)
 	mosquitto_pub -m '{"action":"delete"}' -t "glp/0/${SID}/rq/dev/${MODBUS_PROTOCOL}/pm820/do"
+	sleep 5
 	parse_sts "${DELETED_STATE}"
 	result "sts"
 	pub=("mosquitto_pub -m '{"action":"delete"}' -t '"glp/0/${SID}/rq/dev/${MODBUS_PROTOCOL}/pm820/do"'")
